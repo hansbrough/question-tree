@@ -4,10 +4,10 @@
 //Establish global namespace
 var SURVEY = {};
 
-require(['backbone'],
-function(BB) {
+require(['app/Survey.App'],
+function(app) {
   console.log("...All files loaded.");
-  //SURVEY = app;
+  SURVEY = app;
   //SURVEY.start();
 
 });

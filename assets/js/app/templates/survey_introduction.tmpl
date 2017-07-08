@@ -1,0 +1,20 @@
+{{#SCREEN}}
+
+  {{#each overview}}
+  <p class="overview {{#each this.styleNames}}{{this}}{{/each}}">
+    {{#each text}}
+      {{#compare this.type 'inline' operator="=="}}
+        {{this.body}}
+      {{/compare}}
+      {{#compare this.type 'span' operator="=="}}
+        <span class="{{#each this.styleNames}}{{this}}{{/each}}">{{this.body}}</span>
+      {{/compare}}
+    {{/each}}
+  </p>
+  {{/each}}
+
+<div class="app-section">
+  <div id="cta_next" class="call-to-action app-button col-4-12 offset-4">{{cta.text}}</div>
+</div>
+
+{{/SCREEN}}

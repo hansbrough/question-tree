@@ -7,12 +7,13 @@ requirejs.config({
         'jquery':'./lib/jquery-2.2.1.min',
         'underscore':'./lib/underscore-min',
         'backbone':'./lib/backbone-min',
-        'marionette':'./lib/backbone.marionette',
+        'marionette':'./lib/backbone.marionette.min',
         'backbone.radio':'./lib/backbone.radio',
         'marionette_overrides':'./lib/backbone.marionette.overrides',
         'handlebars':'./lib/handlebars.min',
         'handlebars_helpers':'./lib/handlebars/common.helpers',
-        'mixins':'./lib/mixins'
+        'mixins':'./lib/mixins',
+        'app':'./app'
     },
     shim: {
         'backbone': {
