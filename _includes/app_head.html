@@ -13,8 +13,9 @@
   <script src="{{ site.github.url }}/assets/js/require-min.js"></script>
 
       <script>
+      var  githubPagesUrl = '{{ site.github.url }}';//TODO: correct way to pass in path to requirejs config???
       //Load common code that includes config, then load the app logic for this page.
-
+      //TODO: how can we load {{ site.github.url }} into commonjs?
       requirejs(['{{ site.github.url }}/assets/js/common.js'], function (common) {
         requirejs(['{{ site.github.url }}/assets/js/main.js']);
       });
