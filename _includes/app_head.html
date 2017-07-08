@@ -14,7 +14,7 @@
 
       <script>
       //Load common code that includes config, then load the app logic for this page.
-      requirejs(['/assets/js/main.js']);      
+      requirejs(['/assets/js/main.js']);
       </script>
 
 
@@ -22,3 +22,7 @@
   {% include google-analytics.html %}
   {% endif %}
 </head>
+
+{% for file in site.static_files %}
+{{ file.path }}
+{% endfor %}
