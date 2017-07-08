@@ -14,7 +14,10 @@
 
       <script>
       //Load common code that includes config, then load the app logic for this page.
-      requirejs(['{{ site.github.url }}/assets/js/main.js']);
+
+      requirejs(['{{ site.github.url }}/assets/js/common.js'], function (common) {
+        requirejs(['{{ site.github.url }}/assets/js/main.js']);
+      });
       </script>
 
 
