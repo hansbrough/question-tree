@@ -2,12 +2,12 @@
 //
 
 //Establish global namespace
-var SURVEY = {};
+var QUESTIONNAIRE = {};
 
 require(['app/Survey.App'],
 function(app) {
   console.log("...All files loaded.");
-  SURVEY = app;
-  //SURVEY.start();
+  QUESTIONNAIRE = app;
+  QUESTIONNAIRE.start();
 
 });

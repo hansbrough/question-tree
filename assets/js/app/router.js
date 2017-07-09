@@ -4,7 +4,7 @@ define([
 ],
 
   function(Marionette, Controller){
-    console.log('CRICKET.App Router Load');
+    //console.log('CRICKET.App Router Load');
 
     var Router = Marionette.AppRouter.extend({
         appRoutes: {

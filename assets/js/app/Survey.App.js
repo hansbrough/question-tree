@@ -17,7 +17,7 @@ define([
       eduTopic  = (_cc.eduTopic) ? _cc.eduTopic : null;
     }
 */
-    var cricketApp    = Marionette.Application.extend({
+    var _App    = Marionette.Application.extend({
       appName: appName,
       channelName: 'app',
       radioEvents: {
@@ -39,7 +39,7 @@ define([
         this.ingestCookies();
       },
       setCampaignScreen: function(){
-        //console.log("CRICKET.App"," setCampaignScreen");
+        //console.log("QUESTIONNAIRE.App"," setCampaignScreen");
         var screenObj = {campaignScreen:this.campaignScreenLUT.DEFAULT};
         if(this.cookie.state_cricket && this.cookie.state_cricket.campaign){
           screenObj.campaignScreen = this.campaignScreenLUT[this.cookie.state_cricket.campaign] || this.campaignScreenLUT.DEFAULT;
@@ -50,7 +50,7 @@ define([
       * set what screen follows survey based on cookie state
       */
       setPostSurveyScreen: function(){
-        //console.log("CRICKET.App"," setPostSurveyScreen");
+        //console.log("QUESTIONNAIRE.App"," setPostSurveyScreen");
         var screenObj = {postSurveyScreen:this.postSurveyScreenLUT.DEFAULT};
         if(this.cookie.state_cricket && this.cookie.state_cricket.land_target){
           screenObj.postSurveyScreen = this.postSurveyScreenLUT[this.cookie.state_cricket.land_target];
@@ -58,7 +58,7 @@ define([
         _.extend(this, screenObj);
       },
       setTheme: function(value){
-        //console.log("CRICKET.App"," setTheme");
+        //console.log("QUESTIONNAIRE.App"," setTheme");
         if(value && value !== ''){
           this.theme = value;
           Backbone.trigger('app:theme:set', value);
@@ -67,13 +67,13 @@ define([
     });
 
     //instantiate app
-    var CRICKET  = new cricketApp();
+    var QUESTIONNAIRE  = new _App();
 
     //Add some in house mixins
-    //CRICKET = _.extend(CRICKET, CookieManager);
+    //QUESTIONNAIRE = _.extend(QUESTIONNAIRE, CookieManager);
 
-    CRICKET.on('start', function(){
-      console.log("CRICKET"," Started");
+    QUESTIONNAIRE.on('start', function(){
+      console.log("QUESTIONNAIRE"," Started");
       Backbone.history.start();
       Backbone.trigger('app:started');
     });
@@ -82,33 +82,33 @@ define([
     Backbone.listenTo(Backbone, 'app:theme:fetched', function(name){
       //console.log("app:theme:fetched",name);
       if(name && name !== ''){
-        CRICKET.setTheme(name);
+        QUESTIONNAIRE.setTheme(name);
       }
     });
 
     Backbone.listenTo( Backbone, 'app:theme:set', function(value){
-      //console.log("CRICKET.App"," setThemeInUI");
-      CRICKET.$el.addClass('theme-'+value);
+      //console.log("QUESTIONNAIRE.App"," setThemeInUI");
+      QUESTIONNAIRE.$el.addClass('theme-'+value);
     });
 
     Backbone.listenTo( Backbone, 'render:question', function(payload){
       //update url history when new question is rendered.
       var route = payload.id.split('_');
-      CRICKET.Router.navigate('choices/'+route[0]+'/'+route[1]);
+      QUESTIONNAIRE.Router.navigate('choices/'+route[0]+'/'+route[1]);
     });
 
 /*
   App.controller('logout', function(page, options){
     options = options || {};
-    //console.log("CRICKET.App"," logout screen:",options);
+    //console.log("QUESTIONNAIRE.App"," logout screen:",options);
     var fragment = (options.forward) ? '/logout/'+options.forward : '/logout';
-    CRICKET.Router.navigate(fragment);
+    QUESTIONNAIRE.Router.navigate(fragment);
   });
 
   App.controller('introduction', function(page){
     //console.log('introduction screen');
-    CRICKET.Router.navigate('introduction');
-    CRICKET.initialize();
+    QUESTIONNAIRE.Router.navigate('introduction');
+    QUESTIONNAIRE.initialize();
   });
 
   //Life choice page controllers
@@ -116,21 +116,21 @@ define([
     //console.log('work_choices screen');
     var topic   = 'work';
 
-    CRICKET.Router.navigate('choices/'+topic);
+    QUESTIONNAIRE.Router.navigate('choices/'+topic);
     $(page).find('#cta_next').on('click', function () {
       //determine if this question just answered has a follow up question.
       //need to examine user choice and match with label config... see if it has a 'next' property. if so get value
-      //console.log("... ", CRICKET.Survey.next() );
+      //console.log("... ", QUESTIONNAIRE.Survey.next() );
     });
   });
 
   App.controller('profile', function (page) {
     //console.log('profile');
-    CRICKET.Router.navigate('profile');
+    QUESTIONNAIRE.Router.navigate('profile');
     $(page).find('#cta-next').on('click', function () {
 
     });
   });
 */
-  return CRICKET;
+  return QUESTIONNAIRE;
 });

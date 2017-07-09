@@ -1,4 +1,4 @@
-/* global App, localStorage, CRICKET, window */
+/* global App, localStorage, QUESTIONNAIRE, window */
 /*jshint bitwise: false*/
 define([
   'marionette',
@@ -10,13 +10,14 @@ define([
   function(Marionette, QuestionView, Tree, Radio){
 
     //ingest cookies if no cookie object in app yet.
+    /*
     var _setCookies = function(){
       //console.log("_setCookies");
-      if(!CRICKET.cookie.state_cricket){
-        CRICKET.ingestCookies();
+      if(!QUESTIONNAIRE.cookie.state_cricket){
+        QUESTIONNAIRE.ingestCookies();
       }
     };
-
+    */
     //set timestamp of last login request
     var lastAuthTime = null;
     var _setLastAuthTime = function(){
@@ -30,11 +31,11 @@ define([
       var currTime  = new Date().getTime(),
           ttl,
           throttle;
-      if(!CRICKET.cookie.state_cricket || !lastAuthTime){
+      if(!QUESTIONNAIRE.cookie.state_cricket || !lastAuthTime){
         throttle = false;
       }else{
         //throttle if curr time is less than lastAuthTime + ttl
-        ttl = CRICKET.cookie.state_cricket.ttl
+        ttl = QUESTIONNAIRE.cookie.state_cricket.ttl
         throttle = (currTime <= lastAuthTime + ttl);
       }
       //console.log("...throttle:",throttle);
@@ -98,10 +99,10 @@ define([
       },
       initializeSurveyViews: function(){
         console.info('initializeSurveyViews');
-        if(!CRICKET.Survey){
+        if(!QUESTIONNAIRE.Survey){
           //initialize the Decision Tree
           //todo:find better way to reference the parent application object - not by instantiated name
-          CRICKET.Survey = new Tree({
+          QUESTIONNAIRE.Survey = new Tree({
             defaultScreen:'opening',
             //graph_name:'ucsf_ckd_graph',//optional
             //question_set_name:'ucsf_ckd_questions',//optional
@@ -109,8 +110,8 @@ define([
           });
         }
         if( !this.views.QuestionView ){
-          this.views.QuestionView = new QuestionView({el:'[data-component=survey]', defaultNextSection:CRICKET.postSurveyScreen});
-          this.views.HeadingView = new HeadingView({el:'[data-component=survey]', defaultModule:'opening'});
+          this.views.QuestionView = new QuestionView({el:'[data-component=survey]', defaultNextSection:QUESTIONNAIRE.postSurveyScreen});
+          //this.views.HeadingView = new HeadingView({el:'[data-component=survey]', defaultModule:'opening'});
         }else{
           Backbone.trigger('survey:reloaded', {});
         }
@@ -133,31 +134,30 @@ define([
 
           this.routeHandler.call(this,
             function(){
-              _setLastAuthTime();
-              _setCookies();
-              if(!this.cricketAuthInProgress){
+              //_setLastAuthTime();
+              //_setCookies();
+              //if(!this.cricketAuthInProgress){
                 //console.log("......cricketAuth Not InProgress");
                 //goto: 1. unfinished survey 2. email campaign 3. land target feature switch
-                if(CRICKET.cookie.state_cricket){
-                  var campaign        = CRICKET.cookie.state_cricket.campaign,
-                      surveyComplete  = !!CRICKET.cookie.state_cricket.survey;
-                  //console.log("survey:",!!CRICKET.cookie.state_cricket.survey," campaign:",CRICKET.cookie.state_cricket.campaign," land_target:",CRICKET.cookie.state_cricket.land_target);
-                  if(surveyComplete && !campaign){
-                    CRICKET.setPostSurveyScreen();
-                    CRICKET.Router.navigate('/'+CRICKET.postSurveyScreen, {trigger: true});
-                  }else if(surveyComplete && campaign){
-                    CRICKET.setCampaignScreen();
-                    CRICKET.Router.navigate('/'+CRICKET.campaignScreen, {trigger: true});
-                  }else{
-                    //console.log('cookie says...survey not complete');
-                    CRICKET.Router.navigate('/introduction', {trigger: true});
-                  }
-                }
-              }else{
+                //if(QUESTIONNAIRE.cookie.state_cricket){
+                /*
+                  var campaign        = QUESTIONNAIRE.cookie.state_cricket.campaign,
+                      surveyComplete  = !!QUESTIONNAIRE.cookie.state_cricket.survey;
+                */
+                  //console.log("survey:",!!QUESTIONNAIRE.cookie.state_cricket.survey," campaign:",QUESTIONNAIRE.cookie.state_cricket.campaign," land_target:",QUESTIONNAIRE.cookie.state_cricket.land_target);
+                  //if(surveyComplete){
+                    //QUESTIONNAIRE.setPostSurveyScreen();
+                    //QUESTIONNAIRE.Router.navigate('/'+QUESTIONNAIRE.postSurveyScreen, {trigger: true});
+                  //}else{
+                    console.log('cookie says...survey not complete');
+                    QUESTIONNAIRE.Router.navigate('/introduction', {trigger: true});
+                  //}
+                //}
+              //}else{
                 //don't run index route until authenticated
                 //console.log("don't run index route just yet");
                 //this.queue.add('index');
-              }
+              //}
             }.bind(this)
           );
 
@@ -174,18 +174,18 @@ define([
       */
       routeHandler: function(fn){
         //console.log("routeHandler ",fn);
-        if( this.getJwtIsCurrent() ){
-          if( !_requestShouldBeThrottled() ){
+        //if( this.getJwtIsCurrent() ){
+          /*if( !_requestShouldBeThrottled() ){
             this.POST({
               url:'/account/login',
               cb:fn
             });
-          }else{
+          }else{*/
             fn();
-          }
-        }else{
-          App.load('logout');
-        }
+          //}
+        //}else{
+          //App.load('logout');
+        //}
       },
       /*
       * route handler always loads intro page but only inits views if user authenticated.
@@ -198,7 +198,7 @@ define([
         //this.routeHandler.call(this,
           //function(){
             //_setLastAuthTime();
-            CRICKET.setPostSurveyScreen();
+            QUESTIONNAIRE.setPostSurveyScreen();
             //App.load('introduction');
             this.initializeSurveyViews();
           //}.bind(this)
@@ -249,7 +249,7 @@ define([
       question: function(topic, idx){
         //console.log("BB Question route handler:",topic,' : ', idx);
         //var qid = topic+'_'+idx;
-        CRICKET.Survey.find(topic, idx);
+        QUESTIONNAIRE.Survey.find(topic, idx);
       }
     });
 

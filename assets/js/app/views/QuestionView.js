@@ -1,6 +1,6 @@
 /*global _cc */
 
-/* global CRICKET, window, localStorage, _platform, navigator */
+/* global QUESTIONNAIRE, window, localStorage, _platform, navigator */
 /*
 * Search Results View
 * includes handler logic for all dom nodes
@@ -57,14 +57,14 @@ define([
           this.defaultNextSection = options.defaultNextSection;
 
           //pick template based on app name and store
-          var appResultsTmpl = (CRICKET.appName === 'cm') ? careResultsTmpl : hopeResultsTmpl;
+          var appResultsTmpl = (QUESTIONNAIRE.appName === 'cm') ? careResultsTmpl : hopeResultsTmpl;
           Marionette.TemplateCache.storeTemplate('results', appResultsTmpl);
           Marionette.TemplateCache.storeTemplate('intro', hopeIntroTmpl);
 
-          this.requestCriterionDisplayNameLUT();
-          this.requestCriterionModalityLUT();
+          //this.requestCriterionDisplayNameLUT();
+          //this.requestCriterionModalityLUT();
           //note: once hope / care apps are distinct this app sniffing code like this can go away.
-          if (CRICKET.appName === 'hope'){
+          if (QUESTIONNAIRE.appName === 'hope'){
             this.requestIntroduction();
           }
           this.requestExitTemplate();
@@ -193,7 +193,7 @@ define([
             var answerSet = makeAnswersPayloadFunc(questionSetId);
             if(answerSet.length > 0 ){//(1)
               payload = {
-                surveyId: CRICKET.Survey.getId(),
+                surveyId: QUESTIONNAIRE.Survey.getId(),
                 questionSet: questionSetId,
                 answerType: this.mapQuestionTypeToAnswerType(questionSet.type),
                 answers: answerSet
@@ -207,7 +207,7 @@ define([
           e.preventDefault();
           this.direction = STR_BACK;
           this.persist($(e.target));
-          CRICKET.Survey.prev();
+          QUESTIONNAIRE.Survey.prev();
         },
         /*
         * Finish button appears on the last screen
@@ -219,15 +219,15 @@ define([
               href    = $target.attr('href');
 
           this.persist($target);
-          var surveyUri  = 'survey://'+CRICKET.Survey.getId();
+          var surveyUri  = 'survey://'+QUESTIONNAIRE.Survey.getId();
           this.direction = STR_NEXT;
           this.logEvent('surveyComplete', surveyUri, {'userAgent': navigator.userAgent});
-          CRICKET.setCookie('state_cricket',{'survey':1});
+          QUESTIONNAIRE.setCookie('state_cricket',{'survey':1});
           //lastly - go to screen specified in target or fallback to the discuss screen.
           if(href){
             window.location.href = href;
           }else{
-            CRICKET.Router.navigate('/discuss', {trigger: true});
+            QUESTIONNAIRE.Router.navigate('/discuss', {trigger: true});
           }
         },
         /*
@@ -243,7 +243,7 @@ define([
           e.preventDefault();
           this.direction = STR_NEXT;
           this.persist($(e.target));
-          CRICKET.Survey.next(config);
+          QUESTIONNAIRE.Survey.next(config);
         },
         handleInputChange: function(e){
           //console.log("QuestionView"," handleInputChange ");
@@ -408,10 +408,10 @@ define([
           return answerType;
         },
         persist: function($target){
-          //console.log('persist: ',CRICKET.Survey.getCurrentQuestion());
+          //console.log('persist: ',QUESTIONNAIRE.Survey.getCurrentQuestion());
           var account_url = '/survey/answers',
               token       = localStorage.getItem('idToken') || null,
-              questionSet = CRICKET.Survey.getCurrentQuestion(),
+              questionSet = QUESTIONNAIRE.Survey.getCurrentQuestion(),
               payload;
 
           //not all screens will have questions / answers that need to be persisted e.g. final results page.
@@ -454,7 +454,7 @@ define([
                   }
                 });
               }
-              this.logEvents(events);
+              //this.logEvents(events);
             }else{
               console.info('no persist request made due to empty payload.');
             }
@@ -544,7 +544,7 @@ define([
         requestExitTemplate: function(){
           //console.log("requestExitTemplate");
           var token   =  localStorage.getItem('idToken'),
-              api_url = '/survey/template/survey_exit';
+              api_url = '/assets/js/app/templates/survey_exit.tmpl';
 
           $.ajax({
                 url: api_url,

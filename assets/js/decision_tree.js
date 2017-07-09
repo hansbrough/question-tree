@@ -1,5 +1,5 @@
 // Define an AMD module
-// Survey Mixin
+// Survey Decision Tree Logic
 
 define(['underscore', 'backbone'],
   function (_, Backbone) {
@@ -21,7 +21,7 @@ define(['underscore', 'backbone'],
 
     Survey.prototype = {
       initialize: function(options){
-        //console.log('Survey initialize: ',options);
+        console.log('Survey initialize: ',options);
         var graphName = options.graph_name || null,
             questionSetName = options.question_set_name || null;
         this.token = options.token || null;
@@ -32,8 +32,8 @@ define(['underscore', 'backbone'],
         this.requestQuestions(questionSetName);
 
         //listen for custom events
-        Backbone.listenTo( Backbone, 'graph:set', this.requestAnswers );
-        Backbone.listenTo( Backbone, 'answers:set', this.merge );
+        //Backbone.listenTo( Backbone, 'graph:set', this.requestAnswers );
+        //Backbone.listenTo( Backbone, 'answers:set', this.merge );
       },
       //return question (object) by a given id
       findModuleIdByQid: function(qid){
@@ -276,32 +276,36 @@ define(['underscore', 'backbone'],
         return question;
       },
       requestGraph: function(config_name){
-        //console.log('Survey requestGraph');
-        config_name = config_name || '';
+        console.log('Survey requestGraph');
+        config_name = config_name || 'index.js';
         var token   =  this.token,
-            api_url = '/survey/graph/'+config_name;
-
+            api_url = '/data/graph/'+config_name;
+        console.log("...config_name:",config_name);
         $.ajax({
               url: api_url,
               type: 'GET',
               xhrFields: {
                 withCredentials: true
               },
+              dataType: 'json',
+              contentType: "application/json; charset=utf-8",
               headers: {
                 'Authorization': 'Bearer '+ token
               }
             }).done( this.setGraph );
       },
       requestQuestions: function(config_name){
-        config_name = config_name || '';
+        config_name = config_name || 'index.js';
         var token   =  this.token,
-            api_url = '/survey/questions/'+config_name;
+            api_url = '/data/questions/'+config_name;
         $.ajax({
               url: api_url,
               type: 'GET',
               xhrFields: {
                 withCredentials: true
               },
+              dataType: 'json',
+              contentType: "application/json; charset=utf-8",
               headers: {
                 'Authorization': 'Bearer '+ token
               }
@@ -367,8 +371,8 @@ define(['underscore', 'backbone'],
         }
       },
       setGraph: function(resp){
-        //console.log("setGraph:",resp);
-        this.graph = resp.data || {};
+        console.log("setGraph:",resp);
+        this.graph = resp.data || resp || {};
         this.modules = _.without( _.keys(this.graph), 'meta');//todo:run this in response to a custom event
         Backbone.trigger('graph:set', {});
       },
@@ -385,9 +389,9 @@ define(['underscore', 'backbone'],
         return this.history;
       },
       setQuestions: function(resp){
-        //console.log('setQuestions:',resp);
-        //console.log("... this: ",this);
-        this.questions = resp.data || {};
+        console.log('setQuestions:',resp);
+        this.questions = resp.data || resp || {};
+        console.log("... this: ",this);
       },
       setEducationModules: function(modules){//deprecated in v3+
         this.eduModules = modules;
