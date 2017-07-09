@@ -371,7 +371,7 @@ define(['underscore', 'backbone'],
         }
       },
       setGraph: function(resp){
-        console.log("setGraph:",resp);
+        //console.log("setGraph:",resp);
         this.graph = resp.data || resp || {};
         this.modules = _.without( _.keys(this.graph), 'meta');//todo:run this in response to a custom event
         Backbone.trigger('graph:set', {});
@@ -389,12 +389,9 @@ define(['underscore', 'backbone'],
         return this.history;
       },
       setQuestions: function(resp){
-        console.log('setQuestions:',resp);
+        //console.log('setQuestions:',resp);
         this.questions = resp.data || resp || {};
-        console.log("... this: ",this);
-      },
-      setEducationModules: function(modules){//deprecated in v3+
-        this.eduModules = modules;
+        //console.log("... this: ",this);
       },
       /*
       * Update an individual question (within a set/screen)
