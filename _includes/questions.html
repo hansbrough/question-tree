@@ -1,3 +1,29 @@
-<div class="question-container">
-  A question.
+<div class="app-page introduction grapevine" data-page="introduction">
+  {{> components/top-bar logo=true menu=true}}
+
+  <div class="app-content grid">
+
+    <div class="content-wrapper col-10-12 offset-1 opening" data-component="survey">
+
+      <h2 class="medium-large weight-medium lifestyle title top dot shape with-clear-back">Welcome to Prickly Pair</h2>
+      {{> components/progress-bar variety='collapsed' initial_value=5 background='salmon'}}
+
+      <div id="lifestyleChoice" class="small-large lifestyle-choice opening grapevine">
+
+        <p class="overview weight-book">
+          Prickly Pair is an online community dedicated to helping people learn about cacti, succulents and other waterwise plants.
+        </p>
+        <p class="overview weight-book">
+          To get started, we have a couple of questions that will help us personalize your experience. This survey is confidential and will only take about 2 minutes.
+        </p>
+
+        <div class="app-section">
+          <div id="cta_next" class="call-to-action app-button col-4-12 offset-4">Continue</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="charcoal fade"></div>
 </div>

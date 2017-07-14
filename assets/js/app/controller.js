@@ -247,7 +247,7 @@ define([
         App.load('logout', {forward:forward});
       },
       question: function(topic, idx){
-        //console.log("BB Question route handler:",topic,' : ', idx);
+        console.log("BB Question route handler:",topic,' : ', idx);
         //var qid = topic+'_'+idx;
         QUESTIONNAIRE.Survey.find(topic, idx);
       }

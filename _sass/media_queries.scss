@@ -1,0 +1,81 @@
+/* define supported screen sizes */
+
+$iphone5-width: 320px;
+$galaxyS-width: 360px;
+$iphone6-width: 375px;
+$iphone6plus-width: 414px;
+$tablet-min-width: 768px;
+$tablet-max-width: 1024px;
+$desktop-width: 1024px;
+$desktop-md-width: 1180px;
+$desktop-lg-width: 1440px;
+$thunderbolt-width: 2560px;
+
+@mixin iphone5 {
+  @media (max-width: $iphone5-width) {
+    @content;
+  }
+}
+
+@mixin galaxyS {
+  @media (max-width: $galaxyS-width) {
+    @content;
+  }
+}
+
+@mixin iphone6 {
+  @media (max-width: $iphone6-width) {
+    @content;
+  }
+}
+
+@mixin iphone6plus {
+  @media (max-width: $iphone6plus-width) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (max-width: $tablet-min-width) {
+    @content;
+  }
+}
+
+@mixin ipad_1_2 {
+  @media only screen
+    and (min-device-width: $tablet-min-width)
+    and (max-device-width: $tablet-max-width)
+    and (-webkit-min-device-pixel-ratio: 1) {
+      @content;
+  }
+}
+
+@mixin desktop-sm {
+  @media (max-width: $desktop-width) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: $desktop-width) {
+    @content;
+  }
+}
+
+@mixin desktop-md {
+  @media (max-width: $desktop-md-width) {
+    @content;
+  }
+}
+
+@mixin desktop-lg {
+  @media (max-width: $desktop-lg-width) {
+    @content;
+  }
+}
+
+@mixin desktop-xlg {
+  @media (max-width: $thunderbolt-width) {
+    @content;
+  }
+}

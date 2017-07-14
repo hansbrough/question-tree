@@ -48,8 +48,6 @@ define([
         criterionDisplayNameLUT:null,
         initialize: function(options){
           //_.extend(this, new ClientEventLogger() );
-
-
           console.log('QuestionView init:',options);
           console.log('... $el:',this.$el);
           this.collection = new Collection();
@@ -87,7 +85,7 @@ define([
         * determine ranking of criterion based on user answers
         */
         calculateResultCriteria: function(){
-          //console.info('calculateResultCriteria');
+          console.info('calculateResultCriteria');
           var recordSet = [],
               criteria = {};
           //create criterion count
@@ -117,8 +115,8 @@ define([
         * 4. previous item which has previously been rendered.
         */
         determineRenderSource: function(model){
-          //console.log("QuestionView"," determineRenderSource: ",model);
-          //console.log("...module name:",model.get('module'));
+          console.log("QuestionView"," determineRenderSource: ",model);
+          console.log("...module name:",model.get('module'));
           var changedProps = _.keys(model.changed),
               isFinalScreen = model.get('last');
 
@@ -143,7 +141,7 @@ define([
         * ensure that a 'unique' input is not selected with any other inputs from the same control group.
         */
         enforceCheckboxUniqueness: function($target, $inputs){
-          //console.log("enforceCheckboxUniqueness");
+          console.log("enforceCheckboxUniqueness");
           var i, $currInput;
           if( $target.attr('type') === 'checkbox' ){
             if( $target.attr('data-unique') && $target.prop('checked') ){//unselect sibling inputs
@@ -165,7 +163,7 @@ define([
           }
         },
         getCriterionDisplayName: function(name){
-          //console.info("getCriterionDisplayNameL ",name);
+          console.info("getCriterionDisplayNameL ",name);
           var displayName = '';//should we have some default text for troubleshooting?
           if(name && this.criterionDisplayNameLUT){
             displayName = this.criterionDisplayNameLUT[name];
@@ -173,7 +171,7 @@ define([
           return displayName;
         },
         getInputs: function($target){
-          //console.log('getSelectedLabels:',$target);
+          console.log('getSelectedLabels:',$target);
           return $target.closest('.control-group').find('input');
         },
         /*
@@ -182,7 +180,7 @@ define([
         * return null value if answerSet is empty(1)
         */
         getQuestionSetPayload: function(questionSet){
-          //console.log("getQuestionSetPayload: ", questionSet);
+          console.log("getQuestionSetPayload: ", questionSet);
           var payload = null,
               questionSetId,
               makeAnswersPayloadFunc;
@@ -203,22 +201,22 @@ define([
           return payload;
         },
         handleBackButtonClick: function(e){
-          //console.log("handleBackButtonClick");
+          console.log("handleBackButtonClick");
           e.preventDefault();
           this.direction = STR_BACK;
-          this.persist($(e.target));
+          //this.persist($(e.target));
           QUESTIONNAIRE.Survey.prev();
         },
         /*
         * Finish button appears on the last screen
         */
         handleFinishButtonClick: function(e){
-          //console.log("QuestionView"," handleFinishButtonClick");
+          console.log("QuestionView"," handleFinishButtonClick");
           e.preventDefault();
           var $target = $(e.target),
               href    = $target.attr('href');
 
-          this.persist($target);
+          //this.persist($target);
           var surveyUri  = 'survey://'+QUESTIONNAIRE.Survey.getId();
           this.direction = STR_NEXT;
           this.logEvent('surveyComplete', surveyUri, {'userAgent': navigator.userAgent});
@@ -235,18 +233,18 @@ define([
         * conditionally send config values to decision tree. used to determine question path.
         */
         handleNextButtonClick: function(e){
-          //console.log("handleNextButtonClick");
+          console.log("handleNextButtonClick");
           var config = {};
           if(_.isNumber(this.selectedRadioInputIdx)){
             config.labelIdx = this.selectedRadioInputIdx;
           }
           e.preventDefault();
           this.direction = STR_NEXT;
-          this.persist($(e.target));
+          //this.persist($(e.target));
           QUESTIONNAIRE.Survey.next(config);
         },
         handleInputChange: function(e){
-          //console.log("QuestionView"," handleInputChange ");
+          console.log("QuestionView"," handleInputChange ");
           var $target = $(e.target),
               $checkedInputs = $target.closest('.control-group').find('input:checked'),
               $inputs = this.getInputs($target),
@@ -263,7 +261,7 @@ define([
           }
         },
         handleReload: function(){
-          //console.log("QuestionView"," handleReload ");
+          console.log("QuestionView"," handleReload ");
           this.$el = $(CSS_PARENT);
 
           this.delegateEvents();
@@ -280,13 +278,13 @@ define([
         * determine if question is of a type that should be saved.
         */
         isPersistable: function(question){
-          //console.log("isPersistable: ",question);
+          console.log("isPersistable: ",question);
           var candidate     = (question && question.type) ? question.type : 'unknown',
               questionTypes = {radio:true,checkbox:true,textarea:true,summary:false};
           return questionTypes[candidate];
         },
         labelsInGroupHaveSameQID: function($inputs){
-          //console.log("labelsInGroupHaveSameQID");
+          console.log("labelsInGroupHaveSameQID");
           var qids = [];
           $inputs.each( function(idx, node){
             if(qids.indexOf(node.id) < 0){
@@ -300,7 +298,7 @@ define([
         * return the correct function to create a answers payload based on question type.
         */
         getAnswersPayloadFunc: function(questionType){
-          //console.log("getAnswersPayloadFunc: ",questionType);
+          console.log("getAnswersPayloadFunc: ",questionType);
           var func;
           switch(questionType){
             case 'radio':
@@ -319,7 +317,7 @@ define([
         * add answerId if exists (question answered previously)
         */
         makeAnswersPayloadFromCollectionModel: function(questionSetId){
-          //console.log("makeAnswersPayloadFromCollectionModel: ",questionSetId);
+          console.log("makeAnswersPayloadFromCollectionModel: ",questionSetId);
           var questionSetResults = [],
               model = this.collection.findWhere({'id':questionSetId}),
               labels = model.get('labels');
@@ -337,7 +335,7 @@ define([
           return questionSetResults;
         },
         makeTextAnswersPayloadFromCollectionModel: function(questionSetId){
-          //console.log("makeTextAnswersPayloadFromCollectionModel: ",questionSetId);
+          console.log("makeTextAnswersPayloadFromCollectionModel: ",questionSetId);
           var model = this.collection.findWhere({'id':questionSetId});
           return [{
             qid:model.get('qid'),
@@ -346,7 +344,7 @@ define([
           }];
         },
         makePayloadOfInputSet: function($inputs){
-          //console.log("makePayloadOfInputSet: ",$inputs);
+          console.log("makePayloadOfInputSet: ",$inputs);
           var payload = [],
               isYesNo = this.labelsInGroupHaveSameQID($inputs);
 
@@ -376,7 +374,7 @@ define([
           return payload;
         },
         makePayloadOfTextArea: function($textarea){
-          //console.log('makePayloadOfTextArea: ',$textarea);
+          console.log('makePayloadOfTextArea: ',$textarea);
           var payload = {
             questionId: $textarea.attr('id').split('_')[1],
             questionSet: $textarea.attr('name'),
@@ -389,7 +387,7 @@ define([
         * translate type of questions found in a question set to a string format expected by endpoint.
         */
         mapQuestionTypeToAnswerType: function(questionType){
-          //console.log("QuestionView"," mapQuestionTypeToAnswerType ",questionType);
+          console.log("QuestionView"," mapQuestionTypeToAnswerType ",questionType);
           var answerType;
           switch(questionType){
             case 'radio':
@@ -464,7 +462,7 @@ define([
         * display a screen of questions OR the final results screen.
         */
         render: function(model, options){
-          //console.log("QuestionView ","render");
+          console.log("QuestionView ","render");
           options = options || {};
           var payload           = model.toJSON(),
               nxtQuestionSetId  = payload.id,
@@ -472,7 +470,7 @@ define([
               prevQuestionSetId = payload.previous,
               templateFunc      = (payload.last)? Marionette.TemplateCache.get('#results') : this.template,
               markup;
-          //console.log("... payload: ",payload);
+          console.log("... payload: ",payload);
           //conditionally override w/an org specific results template
           if(payload.last && Marionette.TemplateCache.templateCaches['#org_survey_results']){
             templateFunc = Marionette.TemplateCache.get('#org_survey_results');
@@ -500,11 +498,11 @@ define([
           Backbone.trigger('render:question',payload);//notify listeners that a new question has been rendered.
         },
         renderIntroduction: function(data){
-          //console.log("renderIntroduction:",data);
+          console.log("renderIntroduction:",data);
           this.$el.find('.'+CSS_INTRO).html( Marionette.TemplateCache.get('#intro')({SCREEN: data}) );
         },
         requestCriterionModalityLUT: function(config_name){
-          //console.log("QuestionView"," requestCriterionModalityLUT");
+          console.log("QuestionView"," requestCriterionModalityLUT");
           config_name = config_name || 'ckd_criteria_modality';
           var api_url   = '/survey/lut/'+config_name,
               token     = localStorage.getItem('idToken') || null;
@@ -523,7 +521,7 @@ define([
               });
         },
         requestCriterionDisplayNameLUT: function(config_name){
-          //console.log("QuestionView"," requestCriterionDisplayNameLUT");
+          console.log("QuestionView"," requestCriterionDisplayNameLUT");
           config_name = config_name || 'ckd_criteria_name';
           var api_url   = '/survey/lut/'+config_name,
               token     = localStorage.getItem('idToken') || null;
@@ -542,7 +540,7 @@ define([
               });
         },
         requestExitTemplate: function(){
-          //console.log("requestExitTemplate");
+          console.log("requestExitTemplate");
           var token   =  localStorage.getItem('idToken'),
               api_url = '/assets/js/app/templates/survey_exit.tmpl';
 
@@ -563,7 +561,7 @@ define([
               });
         },
         requestIntroduction: function(){
-          //console.log("QuestionView"," requestIntroduction");
+          console.log("QuestionView"," requestIntroduction");
           var token   =  localStorage.getItem('idToken'),
               api_url = '/survey/introduction';
 
@@ -587,13 +585,13 @@ define([
           $('body').animate({'scrollTop':0},'slow');
         },
         setCriterionDisplayNameLUT: function(value){
-          //console.log("setCriterionDisplayNameLUT: ",value);
+          console.log("setCriterionDisplayNameLUT: ",value);
           if(value){
             this.criterionDisplayNameLUT = value;
           }
         },
         setCriterionModalitiesLUT: function(value){
-          //console.log("setCriterionModalitiesNameLUT: ",value);
+          console.log("setCriterionModalitiesNameLUT: ",value);
           if(value){
             this.criterionModalitiesLUT = value;
           }
@@ -602,12 +600,12 @@ define([
         * if radio btn selected save it's index 0 based index within the radio btn group.
         */
         setSelectedRadioInputIndex: function($inputs){
-          //console.log('setSelectedRadioInputIndex: ',$inputs);
+          console.log('setSelectedRadioInputIndex: ',$inputs);
           var $selected = $inputs.filter(':checked');
           this.selectedRadioInputIdx = ($selected.length === 1 && $selected.attr('type') === 'radio') ? $inputs.index($selected): null;
         },
         toggleCtaBtn: function($target, valid){
-          //console.log('toggleCtaBtn',$target, valid);
+          console.log('toggleCtaBtn',$target, valid);
           var $ctaBtn = $target.closest('.'+CSS_CHOICE).find('.call-to-action');
           if(valid){
             $ctaBtn.removeClass(CSS_DISABLED);
@@ -616,7 +614,7 @@ define([
           }
         },
         transitionNext: function(currentId, nextId){
-          //console.log("transitionNext: ",currentId,"  ",nextId);
+          console.log("transitionNext: ",currentId,"  ",nextId);
           var $current  = this.$el.find('.'+CSS_CHOICE+'.' + currentId),
               $next     = this.$el.find('.'+CSS_CHOICE+'.' + nextId);
           //console.log("...$current:",$current);
@@ -627,7 +625,7 @@ define([
 
         },
         transitionNextExisting: function(question){
-          //console.log("transitionNextExisting: ",question);
+          console.log("transitionNextExisting: ",question);
           var nextId    = question.id,
               $current  = this.$el.find('.'+CSS_CURRENT),
               $next     = this.$el.find('.'+CSS_CHOICE+'.' + nextId);

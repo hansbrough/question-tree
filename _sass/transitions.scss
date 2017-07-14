@@ -1,0 +1,154 @@
+/*
+ * Common Transitions
+ *
+ */
+
+ .moveToLeft {
+ 	-webkit-animation: moveToLeft 1.6s ease both;
+ 	animation: moveToLeft 1.6s ease both;
+ 	position: absolute;
+ 	width: 100%;
+ }
+
+ .moveFromLeft {
+ 	-webkit-animation: moveFromLeft .6s ease both;
+ 	animation: moveFromLeft .6s ease both;
+
+  @include ipad_1_2 {
+    /* fixes ocassionally disappearing elements on older ios / safari */
+    transform: translate3d(0, 0, 0);
+  }
+ }
+
+ .moveToRight {
+ 	-webkit-animation: moveToRight .6s ease both;
+ 	animation: moveToRight .6s ease both;
+
+    &.offscreen {
+      position: absolute;
+      width: 100%;
+    }
+ }
+
+ .moveFromRight {
+ 	-webkit-animation: moveFromRight 1.6s ease both;
+ 	animation: moveFromRight 1.6s ease both;
+
+  @include ipad_1_2 {
+    /* fixes ocassionally disappearing elements on older ios / safari */
+    transform: translate3d(0, 0, 0);
+  }
+ }
+
+ .moveToTop {
+ 	-webkit-animation: moveToTop .6s ease both;
+ 	animation: moveToTop .6s ease both;
+ }
+
+ .fade-out {
+   -webkit-animation: fadeout .5s ease both;
+ 	 animation: fadeout .5s ease both;
+   transform: translate3d(0, 0, 0);
+ }
+
+ .fade-in {
+   -webkit-animation: fadein .5s ease both;
+ 	 animation: fadein .5s ease both;
+   transform: translate3d(0, 0, 0);
+ }
+
+ .pulse {
+   -webkit-animation: pulse .5s ease both;
+ 	 animation: pulse .5s ease both;
+ }
+
+ /********************************* keyframes **************************************/
+
+ /* move from / to  */
+
+ @-webkit-keyframes moveToLeft {
+ 	from { }
+ 	to { -webkit-transform: translateX(-200%); }
+ }
+ @keyframes moveToLeft {
+ 	from { }
+ 	to { -webkit-transform: translateX(-200%); transform: translateX(-200%); }
+ }
+
+ @-webkit-keyframes moveFromLeft {
+ 	from { -webkit-transform: translateX(-100%); }
+ }
+ @keyframes moveFromLeft {
+ 	from { -webkit-transform: translateX(-100%); transform: translateX(-100%); }
+ }
+
+ @-webkit-keyframes moveToRight {
+ 	from { }
+ 	to { -webkit-transform: translateX(100%); }
+ }
+ @keyframes moveToRight {
+ 	from { }
+ 	to { -webkit-transform: translateX(100%); transform: translateX(100%); }
+ }
+
+ @-webkit-keyframes moveFromRight {
+ 	from { -webkit-transform: translateX(200%); }
+ }
+ @keyframes moveFromRight {
+ 	from { -webkit-transform: translateX(200%); transform: translateX(200%); }
+ }
+
+ @-webkit-keyframes moveToTop {
+ 	from { }
+ 	to { -webkit-transform: translateY(-100%); }
+ }
+ @keyframes moveToTop {
+ 	from { }
+ 	to { -webkit-transform: translateY(-100%); transform: translateY(-100%); }
+ }
+
+ /* fade */
+
+ @-webkit-keyframes fadeout {
+ 	from { }
+ 	to { opacity: 0; }
+ }
+ @keyframes fadeout {
+ 	from { }
+ 	to { opacity: 0; }
+ }
+
+ @-webkit-keyframes fadein {
+ 	from { }
+ 	to { opacity: 1; }
+ }
+ @keyframes fadein {
+ 	from { }
+ 	to { opacity: 1; }
+ }
+
+ /* pulse */
+
+ @-webkit-keyframes pulse {
+   0% {
+     opacity: 1;
+   }
+   50% {
+     opacity: .25;
+   }
+   100% {
+     opacity: 1;
+   }
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: .25;
+  }
+  100% {
+    opacity: 1;
+  }
+}
