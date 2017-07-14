@@ -1,10 +1,11 @@
 {
-  "feelings_1":{
-    "title":"Your kidney health is important. How confident are you in your understanding of your kidney health?",
+  "botany_1":{
+    "title":"Agaves are a member of which genus?",
     "labels":[
-      {"title":"Confident", "qid":"45", "subtype":"likert", "level":"agree"},
-      {"title":"I'm not sure", "qid":"46", "subtype":"likert", "level":"neutral"},
-      {"title":"Worried", "qid":"47", "subtype":"likert", "level":"disagree"}
+      {"title":"Macrocot", "qid":"44"},
+      {"title":"Monocot", "qid":"45"},
+      {"title":"Dicot", "qid":"46"},
+      {"title":"Endocot", "qid":"47"}
     ],
     "type":"radio"
   },

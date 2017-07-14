@@ -1,0 +1,105 @@
+/*
+ * Common Font Properties
+ * uses the font mixins
+ */
+
+//fonts
+$fontFamily: AvenirLTStd-Medium, Helvetica Neue, Helvetica, Arial;
+$fontFamilyBold: AvenirLTStd-Heavy, Helvetica Neue, Helvetica, Arial;
+$fontFamilyBook: AvenirLTStd-Book, Helvetica Neue, Helvetica, Arial;
+$fontFamilyRoman: AvenirLTStd-Roman, Helvetica Neue, Helvetica, Arial;
+$fontFamilyBlack: AvenirLTStd-Black, Helvetica Neue, Helvetica, Arial;
+
+//Size
+.xx-small {
+  @include font-xx-small();
+}
+
+.x-small {
+  @include font-x-small();
+}
+
+.small {
+  @include font-small();
+}
+
+.medium {
+  @include font-medium();
+}
+
+.small-large {
+  @include font-small-large();
+}
+
+.medium-large {
+  @include font-medium-large();
+}
+
+.large {
+  @include font-large();
+}
+
+.big-large {
+  @include font-big-large();
+}
+
+.x-large {
+  @include font-x-large();
+}
+
+.xx-large {
+  @include font-xx-large();
+}
+
+.xxx-large {
+  @include font-xxx-large();
+}
+
+.gigantic {
+  @include font-gigantic();
+}
+
+//weight
+
+.thin {
+  @include font-thin();
+}
+
+.narrow {
+  @include font-narrow();
+}
+
+.thick {
+  @include font-thick();
+}
+
+//color
+
+.on-dark-background {
+  color:#fff;
+}
+
+.on-light-background {
+  color:#333;
+}
+
+//Font Family Types
+.weight-book {
+  font-family: $fontFamilyBook
+}
+
+.weight-medium {
+  font-family: $fontFamily;
+}
+
+.weight-small {
+  font-family: $fontFamilyRoman;
+}
+
+.weight-heavy {
+  font-family: $fontFamilyBold;
+}
+
+.weight-black {
+  font-family: $fontFamilyBlack;
+}

@@ -1,0 +1,369 @@
+/* basic mixins */
+@mixin transition($args) {
+  -webkit-transition: $args;
+  -moz-transition: $args;
+  -ms-transition: $args;
+  -o-transition: $args;
+  transition: $args;
+}
+
+@mixin appearance($args){
+  -webkit-appearance: $args;
+  -moz-appearance:$args;
+  appearance: $args;
+}
+
+@mixin transform($args) {
+  -webkit-transform: $args;
+  -moz-transform: $args;
+  -ms-transform: $args;
+  -o-transform: $args;
+  transform: $args;
+}
+
+@mixin progressbar-background-value($color){
+  &::-webkit-progress-value {
+    background:$color;
+  }
+
+  &::-moz-progress-bar {
+    background:$color;
+  }
+
+  &::-ms-fill {
+    background-color:$color;
+  }
+}
+
+/* shapes */
+//small, simple, triangle arrow
+@mixin arrow-up($size, $colorHex) {
+  width: 0;
+  height: 0;
+  border-left: $size solid transparent;
+  border-right: $size solid transparent;
+  border-bottom: $size solid $colorHex;
+}
+//up arrow with wings
+@mixin arrow-up-fancy($size, $colorHex, $thickness, $right:0, $top:0) {
+  border-color: $colorHex;
+  border-image: none;
+  border-style: solid;
+  border-width: 0 $thickness $thickness 0;
+  content: "";
+  display:block;
+  height: $size;
+  position: relative;
+  right: $right;
+  top: $top;
+  transform: rotate(-135deg);
+  width: $size;
+}
+@mixin arrow-down($size, $colorHex, $thickness, $right:-45%, $top:0) {
+  border-color: $colorHex;
+  border-image: none;
+  border-style: solid;
+  border-width: 0 $thickness $thickness 0;
+  content: "";
+  display:block;
+  height: $size;
+  position: relative;
+  right: $right;
+  top: $top;
+  transform: rotate(45deg);
+  width: $size;
+}
+@mixin arrow-right($size, $colorHex, $thickness, $right:0, $top:30%) {
+  border-color: $colorHex;
+  border-image: none;
+  border-style: solid;
+  border-width: 0 $thickness $thickness 0;
+  content: "";
+  display:block;
+  height: $size;
+  position: absolute;
+  right: $right;
+  top: $top;
+  transform: rotate(-45deg);
+  width: $size;
+}
+@mixin arrow-left($size, $colorHex, $thickness, $left:0, $top:50%) {
+  border-color: $colorHex;
+  border-image: none;
+  border-style: solid;
+  border-width: $thickness 0 0 $thickness;
+  content: "";
+  display:block;
+  height: $size;
+  position: absolute;
+  left: $left;
+  top:$top;
+  transform: rotate(-45deg);
+  width: $size;
+}
+
+@mixin dot($size, $colorHex, $leftOffset:inherit, $rightOffset:inherit, $topOffset:50%) {
+  background: $colorHex;
+  border-color: $colorHex;
+  border-image: none;
+  border-radius:50%;
+  border-style: solid;
+  content: "";
+  display:block;
+  height: $size;
+  margin-top:-$size;
+  position: absolute;
+  left: $leftOffset;
+  right: $rightOffset;
+  top: $topOffset;
+  width: $size;
+}
+
+@mixin check-mark($color, $height, $width, $thickness, $top:calc(50%/2), $left:0){
+  /* Checkbox tick */
+  content: '';
+  position: absolute;
+  top: $top;
+  left: $left;
+  height: $height;
+  width: $width;
+  transform: rotate(45deg);
+  border: solid $color;
+  border-width: 0 $thickness $thickness 0;
+}
+
+@mixin x-mark($color, $size, $top, $left){
+  color:$color;
+  content:'\00d7';
+  font-size: $size;
+  position: absolute;
+  top: $top;
+  left: $left;
+}
+
+/* pills */
+@mixin basic-pill($background:$mediumGray, $hoverBackground:$mediumDarkGray, $height:1.5em, $width:1.5em) {
+  background:$background;
+  border-radius: .3em;
+  display: inline-block;
+  height:$height;
+  padding:.25em;
+  text-align:center;
+  transition: background 0.2s ease-out 0s;
+  width:$width;
+
+  .icon {
+    height:95%;
+  }
+
+  &:hover {
+    background:$hoverBackground;
+  }
+}
+
+@mixin role-pills() {
+  .role {
+    border-radius: 2px;
+    color:#fff;
+    padding:.25em .5em;
+    text-transform: uppercase;
+
+    &.nurse {
+      background:$salmon;
+    }
+
+    &.mentor {
+      background: $lightPurple;
+    }
+
+    &.doctor {
+      background:$berry;
+    }
+
+    &.social_worker {
+      background:$blue;
+    }
+
+    &.dietitian {
+      background:$gold;
+    }
+
+    &.care.partner {
+      background:$green;
+    }
+
+    &.pharmacist {
+      background:$orange;
+    }
+
+    &.cricket.staff {
+      background:$green;
+    }
+  }
+}
+
+
+/* gradients */
+@mixin vertical-gradient($fromColor, $toColor, $fromOffset:0%) {
+	background-color: $toColor; /* Fallback Color */
+	background-image: -webkit-gradient(linear, left top, left bottom, from($fromColor), to($toColor)); /* Saf4+, Chrome */
+	background-image: -webkit-linear-gradient(top, $fromColor, $toColor); /* Chrome 10+, Saf5.1+, iOS 5+ */
+	background-image: -moz-linear-gradient(top, $fromColor $fromOffset, $toColor); /* FF3.6 */
+	background-image: -ms-linear-gradient(top, $fromColor, $toColor); /* IE10 */
+	background-image: -o-linear-gradient(top, $fromColor, $toColor); /* Opera 11.10+ */
+	background-image: linear-gradient(top, $fromColor, $toColor);
+	filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='#{$fromColor}', EndColorStr='#{$toColor}');
+}
+
+@mixin horizontal-gradient($fromColor, $toColor) {
+	background-color: $toColor; /* Fallback Color */
+	background-image: -webkit-gradient(linear, left top, left bottom, from($fromColor), to($toColor)); /* Saf4+, Chrome */
+	background-image: -webkit-linear-gradient(left, $fromColor 0px, $toColor 100%); /* Chrome 10+, Saf5.1+, iOS 5+ */
+	background-image: -moz-linear-gradient(left center, $fromColor 0px, $toColor 100%); /* FF3.6 */
+	background-image: -ms-linear-gradient(left center, $fromColor, $toColor); /* IE10 */
+  background-image: -o-linear-gradient(left, $fromColor 0px, $toColor 100%); /* Chrome 10+, Saf5.1+, iOS 5+ */
+	background: linear-gradient(to right, $fromColor 0%,$toColor 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$fromColor', endColorstr='$toColor',GradientType=1 ); /* IE6-9 */
+}
+
+/* positioning */
+@mixin absolute-center {
+  margin: auto;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+}
+
+@mixin absolute-center-inset($top, $right, $bottom, $left) {
+  margin: auto;
+  position: absolute;
+  top: $top; left: $left; bottom: $bottom; right: $right;
+}
+
+/* selection */
+@mixin user-select($value)  {
+  -webkit-user-select:$value;
+  -moz-user-select:$value;
+  user-select:$value;
+}
+
+/* buttons */
+@mixin app-button($background-color:#fff, $shadow-color:$lightGray, $color:inherit, $height:2.5em){
+  background-color: $background-color;
+  border-radius:9px;
+  border:1px solid $mediumGray;
+  box-shadow: 0 1px 0 0 $shadow-color;
+  color:$color;
+  height: $height;
+  line-height: $height;
+  overflow: hidden;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin chat-button() {
+  color: white;
+  background-color: $lightPurple;
+  border: none;
+  border-radius: 6px;
+
+  &:hover,&:focus {
+    background-color: $brightPurple;
+    cursor: pointer;
+    outline: none;
+  }
+}
+
+@mixin chatEntryText() {
+  background: #fff none repeat scroll 0 0;
+  color: $charcoal;
+  text-align: left;
+  outline: 0;
+  word-wrap: break-word;
+
+  //allows focus
+  &[contenteditable] {
+    @include user-select(text);
+  }
+
+  //css powered placeholder text
+  &[contenteditable=true]:empty:before {
+    color:$gray;
+    content: attr(placeholder);
+    display: block; /* For Firefox */
+  }
+}
+
+@mixin drawers() {
+  .drawer-container {
+    height: 0px;
+    overflow: hidden;
+
+    &.initialize {
+      height: auto;
+    }
+  }
+
+  .drawer-content.initialize {
+    @include transition(margin-top 1s);
+  }
+}
+
+@mixin placeholder {
+  &::-webkit-input-placeholder {@content}
+  &:-moz-placeholder           {@content}
+  &::-moz-placeholder          {@content}
+  &:-ms-input-placeholder      {@content}
+}
+
+/* font sizing */
+@mixin font-xx-small(){
+  font-size:0.4em;
+}
+@mixin font-x-small(){
+  font-size:0.6em;
+}
+@mixin font-small(){
+  font-size:0.8em;
+}
+@mixin font-medium(){
+  font-size:1em;
+}
+@mixin font-small-large(){
+  font-size:1.2em;
+}
+@mixin font-medium-large(){
+  font-size:1.5em;
+}
+@mixin font-large(){
+  font-size:1.8em;
+}
+@mixin font-big-large(){
+  font-size:2em;
+}
+@mixin font-x-large(){
+  font-size:2.4em;
+}
+@mixin font-xx-large(){
+  font-size:3em;
+}
+@mixin font-xxx-large(){
+  font-size:4em;
+}
+@mixin font-gigantic(){
+  font-size:10em;
+  font-weight:700;
+}
+
+@mixin font-thick(){
+  font-weight:700;
+}
+@mixin font-heavy(){
+  font-weight:500;
+}
+@mixin font-narrow(){
+  font-weight:300;
+}
+@mixin font-thin(){
+  font-weight:200;
+}

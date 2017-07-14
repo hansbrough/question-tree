@@ -1,0 +1,124 @@
+/*
+* Stylized form elements using the "Grapevine" theme
+*/
+
+.grapevine {
+
+  .control {
+    color: $mediumDarkGray;
+    margin-bottom: 2em;
+    padding-left: 3.5em;
+  }
+
+  //sets size of outer container (for both radio and checkbox)
+  .control__indicator {
+    border: 2px solid #ccc;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 2.5em;
+    width: 2.5em;
+    background: #f1f1f1;
+  }
+
+  .control:hover input ~ .control__indicator,
+  .control input:focus ~ .control__indicator {
+    background: #ccc;
+  }
+
+  .control input:disabled ~ .control__indicator {
+    background: #e6e6e6;
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
+  /*-- Checkbox --*/
+  .control--checkbox .control__indicator {
+    border-radius: 6px;
+  }
+
+  .control--checkbox .control__indicator:after {
+    @include check-mark($lightPurple, 1.5em, .75em, 3px, 2px, 12px);
+  }
+
+  //checked
+  .control--checkbox input:not([disabled]):checked ~ .control__indicator,
+  .control--checkbox input:checked ~ .control__indicator {
+    background: $lavender;
+    border-color: $lightPurple;
+  }
+
+  //checked and either focused or hovered
+  .control--checkbox:hover input:not([disabled]):checked ~ .control__indicator,
+  .control--checkbox input:checked:focus ~ .control__indicator {
+    background: darken($lavender, 5%);
+  }
+
+  .control--checkbox input:disabled ~ .control__indicator:after {
+    border-color: #7b7b7b;
+  }
+
+  /*-- Radio button --*/
+  //inner dot of selected radio button.
+  .control--radio .control__indicator:after {
+    left:calc(50% - .9em);
+    top: calc(50% - .9em);
+    height:1.8em;
+    width:1.8em;
+    background: $lightPurple;
+  }
+
+  .control--radio input:checked ~ .control__indicator {
+    background: $lavender;
+    border-color: $lightPurple;
+  }
+
+  .control--radio:hover input:not([disabled]):checked ~ .control__indicator,
+  .control--radio input:checked:focus ~ .control__indicator {
+    background: lighten($lavender, 5%);
+  }
+
+  .control--radio input:checked:hover ~ .control__indicator:after {
+    background: darken($lightPurple, 2%);
+  }
+
+  .control--radio input:disabled ~ .control__indicator:after {
+    background: $mediumGray;
+  }
+
+
+  /* Buttons */
+
+  .app-button {
+    @include app-button($lightPurple, $purple, #ffffff, 3em);
+
+    &:hover {
+      background-color: $brightPurple;
+    }
+
+    &:active {
+      background-color: $purple;
+    }
+
+    &.call-to-action {
+      color: #fff;
+      border:none;
+      font-family: $fontFamilyBold;
+    }
+
+    &.disabled, &.disabled:hover, &.disabled:active {
+      background-color:$lavender;
+      background-image:none;
+      box-shadow: none;
+      top:0;
+    }
+
+    &.clear {
+      background:none;
+      box-shadow: none;
+      border:none;
+      color:$mediumDarkGray;
+    }
+  }
+
+}

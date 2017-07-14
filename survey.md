@@ -1,6 +1,6 @@
 ---
 layout: app
-title: Survey
+title: Prickly Pair Quiz
 permalink: /survey/
 ---
 
