@@ -122,13 +122,13 @@ define(['underscore', 'backbone'],
       * not inclusive of conditional questions.
       */
       getQuestionCount: function(){
-        //console.log("getQuestionCount");
+        console.log("getQuestionCount");
         var cnt = 0;
         this.modules.forEach( function(module){
           //console.log('.... number questions:',this.graph[module].questions.length);
           cnt = cnt + this.graph[module].questions.length;
         }, this);
-        //console.log("...cnt:",cnt);
+        console.log("...cnt:",cnt);
         return cnt;
       },
       /*
@@ -350,12 +350,12 @@ define(['underscore', 'backbone'],
         Backbone.trigger('module:change',data);
       },
       setCurrentQuestion: function(question){
-        //console.log('Survey setCurrentQuestion: ',question);
+        console.log('Survey setCurrentQuestion: ',question);
         if(question){
           this.setHistory('add', question);//add qid to history stack.
           var positionData    = this.getQuestionPosition(question),
               prevQuestionId  = (this.currentQuestion) ? this.currentQuestion.id : this.defaultScreen;
-          //console.log("...prevQuestionId:",prevQuestionId);
+          console.log("...positionData:",positionData);
           //determine if is second to last and last question.
           if( positionData.total / positionData.current === 1){
             _.extend(question, {last:true});

@@ -7,6 +7,15 @@
 @import "fonts";
 @import "media_queries";
 @import "transitions";
+@import "components";
 @import "forms";
 
-@import "themes/grapevine";
+@import "themes/bracteosa";
+
+
+.app-content {
+
+  .question-media-container {
+    margin-bottom: 1em;
+  }
+}

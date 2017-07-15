@@ -10,6 +10,17 @@
     {{/compare}}
 
       <p class="directions">{{title}}</p>
+
+      {{#if media}}
+        <div class="question-media-container">
+        {{#each media}}
+          {{#compare type 'image' operator="=="}}
+            <img class="question-image" src="{{src}}">
+          {{/compare}}
+        {{/each}}
+        </div>
+      {{/if}}
+
       {{#each labels}}
       <label class="medium choice control control--{{../type}}{{#if subtype}} {{subtype}}{{/if}}{{#if level}} {{level}}{{/if}}"><span class="question-copy">{{title}}</span>
 			  <input type="{{../type}}" {{#if value}}value="{{value}}"{{/if}} name="{{../id}}" id="qid_{{qid}}" data-unique="{{unique}}" {{#compare answerValue 'T' operator="=="}}checked {{/compare}}class="controlled__{{../type}}">

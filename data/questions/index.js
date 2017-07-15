@@ -1,12 +1,124 @@
 {
-  "botany_1":{
-    "title":"Agaves are a member of which genus?",
+  "feelings_1":{
+    "title":"Your kidney health is important. How confident are you in your understanding of your kidney health?",
     "labels":[
-      {"title":"Macrocot", "qid":"44"},
-      {"title":"Monocot", "qid":"45"},
-      {"title":"Dicot", "qid":"46"},
-      {"title":"Endocot", "qid":"47"}
+      {"title":"Confident", "qid":"45", "subtype":"likert", "level":"agree"},
+      {"title":"I'm not sure", "qid":"46", "subtype":"likert", "level":"neutral"},
+      {"title":"Worried", "qid":"47", "subtype":"likert", "level":"disagree"}
     ],
+    "category":"survey",
+    "type":"radio"
+  },
+  "plantId_1":{
+    "title":"What genus does this plant most likely belong to?",
+    "media": [
+      {"type":"image", "src":"/assets/img/a_barberae_e_200.jpg"}
+    ],
+    "labels":[
+      {"title":"Aloe", "qid":"100", "next":"plantId_2"},
+      {"title":"Agave", "qid":"101"},
+      {"title":"Haworthia", "qid":"102"},
+      {"title":"Gasteria", "qid":"103"},
+      {"title":"None of the Above", "qid":"104"}
+    ],
+    "actual":"100",
+    "category":"quiz",
+    "type":"radio"
+  },
+  "plantId_2":{
+    "title":"Which of the following is the name of this plant?",
+    "media": [
+      {"type":"image", "src":"/assets/img/al_aculeata_a_200.jpg"}
+    ],
+    "labels":[
+      {"title":"Aloe aculeata", "qid":"105", "next":"plantId_3"},
+      {"title":"Agave celsii", "qid":"106", "next":"plantId_4"},
+      {"title":"Aloe africana", "qid":"107"},
+      {"title":"Gasteria baylissiana", "qid":"108"}
+    ],
+    "actual":"105",
+    "category":"quiz",
+    "type":"radio"
+  },
+  "plantId_3":{
+    "title":"Which of the following is the name of this plant?",
+    "media": [
+      {"type":"image", "src":"/assets/img/a_brevifolia_c_200.jpg"}
+    ],
+    "labels":[
+      {"title":"Aloe arborescens", "qid":"109"},
+      {"title":"Aloe vera", "qid":"110"},
+      {"title":"Aloe africana", "qid":"111"},
+      {"title":"Aloe brevifolia", "qid":"112"},
+      {"title":"Aloe aculeata", "qid":"113"}
+    ],
+    "actual":"112",
+    "category":"quiz",
+    "type":"radio"
+  },
+  "plantId_4":{
+    "title":"Which of the following is the name of this plant?",
+    "media": [
+      {"type":"image", "src":"/assets/img/a_bracteosa_d_200.jpg"}
+    ],
+    "labels":[
+      {"title":"Agave celsii", "qid":"114"},
+      {"title":"Aloe vera", "qid":"115"},
+      {"title":"Agave bracteosa", "qid":"116", "next":"plantId_6"},
+      {"title":"Echeveria agavoides", "qid":"117"},
+      {"title":"Dudlyea brittonii", "qid":"118"}
+    ],
+    "actual":"116",
+    "category":"quiz",
+    "type":"radio"
+  },
+  "plantId_5":{
+    "title":"Which of the following is the name of this plant?",
+    "media": [
+      {"type":"image", "src":"/assets/img/a_bracteosa_h_200.jpg"}
+    ],
+    "labels":[
+      {"title":"Agave celsii", "qid":"114"},
+      {"title":"Aloe vera", "qid":"115"},
+      {"title":"Agave bracteosa", "qid":"116", "next":"plantId_6"},
+      {"title":"Echeveria agavoides", "qid":"117"},
+      {"title":"Dudlyea brittonii", "qid":"118"}
+    ],
+    "actual":"116",
+    "category":"quiz",
+    "type":"radio",
+    "comment":"another chance at agave bracteosa w/a different picture."
+  },
+  "plantId_6":{
+    "title":"Which of the following is the name of this plant?",
+    "media": [
+      {"type":"image", "src":"/assets/img/a_bracteosa_frost_200.jpg"}
+    ],
+    "labels":[
+      {"title":"Agave bracteosa 'Calamar'", "qid":"119"},
+      {"title":"Aloe vera", "qid":"120"},
+      {"title":"Agave bracteosa 'Monterey Frost'", "qid":"121", "next":"plantId_7"},
+      {"title":"Echeveria agavoides", "qid":"122"},
+      {"title":"Agave bracteosa varigata", "qid":"123"}
+    ],
+    "actual":"121",
+    "category":"quiz",
+    "type":"radio"
+  },
+  "plantId_7":{
+    "title":"Which of the following is the name of this plant?",
+    "media": [
+      {"type":"image", "src":"/assets/img/a_attenuata_a_200.jpg"}
+    ],
+    "labels":[
+      {"title":"Agave bovicornuta", "qid":"124"},
+      {"title":"Agave havardiana", "qid":"125"},
+      {"title":"Agave attenuata", "qid":"126"},
+      {"title":"Agave lophantha", "qid":"127"},
+      {"title":"Agave bracteosa", "qid":"128"}
+    ],
+    "actual":"126",
+    "category":"quiz",
     "type":"radio"
   },
   "work_1":{
@@ -17,6 +129,7 @@
       {"title":"I am a full time primary caregiver to young, elderly or ill family members", "next":"work_4", "qid":"3"},
       {"title":"I am retired or unemployed. I am not a primary caregiver to young, elderly or ill family members.", "next":"work_5", "qid":"4"}
     ],
+    "category":"survey",
     "type":"radio"
   },
   "work_2":{

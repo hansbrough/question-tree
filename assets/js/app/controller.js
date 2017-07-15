@@ -3,11 +3,11 @@
 define([
   'marionette',
   'app/views/QuestionView',
-  /*'hope/views/ModuleHeadingView',*/
+  'app/views/ModuleHeadingView',
   'decision_tree',
   'backbone.radio'],
 
-  function(Marionette, QuestionView, Tree, Radio){
+  function(Marionette, QuestionView, HeadingView, Tree, Radio){
 
     //ingest cookies if no cookie object in app yet.
     /*
@@ -111,7 +111,7 @@ define([
         }
         if( !this.views.QuestionView ){
           this.views.QuestionView = new QuestionView({el:'[data-component=survey]', defaultNextSection:QUESTIONNAIRE.postSurveyScreen});
-          //this.views.HeadingView = new HeadingView({el:'[data-component=survey]', defaultModule:'opening'});
+          this.views.HeadingView = new HeadingView({el:'[data-component=survey]', defaultModule:'opening'});
         }else{
           Backbone.trigger('survey:reloaded', {});
         }

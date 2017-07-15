@@ -18,7 +18,7 @@ define([
   'text!/assets/js/app/templates/survey_results.tmpl?noext',
   'text!/assets/js/app/templates/survey_introduction.tmpl?noext'
   ],
-  function($,_,Backbone,Marionette,overrides, Collection, questionTmpl, hopeResultsTmpl, hopeIntroTmpl, careResultsTmpl){
+  function($,_,Backbone,Marionette,overrides, Collection, questionTmpl, resultsTmpl, introTmpl){
     //compile and cache the template. register a partial for use in the template.
     Marionette.TemplateCache.storeTemplate('question', questionTmpl);
 
@@ -54,18 +54,18 @@ define([
           this.selectedRadioInputIdx = null;
           this.defaultNextSection = options.defaultNextSection;
 
-          //pick template based on app name and store
-          var appResultsTmpl = (QUESTIONNAIRE.appName === 'cm') ? careResultsTmpl : hopeResultsTmpl;
-          Marionette.TemplateCache.storeTemplate('results', appResultsTmpl);
-          Marionette.TemplateCache.storeTemplate('intro', hopeIntroTmpl);
+          Marionette.TemplateCache.storeTemplate('results', resultsTmpl);
+          Marionette.TemplateCache.storeTemplate('intro', introTmpl);
 
           //this.requestCriterionDisplayNameLUT();
           //this.requestCriterionModalityLUT();
           //note: once hope / care apps are distinct this app sniffing code like this can go away.
+          /*
           if (QUESTIONNAIRE.appName === 'hope'){
             this.requestIntroduction();
           }
-          this.requestExitTemplate();
+          */
+          //this.requestExitTemplate();
 
           this.listenTo(this.collection, 'add change', this.determineRenderSource);//not triggered on back btn click.
 
@@ -462,7 +462,7 @@ define([
         * display a screen of questions OR the final results screen.
         */
         render: function(model, options){
-          console.log("QuestionView ","render");
+          console.log("QuestionView ","render ", " model:",model);
           options = options || {};
           var payload           = model.toJSON(),
               nxtQuestionSetId  = payload.id,
@@ -472,25 +472,28 @@ define([
               markup;
           console.log("... payload: ",payload);
           //conditionally override w/an org specific results template
+          /*
           if(payload.last && Marionette.TemplateCache.templateCaches['#org_survey_results']){
             templateFunc = Marionette.TemplateCache.get('#org_survey_results');
           }
+          */
           //Add extras to payload and create markup from template.
           _.extend(payload, {platform:platform, nextScreen:this.defaultNextSection});
           markup  = templateFunc({SCREEN: payload});
           //choose insertion type.
           if(options.replace){
-            //console.log('...replace: ',this.$el.find('.'+nxtQuestionSetId));
+            console.log('...replace: ',this.$el.find('.'+nxtQuestionSetId));
             var $existingNode = this.$el.find('.'+nxtQuestionSetId);
-            //console.log('... existing node:',$existingNode);
+            console.log('... existing node:',$existingNode);
             if($existingNode.length > 0){
-              //console.log('.... yeah found it. now replace it.');
+              console.log('.... yeah found it. now replace it.');
               $existingNode.replaceWith( markup );
             }else {
-              //console.log('.... not existing yet');
+              console.log('.... not existing yet');
               this.$el.append( markup );
             }
           }else{
+            console.log('... append')
             this.$el.append( markup );
           }
 

@@ -1,0 +1,35 @@
+/*
+ * Reusable componenents
+ */
+
+progress.bar {
+  @include appearance(none);/* Reset the default appearance */
+  @include progressbar-background-value($mediumDarkGray);
+  border:1px solid $mediumDarkGray;
+  height:1em;
+  margin-bottom:1em;
+  width:100%;
+  z-index:1;
+
+  &::-webkit-progress-bar {
+    background:#ccc;
+  }
+
+  //animate transition of progress value (no moz equiv)
+  &::-webkit-progress-value {
+    @include transition(width 0.5s ease 0s);
+  }
+
+  &.collapsed {
+    border:0;
+    height:2px;
+  }
+
+  &.salmon-back {
+    @include progressbar-background-value($salmon);
+  }
+
+  &.blue-back {
+    @include progressbar-background-value($blue);
+  }
+}
