@@ -1,14 +1,30 @@
 {
-  "feelings_1":{
-    "title":"Your kidney health is important. How confident are you in your understanding of your kidney health?",
+  "background_1":{
+    "title":"Select the one that best applies to you.",
     "labels":[
-      {"title":"Confident", "qid":"45", "subtype":"likert", "level":"agree"},
-      {"title":"I'm not sure", "qid":"46", "subtype":"likert", "level":"neutral"},
-      {"title":"Worried", "qid":"47", "subtype":"likert", "level":"disagree"}
+      {"title":"I am employed", "qid":"1"},
+      {"title":"I am a student", "qid":"2"},
+      {"title":"I am retired", "qid":"3"},
+      {"title":"I'd rather not say; I just like plants", "qid":"4"}
     ],
     "category":"survey",
     "type":"radio"
   },
+  "background_2":{
+    "title":"Select all that describe your experience.",
+    "labels":[
+      {"title":"I enjoy growing plants at home.", "qid":"5"},
+      {"title":"I have propagated plants", "qid":"6"},
+      {"title":"I have worked as a Landscape Architect or Designer", "qid":"7"},
+      {"title":"I have worked in Landscape Construction", "qid":"8"},
+      {"title":"I have worked in a plant nursery", "qid":"9"},
+      {"title":"I have worked as a plant broker", "qid":"10"},
+      {"title":"None of the above", "qid":"11", "unique":true}
+    ],
+    "category":"survey",
+    "type":"checkbox"
+  },
+
   "plantId_1":{
     "title":"What genus does this plant most likely belong to?",
     "media": [
@@ -121,17 +137,7 @@
     "category":"quiz",
     "type":"radio"
   },
-  "work_1":{
-    "title":"Select the one that best applies to you",
-    "labels":[
-      {"title":"I am employed", "next":"work_2", "qid":"1"},
-      {"title":"I am a student", "next":"work_3", "qid":"2"},
-      {"title":"I am a full time primary caregiver to young, elderly or ill family members", "next":"work_4", "qid":"3"},
-      {"title":"I am retired or unemployed. I am not a primary caregiver to young, elderly or ill family members.", "next":"work_5", "qid":"4"}
-    ],
-    "category":"survey",
-    "type":"radio"
-  },
+
   "work_2":{
     "title":"Select all that apply to you",
     "labels":[
@@ -162,162 +168,6 @@
       }
     ],
     "type":"checkbox"
-  },
-  "work_3":{
-    "title":"Select all that apply to you",
-    "labels":[
-      {
-        "title":"I want to keep my existing school schedule",
-        "modality_score":{"pd":1,"hhd":1,"hd":-1},
-        "qid":"9",
-        "criterion":"flexible_schedule"
-      },
-      {
-        "title":"I want to avoid missing school due to any health-related issues",
-        "modality_score":{"pd":1,"hhd":1,"hd":-1},
-        "insight":true,
-        "qid":"10",
-        "criterion":"less_time_on_health_issues"
-      },
-      {
-        "title":"I need energy and mental focus to do my school work",
-        "modality_score":{"pd":1,"hhd":2,"hd":-1},
-        "qid":"11",
-        "criterion":"more_energy"
-      },
-      {
-        "title":"none of these apply to me",
-        "modality_score":{"pd":0,"hhd":0,"hd":0},
-        "unique":true,
-        "qid":"12"
-      }
-    ],
-    "type":"checkbox"
-  },
-  "work_4":{
-    "title":"Select all that apply to you",
-    "labels":[
-      {
-        "title":"I have a lot of commitments and a busy schedule",
-        "modality_score":{"pd":1,"hhd":1,"hd":-1},
-        "qid":"13",
-        "criterion":"flexible_schedule"
-      },
-      {
-        "title":"If I have a health issue, it will be difficult to find someone to help care for my family",
-        "modality_score":{"pd":1,"hhd":1,"hd":-1},
-        "insight":true,
-        "qid":"14",
-        "criterion":"less_time_on_health_issues"
-      },
-      {
-        "title":"I need energy and mental focus to care for my family",
-        "modality_score":{"pd":1,"hhd":2,"hd":-1},
-        "qid":"15",
-        "criterion":"more_energy"
-      },
-      {
-        "title":"none of these apply to me",
-        "modality_score":{"pd":0,"hhd":0,"hd":0},
-        "unique":true,
-        "qid":"16"
-      }
-    ],
-    "type":"checkbox"
-  },
-  "work_5":{
-    "title":"Select all that apply to you",
-    "labels":[
-      {
-        "title":"I have a lot of regularly scheduled commitments and a busy schedule",
-        "modality_score":{"pd":1,"hhd":1,"hd":-1},
-        "qid":"17",
-        "criterion":"flexible_schedule"
-      },
-      {
-        "title":"I want to avoid missing my regular activities due to any health-related issues",
-        "modality_score":{"pd":1,"hhd":1,"hd":-1},
-        "insight":true,
-        "qid":"18",
-        "criterion":"fewer_hospitalizations"
-      },
-      {
-        "title":"I want consistent energy and mental focus",
-        "modality_score":{"pd":1,"hhd":2,"hd":-1},
-        "qid":"19",
-        "criterion":"more_energy"
-      },
-      {
-        "title":"none of these apply to me",
-        "modality_score":{"pd":0,"hhd":0,"hd":0},
-        "unique":true,
-        "qid":"20"
-      }
-    ],
-    "type":"checkbox"
-  },
-
-  "independence_1":{
-    "title":"Select the one that best applies to you",
-    "labels":[
-      {"title":"I handle most of my daily activities on my own.", "next":"independence_2", "qid":"21"},
-      {"title":"I have difficulty with most daily activities.", "next":"independence_3", "qid":"22"}
-    ],
-    "type":"radio"
-  },
-  "independence_2":{
-    "title":"Select the one that best applies to you",
-    "labels":[
-      {
-        "title":"I live alone",
-        "modality_score":{"pd":1,"hhd":0,"hd":0},
-        "qid":"23",
-        "criterion":"self_treatment"
-      },
-      {
-        "title":"I live alone. Someone comes to help to me as needed.",
-        "modality_score":{"pd":1,"hhd":0,"hd":0},
-        "qid":"24",
-        "criterion":"self_treatment"
-      },
-      {
-        "title":"I live with someone who might be able/willing to help me with treatments",
-        "modality_score":{"pd":1,"hhd":1,"hd":0},
-        "qid":"25",
-        "criterion":"self_treatment"
-      },
-      {
-        "title":"I live with someone, who will not be able/willing to help me with treatments",
-        "modality_score":{"pd":1,"hhd":0,"hd":0},
-        "qid":"26",
-        "criterion":"self_treatment"
-      }
-    ],
-    "type":"radio"
-  },
-  "independence_3":{
-    "title":"Select the one that best applies to you",
-    "labels":[
-      {
-        "title":"I live alone. I have someone I can rely on who comes to help me every day. ",
-        "modality_score":{"pd":1,"hhd":0,"hd":1},
-        "qid":"27",
-        "criterion":"other_does_treatment"
-      },
-      {
-        "title":"I live with someone who I can rely on to help me with everything I need to do.",
-        "modality_score":{"pd":1,"hhd":1,"hd":1},
-        "qid":"28",
-        "criterion":"other_does_treatment"
-      },
-      {
-        "title":"I live with someone or I live alone. I have no one to rely on for help consistently.",
-        "modality_score":{"pd":0,"hhd":0,"hd":1},
-        "qid":"29",
-        "criterion":"other_does_treatment"
-      }
-    ],
-    "type":"radio"
   },
 
   "activities_1":{
@@ -384,16 +234,6 @@
     "title":"How well do you understand your treatment options.",
     "type":"textarea",
     "qid":"42"
-  },
-  "thoughts_2":{
-    "title":"What things worry you about End Stage Renal Disease?",
-    "type":"textarea",
-    "qid":"43"
-  },
-  "thoughts_3":{
-    "title":"What are your personal goals for the next 6 months?",
-    "type":"textarea",
-    "qid":"44"
   },
   "survey_results":{
     "type":"summary",
