@@ -1,30 +1,27 @@
 {{#SCREEN}}
-<div id="lifestyleChoice" class="lifestyle-choice {{id}} grapevine">
+<div id="lifestyleChoice" class="survey_results {{id}} bracteosa">
 
   <p class="weight-book medium-large overview">
-    Great work finishing your survey! Based on what you’ve told us, Peritoneal Dialysis (PD) or Home Hemodialysis (HHD) may be good fits should you need dialysis.
+    Great work finishing the quiz! Here's how you did.
   </p>
 
-{{!-- Required markup between platforms is different enough that it requires conditional templating logic :( --}}
-
-{{#if platform.Desktop}}
   {{!-- DESKTOP --}}
   <div class="criteria-header">
-    <p class="modality-name pd col-1-6 offset-4 small-large"><img class="gold-star" src="/img/hope/mini-goldstar-16px.svg">Peritoneal Dialysis<span>(PD)</span></p><p class="modality-name hhd col-1-3 small-large"><img class="gold-star" src="/img/hope/mini-goldstar-16px.svg">Home Hemodialysis<span>(HHD)</span></p><p class="modality-name hd col-1-6 small-large"><img class="gold-star" src="/img/hope/mini-goldstar-16px.svg">In-Center Hemodialysis<span>(HD)</span></p>
+    <p class="column-name genus col-1-6 small-large">Genus</p><p class="column-name example-img col-1-6 small-large">Know it?</p><p class="column-name correct col-1-6 small-large"># Correct</p>
   </div>
 
   {{#each results}}
   <div class="data-row {{stripes @index}}{{#if @first}} first{{/if}}{{#if @last}} last{{/if}}">
-    <p class="weight-book criterion-name col-1-3" id="{{id}}" data-count="{{count}}">{{displayName}}</p>
-    <p class="criterion-supported col-1-6{{#if modalities.pd}} selected{{/if}}">{{#if modalities.pd}}<img src="/img/hope/mini-checkcircle-18px.svg">{{else}}<img src="/img/hope/mini-xcircle-18px.svg">{{/if}}</p>
-    <p class="criterion-supported col-1-3{{#if modalities.hhd}} selected{{/if}}">{{#if modalities.hhd}}<img src="/img/hope/mini-checkcircle-18px.svg">{{else}}<img src="/img/hope/mini-xcircle-18px.svg">{{/if}}</p>
-    <p class="criterion-supported col-1-6{{#if modalities.hd}} selected{{/if}} last">{{#if modalities.hd}}<img src="/img/hope/mini-checkcircle-18px.svg">{{else}}<img src="/img/hope/mini-xcircle-18px.svg">{{/if}}</p>
+    <p class="criterion col-1-6">{{displayName}}</p>
+    <p class="criterion-supported col-1-6"><img src="/assets/img/icons/mini-checkcircle-18px.svg"></p>
+    <p class="criterion-count col-1-6">{{count}}</p>
   </div>
   {{/each}}
 
-{{else}}
 
-  {{!-- MOBILE --}}
+
+  {{!-- MOBILE / unused for now --}}
+  {{!--
   <section class="grid modality-container">
     <div class="criteria-header">
       <img class="gold-star" src="/img/hope/mini-goldstar-16px.svg"> <span class="match small weight-heavy">Potential Match</span>
@@ -59,13 +56,13 @@
     </div>
     {{/each}}
   </section>
+--}}
 
-{{/if}}
 
   <div class="app-section navigation-controls">
-    <p class="begin-program-msg medium">Don’t worry, this program is here to make all your options clear. Ready to begin?</p>
+    <p class="begin-program-msg medium">Think you can do better?</p>
 
-    <a id="cta_finish" class="call-to-action app-button col-4-12 offset-4" href="#{{nextScreen}}">Let's Go</a>
+    <a id="cta_finish" class="call-to-action app-button col-4-12 offset-4" href="#{{nextScreen}}">Take the quiz again.</a>
     <div id="cta_prev" class="clear app-button back arrow-back shape col-4-12 offset-4">Back</div>
   </div>
 

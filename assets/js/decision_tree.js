@@ -21,7 +21,7 @@ define(['underscore', 'backbone'],
 
     Survey.prototype = {
       initialize: function(options){
-        console.log('Survey initialize: ',options);
+        //console.log('Survey initialize: ',options);
         var graphName = options.graph_name || null,
             questionSetName = options.question_set_name || null;
         this.token = options.token || null;
@@ -122,13 +122,13 @@ define(['underscore', 'backbone'],
       * not inclusive of conditional questions.
       */
       getQuestionCount: function(){
-        console.log("getQuestionCount");
+        //console.log("getQuestionCount");
         var cnt = 0;
         this.modules.forEach( function(module){
           //console.log('.... number questions:',this.graph[module].questions.length);
           cnt = cnt + this.graph[module].questions.length;
         }, this);
-        console.log("...cnt:",cnt);
+        //console.log("...cnt:",cnt);
         return cnt;
       },
       /*
@@ -198,41 +198,41 @@ define(['underscore', 'backbone'],
       },
       //return the next question (object)
       next: function(config){
-        console.log("Survey next: ", config);
+        //console.log("Survey next: ", config);
         var question = {views:0};
         if( !this.currentQuestion ){//0 case. first question.
           this.setCurrentModuleId( this.nextModuleId() );
           _.extend(question, this.graph[ this.currentModuleId ].questions[0], {first:true});
-          console.log("... first question:",question);
+          //console.log("... first question:",question);
         }else{//find next question within current module
-          console.log("...this.currentQuestion:",this.currentQuestion);
+          //console.log("...this.currentQuestion:",this.currentQuestion);
           var nextModuleId    = this.nextModuleId( this.currentModuleId ),
               nextQuestionObj  = this.getNextQuestionId( this.currentQuestion, config );
-          console.log("...nextModuleId:",nextModuleId," nextQuestionObj:",nextQuestionObj);
+          //console.log("...nextModuleId:",nextModuleId," nextQuestionObj:",nextQuestionObj);
           if(nextQuestionObj.id){//use next question in this module
-            console.log("...currentQuestion is followed by another question in same module");
+            //console.log("...currentQuestion is followed by another question in same module");
             var graphNextQuestion = this.getNextQuestionFromGraph();
             _.extend(question, nextQuestionObj, graphNextQuestion);
           }else if(nextModuleId && nextModuleId !== 'module_final'){//jump to next module
-            console.log("...go to next module");
+            //console.log("...go to next module");
             this.setCurrentModuleId( nextModuleId );
             _.extend(question, this.graph[ this.currentModuleId ].questions[0]);
           }else{//account for last module.
             //currently there is not much difference between this and previous, non-final condition.
-            console.log("...graph complete");
+            //console.log("...graph complete");
             this.setCurrentModuleId( nextModuleId );
             _.extend(question, this.graph[ this.currentModuleId ].questions[0]);
             Backbone.trigger('survey:complete', {});
           }
         }
-        console.log('... question before being extended: ',question);
+        //console.log('... question before being extended: ',question);
         if(question){
           _.extend(question, this.questions[question.id], { module : this.currentModuleId }, config);
           question.views++;
-          console.log('..... question after being extended a second time: ',question);
+          //console.log('..... question after being extended a second time: ',question);
         }
         this.setCurrentQuestion(question);
-        console.log("next:", question);
+        //console.log("next:", question);
         return question;
       },
       /*
@@ -276,11 +276,11 @@ define(['underscore', 'backbone'],
         return question;
       },
       requestGraph: function(config_name){
-        console.log('Survey requestGraph');
+        //console.log('Survey requestGraph');
         config_name = config_name || 'index.js';
         var token   =  this.token,
             api_url = '/data/graph/'+config_name;
-        console.log("...config_name:",config_name);
+        //console.log("...config_name:",config_name);
         $.ajax({
               url: api_url,
               type: 'GET',
@@ -350,12 +350,12 @@ define(['underscore', 'backbone'],
         Backbone.trigger('module:change',data);
       },
       setCurrentQuestion: function(question){
-        console.log('Survey setCurrentQuestion: ',question);
+        //console.log('Survey setCurrentQuestion: ',question);
         if(question){
           this.setHistory('add', question);//add qid to history stack.
           var positionData    = this.getQuestionPosition(question),
               prevQuestionId  = (this.currentQuestion) ? this.currentQuestion.id : this.defaultScreen;
-          console.log("...positionData:",positionData);
+          //console.log("...positionData:",positionData);
           //determine if is second to last and last question.
           if( positionData.total / positionData.current === 1){
             _.extend(question, {last:true});

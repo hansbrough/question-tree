@@ -1,0 +1,241 @@
+ .introduction {
+
+   .overview {
+     color:$charcoal;
+     margin-bottom: 2em;
+   }
+
+   //override the header icon per screen.
+   .opening .title.top.dot {
+     margin-top: 8em;
+
+     &:before {
+       background-image:url("/assets/img/authors/debra_lee_baldwin.jpg");
+       background-size: 110%;
+       border-radius:100%;
+       left: calc(50% - 168px/2);
+       top:-4.25em;
+       height:158px;
+       width:158px;
+     }
+   }
+
+ .module_activities {
+   .title.top.dot:before {
+     background-image:url("/img/hope/activities.svg");
+   }
+ }
+
+ .module_final {
+   .title.top.dot {
+     margin-top: 6em;
+
+     &:before {
+       background-image:url("/img/hope/authors/nurse_bianca_200px.jpg");
+       background-size: 110% auto;
+       height:5em;
+       left: calc(50% - 2.5em);
+       top:-2.5em;
+       width:5em;
+     }
+   }
+ }
+
+ .survey_results {
+
+   .modality-container {
+     border:1px solid $mediumGray;
+     border-radius:6px;
+     margin-bottom:12px;
+     padding:12px;
+
+     .match {
+       color:$mediumGray;
+       text-transform: uppercase;
+     }
+
+   }
+
+   .gold-star {
+       height:20px;
+       width:20px;
+       position: relative;
+       top: -1.25em;
+
+       @include ipad_1_2 {
+         height:auto;
+         width:auto;
+         top:0;
+       }
+
+       @include iphone6plus {
+         height:auto;
+         width:auto;
+         top:0;
+       };
+   }
+
+   .overview {
+     @include font-medium();
+   }
+
+   .survey-result-criteria {
+     .criterion {
+       padding:.25em 0;
+     }
+   }
+
+   .modality-name {
+     padding:0;
+     text-align: center;
+
+     @include ipad_1_2 {
+       text-align: left;
+     }
+
+     @include iphone6plus {
+       text-align: left;
+     };
+
+     &.pd .gold-star {
+       left:50px;
+     }
+
+     &.hhd .gold-star {
+       left:95px;
+     }
+
+     &.hd .gold-star {
+       visibility: hidden;
+     }
+
+     span {
+       display: block;
+     }
+   }
+
+   .criteria-header {
+     margin: 2em 0 1em 0;
+     overflow:hidden;
+     padding-top: 1.5em;
+
+     @include ipad_1_2 {
+       margin-top:0;
+       padding:0;
+     }
+
+     @include iphone6plus {
+       margin-top:0;
+       padding:0;
+     }
+   }
+
+   .data-row {
+     clear:both;
+     overflow:hidden;
+
+     @include ipad_1_2 {
+       margin: 0;
+     }
+
+     @include iphone6plus {
+       margin: 0;
+     };
+
+      &.even {
+        background: $offWhite;
+      }
+
+      &.first {
+        border-top:1px solid $mediumGray;
+
+        @include ipad_1_2 {
+          padding-top:8px;
+        }
+
+        @include iphone6plus {
+          padding-top:8px;
+        }
+      }
+
+      &.last {
+        border-bottom:1px solid $mediumGray;
+      }
+
+      .criterion-name {
+        padding:12px;
+        border-right:1px solid $mediumGray;
+
+        @include ipad_1_2 {
+          border: none;
+        }
+
+        @include iphone6plus {
+          border: none;
+        };
+      }
+
+      .criterion-supported {
+        padding:12px;
+        border-right:1px solid $mediumGray;
+
+        .criterion-name {
+          display: none;
+        }
+
+        @include ipad_1_2 {
+          border:none;
+          padding:8px 0;
+          width:100%;
+
+          .criterion-name {
+            display: inline;
+          }
+        }
+
+        @include iphone6plus {
+          border:none;
+          padding:8px 0;
+          width:100%;
+
+          .criterion-name {
+            display: inline;
+          }
+        }
+
+        &.last{
+          border:none;
+        }
+      }
+   }
+
+   .begin-program-msg {
+     clear:both;
+   }
+
+   .navigation-controls {
+     clear:both;
+
+     @include ipad_1_2 {
+        margin:18px 0 0 0;
+     }
+
+     @include iphone6plus {
+       margin:18px 0 0 0;
+     }
+   }
+ }
+
+ .criterion-supported {
+   text-align: center;
+
+   @include ipad_1_2 {
+     text-align: left;
+   }
+
+   @include iphone6plus {
+     text-align: left;
+   }
+ }
+
+}
