@@ -76,31 +76,13 @@ define(['underscore', 'backbone', 'mixins/Graph'],
         console.log("getDistanceBetweenNodes");
       },
       /*
-      * given a start point node for a conditional path - return the squential path end node
-      */
-      getSequentialEndPoint: function(question){
-        console.log("getSequentialEndPoint:", question);
-        //console.log("...previous question:",question.previous);
-        //var graphQuestion = this.getQuestionFromGraphById(question.previous);
-        var graphQuestion = this.GRF.getQuestionById(question.previous);
-        var graphModule   = this.GRF.getModuleByQid(question.previous);
-        //console.log("......graphQuestion",graphQuestion);
-        //console.log("......graphModule",);
-        var orderedModQuestions = graphModule.questions.map(function(a){return a.id});
-        var endPtIdx = orderedModQuestions.indexOf(graphQuestion.next);
-        //console.log("......endPtIdx:",endPtIdx);
-        var conditionalReentryPt = orderedModQuestions.indexOf(question.next);
-        //console.log("......conditionalReentryPt:",conditionalReentryPt);
-        //console.log("........delta:",endPtIdx - conditionalReentryPt);
-      },
-      /*
       * for conditional paths return length
       */
       getPathDelta: function(question){
         //console.log("getPathDelta: ",question);
         var delta = 0;
         if(question && question.conditional){
-          this.getSequentialEndPoint(question);
+          this.GRF.getSequentialEndPoint(question);
 
         }
 
@@ -108,7 +90,6 @@ define(['underscore', 'backbone', 'mixins/Graph'],
       },
       getPathType: function(){
         console.log("DecisionTree"," getPathType");
-
       },
       /*
       * based on questonObj determine which level of 'next' we should use - from graph or questions
@@ -149,7 +130,6 @@ define(['underscore', 'backbone', 'mixins/Graph'],
       },
       getTotalQuestionCount: function(newCurrentQuestion){
         //console.log("DecisionTree"," getTotalQuestionCount");
-        //this.getPathDelta(newCurrentQuestion);
         var cnt = this.GRF.getQuestionCount();
         cnt += this.getConditionalQuestionCount(newCurrentQuestion);
         return cnt;

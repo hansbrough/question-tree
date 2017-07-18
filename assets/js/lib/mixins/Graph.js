@@ -153,6 +153,25 @@ define(['underscore','jquery'],
       },
       getQuestionsByModuleId: function(id){
         return (this.store && this.store[id]) ? this.store[id].questions : null;
+      },
+      /*
+      * given a start point node for a conditional path - return the squential path end node
+      * TODO: this is a work in progress... not working yet.
+      */
+      getSequentialEndPoint: function(question){
+        console.log("Graph"," getSequentialEndPoint:", question);
+        //console.log("...previous question:",question.previous);
+        //var graphQuestion = this.getQuestionFromGraphById(question.previous);
+        var graphQuestion = this.getQuestionById(question.previous);
+        var module   = this.getModuleByQid(question.previous);
+        //console.log("......graphQuestion",graphQuestion);
+        console.log("......module",);
+        var orderedModQuestions = module.questions.map(function(a){return a.id});
+        var endPtIdx = orderedModQuestions.indexOf(graphQuestion.next);
+        //console.log("......endPtIdx:",endPtIdx);
+        var conditionalReentryPt = orderedModQuestions.indexOf(question.next);
+        //console.log("......conditionalReentryPt:",conditionalReentryPt);
+        //console.log("........delta:",endPtIdx - conditionalReentryPt);
       }
     }
 
