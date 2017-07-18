@@ -25,7 +25,7 @@ define([
       catch: function(payload){
         //this proxy here to pass the 'merge' option
         //which will ensure the collection's "change" evt is triggered
-        //console.log('question collection catch:',payload);
+        console.log("questionCollection" ," catch:",payload);
         this.add(payload, {merge:true});
       },
       /*

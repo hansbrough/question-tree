@@ -48,10 +48,10 @@
       {"type":"image", "src":"/assets/img/al_aculeata_a_200.jpg"}
     ],
     "labels":[
-      {"title":"Aloe aculeata", "qid":"105", "next":"plantId_2"},
-      {"title":"Agave celsii", "qid":"106", "next":"plantId_3"},
-      {"title":"Aloe africana", "qid":"107", "next":"plantId_3"},
-      {"title":"Gasteria baylissiana", "qid":"108", "next":"plantId_3"}
+      {"title":"Aloe aculeata", "qid":"105"},
+      {"title":"Agave celsii", "qid":"106","next":"plantId_3"},
+      {"title":"Aloe africana", "qid":"107"},
+      {"title":"Gasteria baylissiana", "qid":"108"}
     ],
     "actual":"105",
     "category":"quiz",

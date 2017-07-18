@@ -48,8 +48,7 @@ define([
         criterionDisplayNameLUT:null,
         initialize: function(options){
           //_.extend(this, new ClientEventLogger() );
-          console.log('QuestionView init:',options);
-          console.log('... $el:',this.$el);
+          //console.log("QuestionView", " init");
           this.collection = new Collection();
           this.selectedRadioInputIdx = null;
           this.defaultNextSection = options.defaultNextSection;
