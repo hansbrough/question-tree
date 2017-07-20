@@ -1,8 +1,8 @@
 // Define an AMD module
 // Decision Tree Logic
 
-define(['underscore', 'backbone', 'mixins/Graph'],
-  function (_, Backbone, GraphHelpers) {
+define(['underscore', 'backbone', 'mixins/Graph', 'mixins/Questions'],
+  function (_, Backbone, GraphHelpers, QuestionsHelpers) {
 
     //constructor
     var _Mixin = function(options){
@@ -11,9 +11,9 @@ define(['underscore', 'backbone', 'mixins/Graph'],
       this.currentModuleId = null;
       this.currentQuestion = null;
       this.currentModuleQuestionIdx = null;
-      this.questions  = {};
       this.history    = [];
       this.GRF        = null;
+      this.QTN        = null;
 
       this.initialize(options);
     };
@@ -23,51 +23,12 @@ define(['underscore', 'backbone', 'mixins/Graph'],
         //console.log("DecisionTree", " initialize:" ,options);
         var graphName = options.graph_name || null,
             questionSetName = options.question_set_name || null;
-        this.token = options.token || null;
+
         this.defaultScreen = options.defaultScreen || 'introduction';
-        _.bindAll(this,'setQuestions');
 
-        //intialize Graph
-        this.GRF = new GraphHelpers({'graph_name':options.graph_name});
-
-        //make some intial requests for data.
-        this.requestQuestions(questionSetName);
-      },
-      //return question (object) by a given id
-      /*
-      findModuleIdByQid: function(qid){
-        //console.log('FINDMODULEIDBYQID: ',qid, ' in ', this.questions);
-        var question, questions, modId;
-        for(var i in this.questions){
-          questions = this.questions[i].labels || [this.questions[i]];//text questions have no labels array.
-          //console.log("...questions:",questions);
-          question = this.findQuestionInSetByQid(questions, qid);
-          //console.log("...question:",question);
-          if( question){
-            modId = i;
-            break;
-          }
-        }
-        return modId;
-      },
-      */
-      findQuestionInSetByQid: function(set, qid, options){
-        //console.log("..FINDQUESTIONINSETBYQID: ",set, qid, options);
-        var len = set.length,
-            q = null;
-        while(len--){
-          //console.log('... len:',len);
-          if( qid === parseInt(set[len].qid) ){
-            if(options){
-              //console.log('.... extending set with options: ', options);
-              _.extend(set[len], options);
-            }
-            q = set[len];
-            //console.log('.... found match.');
-            break;
-          }
-        }
-        return q;
+        //intialize Graph and Question Helper Mixins
+        this.GRF = new GraphHelpers({'graph_name':graphName});
+        this.QTN = new QuestionsHelpers({'config_name':questionSetName});
       },
       getCurrentQuestion: function(){
         return this.currentQuestion;
@@ -114,14 +75,15 @@ define(['underscore', 'backbone', 'mixins/Graph'],
         return payload;
       },
       /*
-      * determine the total number of *conditional* questions that have been answered.
+      * Determine the total number of *conditional* questions that have been answered.
       * TODO: determine of 'detour' (increment count) or 'shortcut' (decrement from count) path.
       */
       getConditionalQuestionCount: function(newCurrentQuestion){
-        //console.log("getConditionalQuestionCount");
+        console.log("DecisionTree"," getConditionalQuestionCount");
         var cnt = 0;
         this.history.forEach( function(modId){
-          var question = (modId === newCurrentQuestion.id) ? newCurrentQuestion : this.questions[modId];
+          console.log("...modId:",modId);
+          var question = (modId === newCurrentQuestion.id) ? newCurrentQuestion : this.QTN.getNodeById(modId);
           if(question.conditional){
             cnt = cnt+1;
           }
@@ -149,32 +111,12 @@ define(['underscore', 'backbone', 'mixins/Graph'],
       * looks up current question in *graph* to determine the next squenced question id.
       */
       getNextQuestionFromGraph: function(){
-        console.log("getNextQuestionFromGraph");
+        //console.log("getNextQuestionFromGraph");
         var question      = this.GRF.getNextModuleQuestion(this.currentModuleId, this.currentQuestion.next);
         var nextQuestion  = (question && question.next) ? {next:question.next} : {};
-        console.log("..... returning:",nextQuestion);
+        //console.log("..... returning:",nextQuestion);
         return nextQuestion;
       },
-      /*
-      merge: function(payload){
-        //console.log('merge');
-        var questions = this.questions,
-            modId, question, answer;
-        //questions are organized by question set id e.g. 'work_1' and a labels array... we get back a question id
-        for(var i=0;i<payload.answers.length;i++){
-          answer = payload.answers[i];
-          modId = this.findModuleIdByQid(answer.questionId);
-          //console.log('...modId:',modId);
-          if(modId){
-            question = questions[modId].labels || [questions[modId]]; //text questions have no labels array.
-            //console.log('... answer:',answer);
-            this.updateQuestion(question, answer);
-            questions[modId].previouslyAnswered = true;
-          }
-        }
-
-      },
-      */
       //return the next question (object)
       next: function(config){
         //console.log("DecisionTree"," next:", config);
@@ -195,7 +137,7 @@ define(['underscore', 'backbone', 'mixins/Graph'],
             var graphNextQuestion = this.getNextQuestionFromGraph();
             _.extend(question, nextQuestionObj, graphNextQuestion);
           }else if(nextModuleId && nextModuleId !== 'module_final'){//jump to next module
-            console.log("...go to next module");
+            //console.log("...go to next module");
             this.setCurrentModuleId( nextModuleId );
             var firstModuleQuestion = this.GRF.getFirstQuestionInModule(nextModuleId);
             _.extend(question, firstModuleQuestion);
@@ -210,7 +152,7 @@ define(['underscore', 'backbone', 'mixins/Graph'],
         }
         //console.log('... question before being extended: ',question);
         if(question){
-          _.extend(question, this.questions[question.id], { module : this.currentModuleId }, config);
+          _.extend(question, this.QTN.getNodeById(question.id), { module : this.currentModuleId }, config);
           question.views++;
           //console.log('..... question after being extended a second time: ',question);
         }
@@ -225,7 +167,7 @@ define(['underscore', 'backbone', 'mixins/Graph'],
         if( len > 0 ){
           this.setHistory('delete');
           //console.log('...', this.history);
-          question = this.questions[ this.history.pop() ];
+          question = this.QTN.getNodeById( this.history.pop() );
         }
         //keep internal state in sync w/UI change
         //console.log('... ',question);
@@ -235,59 +177,6 @@ define(['underscore', 'backbone', 'mixins/Graph'],
 
         return question;
       },
-      requestQuestions: function(config_name){
-        config_name = config_name || 'index.js';
-        var token   =  this.token,
-            api_url = '/data/questions/'+config_name;
-        $.ajax({
-              url: api_url,
-              type: 'GET',
-              xhrFields: {
-                withCredentials: true
-              },
-              dataType: 'json',
-              contentType: "application/json; charset=utf-8",
-              headers: {
-                'Authorization': 'Bearer '+ token
-              }
-            }).done( this.setQuestions );
-      },
-      /*
-      * get user responses to previously answered questions for current survey
-      */
-      /*
-      requestAnswers: function(){
-        //console.log("requestAnswers: ");
-        var token     =  this.token,
-            surveyId  = this.getId(),
-            api_url   = '/survey/answers/'+surveyId;
-
-        if(token){
-          $.ajax({
-                url: api_url,
-                xhrFields: {
-                  withCredentials: true
-                },
-                dataType: 'json',
-                contentType: "application/json; charset=utf-8",
-                headers: {
-                  'Authorization': 'Bearer '+ token
-                },
-                type: 'GET'
-              }).done( this.setAnswers );
-        }
-      },
-      */
-      /*
-      setAnswers: function(resp){
-        //console.log("setAnswers: ",resp);
-        var previouslyAnswered = resp.data;
-        this.answers = previouslyAnswered;
-        if(previouslyAnswered.length > 0){
-          Backbone.trigger('answers:set', {answers:previouslyAnswered});
-        }
-      },
-      */
       setCurrentModuleId: function( mod_id ){
         //console.log("setCurrentModuleId",mod_id);
         this.currentModuleId = mod_id;
@@ -303,7 +192,7 @@ define(['underscore', 'backbone', 'mixins/Graph'],
           this.getPathDelta(question);
           var positionData    = this.getQuestionPosition(question);
 
-          console.log("...positionData:",positionData);
+          //console.log("...positionData:",positionData);
           //determine if is second to last and last question.
           if( positionData.total / positionData.current === 1){
             _.extend(question, {last:true});
@@ -313,8 +202,8 @@ define(['underscore', 'backbone', 'mixins/Graph'],
           }
 
           this.currentQuestion = _.extend(question, {position:positionData});
-          console.log("... currentQuestion has been extended with 'previous' property");
-          this.updateSet(this.currentQuestion);//sync questions store
+          //console.log("... currentQuestion has been extended with 'previous' property");
+          this.QTN.update(this.currentQuestion);//sync questions store
 
           Backbone.trigger('question:change', this.currentQuestion);
         }
@@ -330,28 +219,6 @@ define(['underscore', 'backbone', 'mixins/Graph'],
             break;
         }
         return this.history;
-      },
-      setQuestions: function(resp){
-        //console.log('setQuestions:',resp);
-        this.questions = resp.data || resp || {};
-        //console.log("... this: ",this);
-      },
-      /*
-      * Update an individual question (within a set/screen)
-      */
-      updateQuestion: function(set, answer){
-        //console.log("UPDATEQUESTION: ",answer);
-        var answerValue = answer.booleanValue || answer.textValue;
-        var options = {answerId:answer.surveyAnswerId, answerValue:answerValue};
-        //console.log('... options:',options);
-        var question = this.findQuestionInSetByQid(set, answer.questionId, options);
-        return question;
-      },
-      //update the question set with changes.
-      updateSet: function(question){
-      //console.log('updateSet: ', question);
-        var _id = question.id;
-        this.questions[_id] = question;
       }
     };
 

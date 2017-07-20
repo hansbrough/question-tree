@@ -39,7 +39,7 @@ define(['underscore','jquery'],
         this.modules = _.without( _.keys(this.store), 'meta');
       },
       getFirstQuestionInModule: function(modId){
-        console.log("Graph"," getFirstQuestionInModule:",modId);
+        //console.log("Graph"," getFirstQuestionInModule:",modId);
         return (modId && this.store && this.store[modId]) ? this.store[ modId ].questions[0] : null;
       },
       getId: function(){
@@ -131,7 +131,7 @@ define(['underscore','jquery'],
       * return question object given a question id
       */
       getQuestionById: function(id){
-        console.log("Graph", " getQuestionById:",id);
+        //console.log("Graph", " getQuestionById:",id);
         var question = null;
         if(id){
           for(var i in this.store){
@@ -140,7 +140,7 @@ define(['underscore','jquery'],
               var len = questions.length;
               for(var x =0;x<len;x++){
                 if(id === questions[x].id){
-                  console.log("...found graph question");
+                  //console.log("...found graph question");
                   question = questions[x];
                   break;
                 }
@@ -159,13 +159,13 @@ define(['underscore','jquery'],
       * TODO: this is a work in progress... not working yet.
       */
       getSequentialEndPoint: function(question){
-        console.log("Graph"," getSequentialEndPoint:", question);
+        //console.log("Graph"," getSequentialEndPoint:", question);
         //console.log("...previous question:",question.previous);
         //var graphQuestion = this.getQuestionFromGraphById(question.previous);
         var graphQuestion = this.getQuestionById(question.previous);
         var module   = this.getModuleByQid(question.previous);
         //console.log("......graphQuestion",graphQuestion);
-        console.log("......module",);
+        //console.log("......module",);
         var orderedModQuestions = module.questions.map(function(a){return a.id});
         var endPtIdx = orderedModQuestions.indexOf(graphQuestion.next);
         //console.log("......endPtIdx:",endPtIdx);
