@@ -7,13 +7,14 @@ define(['underscore', 'backbone', 'mixins/Graph', 'mixins/Questions'],
     //constructor
     var _Mixin = function(options){
       console.log('DecisionTree Constructor');
-      options = options || {};
-      this.currentModuleId = null;
-      this.currentQuestion = null;
+      options                       = options || {};
+      this.currentModuleId          = null;
+      this.currentQuestion          = null;
       this.currentModuleQuestionIdx = null;
-      this.history    = [];
-      this.GRF        = null;
-      this.QTN        = null;
+      this.history                  = [];
+      this.GRF                      = null;
+      this.QTN                      = null;
+      this.runningDelta             = 0;
 
       this.initialize(options);
     };
@@ -40,13 +41,24 @@ define(['underscore', 'backbone', 'mixins/Graph', 'mixins/Questions'],
       * for conditional paths return length
       */
       getPathDelta: function(question){
-        //console.log("getPathDelta: ",question);
         var delta = 0;
         if(question && question.conditional){
-          this.GRF.getSequentialEndPoint(question);
-
+          console.log("getPathDelta: ",question);
+          var basePathEndPt = this.GRF.getSequentialEndPoint(question);
+          //console.log("......basePathEndPt:",basePathEndPt);
+          //var conditionalPathEndPt = question.next;
+          var conditionalPathEndPt = question.id;
+          //console.log("......conditionalPathEndPt",conditionalPathEndPt);
+          var basePathEndPtIdx = this.GRF.getIdxOfQidInModule(basePathEndPt);
+          var conditionalPathEndPtIdx = this.GRF.getIdxOfQidInModule(conditionalPathEndPt);
+          //console.log("......basePathEndPtIdx:",basePathEndPtIdx);
+          //console.log("......conditionalPathEndPtIdx:",conditionalPathEndPtIdx);
+          //if both question ids found in module
+          if(basePathEndPtIdx >= 0 && conditionalPathEndPtIdx >= 0){
+            delta = basePathEndPtIdx - conditionalPathEndPtIdx;
+          }
         }
-
+        console.log("...delta:",delta);
         return delta;
       },
       getPathType: function(){
@@ -79,7 +91,13 @@ define(['underscore', 'backbone', 'mixins/Graph', 'mixins/Questions'],
       * TODO: determine of 'detour' (increment count) or 'shortcut' (decrement from count) path.
       */
       getConditionalQuestionCount: function(newCurrentQuestion){
-        //console.log("DecisionTree"," getConditionalQuestionCount");
+        console.log("DecisionTree"," getConditionalQuestionCount");
+        //var pathDelta = this.getPathDelta(newCurrentQuestion);
+        //this.updateRunningDelta(pathDelta);
+        //var cnt = pathDelta;
+        var cnt = 0;
+        /*
+        //Note: old way which miscounted because it didnt take into account shortcuts and erroneously incremented cnt
         var cnt = 0;
         this.history.forEach( function(modId){
           //console.log("...modId:",modId);
@@ -88,12 +106,15 @@ define(['underscore', 'backbone', 'mixins/Graph', 'mixins/Questions'],
             cnt = cnt+1;
           }
         }, this);
+        */
         return cnt;
       },
-      getTotalQuestionCount: function(newCurrentQuestion){
-        //console.log("DecisionTree"," getTotalQuestionCount");
-        var cnt = this.GRF.getQuestionCount();
-        cnt += this.getConditionalQuestionCount(newCurrentQuestion);
+      getTotalQuestionCount: function(question){
+        console.log("DecisionTree"," getTotalQuestionCount");
+        this.updateRunningDelta(question);
+        var cnt = this.GRF.getBasePathLength();
+        //cnt += this.getConditionalQuestionCount(question);
+        cnt += this.runningDelta;
         return cnt;
       },
       /*
@@ -101,49 +122,51 @@ define(['underscore', 'backbone', 'mixins/Graph', 'mixins/Questions'],
       * account for conditional questions by setting current idx to items in history.
       */
       getQuestionPosition: function(question){
-        //console.log("Survey"," getQuestionPosition: ", question);
+        console.log("DecisionTree"," getQuestionPosition: ", question);
         var position    = {current:this.history.length, total:this.getTotalQuestionCount(question)};
         //console.log("...position:",position);
         return position;
       },
       /*
-      * return object w/next question id based on the current question.
-      * looks up current question in *graph* to determine the next squenced question id.
+      * uses graph store to return object based on 'next' question id from 'config' arg.
+      * by default uses 'next' question id from the current question.
       */
-      getNextQuestionFromGraph: function(){
-        //console.log("getNextQuestionFromGraph");
-        var question      = this.GRF.getNextModuleQuestion(this.currentModuleId, this.currentQuestion.next);
+      getNextQuestionFromGraph: function(config){
+        //console.log("DecisionTree"," getNextQuestionFromGraph config:",config);
+        var nextQuestionId = (config) ? config.id : this.currentQuestion.next;
+        //if next question obj passed in ... determine it's sequential 'next' question
+        var question      = this.GRF.getNextModuleQuestion(this.currentModuleId, nextQuestionId);
         var nextQuestion  = (question && question.next) ? {next:question.next} : {};
         //console.log("..... returning:",nextQuestion);
         return nextQuestion;
       },
       //return the next question (object)
       next: function(config){
-        //console.log("DecisionTree"," next:", config);
+        console.log("DecisionTree"," next:", config);
         var question = {views:0};
         if( !this.currentQuestion ){//0 case. first question.
-          //console.log("...first question");
+          console.log("...first question");
           this.setCurrentModuleId( this.GRF.getNextModuleId() );
           var firstModuleQuestion = this.GRF.getFirstQuestionInModule(this.currentModuleId);
           _.extend(question, firstModuleQuestion, {first:true});
-          //console.log("......",question);
+          console.log("......",question);
         }else{//find next question within current module
-          //console.log("...this.currentQuestion:",this.currentQuestion);
+          console.log("...this.currentQuestion:",this.currentQuestion);
           var nextModuleId    = this.GRF.getNextModuleId( this.currentModuleId ),
               nextQuestionObj  = this.getNextQuestionId( this.currentQuestion, config );
-          //console.log("...nextModuleId:",nextModuleId," nextQuestionObj:",nextQuestionObj);
+          console.log("...nextModuleId:",nextModuleId," nextQuestionObj:",nextQuestionObj);
           if(nextQuestionObj.id){//use next question in this module
-            //console.log("...currentQuestion is followed by another question in same module");
-            var graphNextQuestion = this.getNextQuestionFromGraph();
+            console.log("...currentQuestion is followed by another question in same module");
+            var graphNextQuestion = this.getNextQuestionFromGraph(nextQuestionObj);
             _.extend(question, nextQuestionObj, graphNextQuestion);
           }else if(nextModuleId && nextModuleId !== 'module_final'){//jump to next module
-            //console.log("...go to next module");
+            console.log("...go to next module");
             this.setCurrentModuleId( nextModuleId );
             var firstModuleQuestion = this.GRF.getFirstQuestionInModule(nextModuleId);
             _.extend(question, firstModuleQuestion);
           }else{//account for last module.
             //currently there is not much difference between this and previous, non-final condition.
-            //console.log("...graph complete");
+            console.log("...graph complete");
             this.setCurrentModuleId( nextModuleId );
             var firstModuleQuestion = this.GRF.getFirstQuestionInModule(nextModuleId);
             _.extend(question, firstModuleQuestion);
@@ -157,7 +180,7 @@ define(['underscore', 'backbone', 'mixins/Graph', 'mixins/Questions'],
           //console.log('..... question after being extended a second time: ',question);
         }
         this.setCurrentQuestion(question);
-        //console.log("next:", question);
+        console.log(".........next:", question);
         return question;
       },
       prev: function(){
@@ -184,15 +207,15 @@ define(['underscore', 'backbone', 'mixins/Graph', 'mixins/Questions'],
         Backbone.trigger('module:change',data);
       },
       setCurrentQuestion: function(question){
-        //console.log('Survey setCurrentQuestion: ',question);
+        //console.log("DecisionTree", "setCurrentQuestion:",question);
         if(question){
           this.setHistory('add', question);//add qid to history stack.
           var prevQuestionId  = (this.currentQuestion) ? this.currentQuestion.id : this.defaultScreen;
           question = _.extend(question, {previous:prevQuestionId});
-          this.getPathDelta(question);
+          //var pathDelta = this.getPathDelta(question);
           var positionData    = this.getQuestionPosition(question);
 
-          //console.log("...positionData:",positionData);
+          console.log("...positionData:",positionData);
           //determine if is second to last and last question.
           if( positionData.total / positionData.current === 1){
             _.extend(question, {last:true});
@@ -219,6 +242,12 @@ define(['underscore', 'backbone', 'mixins/Graph', 'mixins/Questions'],
             break;
         }
         return this.history;
+      },
+      updateRunningDelta: function(question){
+        console.log("DecisionTree"," updateRunningDelta");
+        var pathDelta = this.getPathDelta(question);
+        this.runningDelta += pathDelta;
+        console.log("...",this.runningDelta);
       }
     };
 

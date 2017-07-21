@@ -105,7 +105,8 @@ define([
           QUESTIONNAIRE.Survey = new Tree({
             defaultScreen:'opening',
             graph_name:'sequential',//optional
-            question_set_name:'sequential',//optional
+            //question_set_name:'sequential',//optional
+            question_set_name:'shortcut',//optional
             token: localStorage.getItem('idToken') || null
           });
         }

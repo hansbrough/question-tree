@@ -62,6 +62,14 @@ define(['underscore','jquery'],
         }
         return mod;
       },
+      /*
+      * return index of question id in it's module of associated questions
+      * default to -1 if 'qid' doesnt exist in graph
+      */
+      getIdxOfQidInModule: function(qid){
+        //console.log("Graph"," getIdxOfQidInModule:",qid);
+        return this.getModuleQids(qid).indexOf(qid);
+      },
       getModuleIdByQuestionSetid: function(QuestionSetid){
         //console.log("Graph"," getModuleIdByQuestionSetid:",QuestionSetid);
         var modId;
@@ -77,6 +85,21 @@ define(['underscore','jquery'],
           }
         }
         return modId;
+      },
+      /*
+      * given a question id return an array of all qid's in it's module
+      * default to empty array if 'qid' doesnt exist in graph
+      */
+      getModuleQids: function(qid){
+        //return (qid) ? this.getModuleByQid(qid).questions.map(function(a){return a.id}) : null;
+        var qids = [];
+        if(qid){
+          var mod = this.getModuleByQid(qid);
+          if(mod){
+            qids = mod.questions.map(function(a){return a.id});
+          }
+        }
+        return qids;
       },
       getModuleTitleById: function(id){
         return (this.store && id && this.store[id]) ? this.store[id].title : null;
@@ -117,8 +140,8 @@ define(['underscore','jquery'],
       * determine the total number of questions in the graph
       * (not inclusive of conditional questions)
       */
-      getQuestionCount: function(){
-        //console.log("Graph", " getQuestionCount");
+      getBasePathLength: function(){
+        //console.log("Graph", " getBasePathLength");
         var cnt = 0;
         this.modules.forEach( function(module){
           //console.log('.... number questions:',this.GRF.store[module].questions.length);
@@ -156,22 +179,13 @@ define(['underscore','jquery'],
       },
       /*
       * given a start point node for a conditional path - return the squential path end node
-      * TODO: this is a work in progress... not working yet.
+      * e.g. conditional node 'plantId_3' was reached from base path node 'plantId_1' so return
+      * the 'next' base path node of 'plantId_2' which would have been used was it not for the conditional branch.
       */
       getSequentialEndPoint: function(question){
         //console.log("Graph"," getSequentialEndPoint:", question);
-        //console.log("...previous question:",question.previous);
-        //var graphQuestion = this.getQuestionFromGraphById(question.previous);
-        var graphQuestion = this.getQuestionById(question.previous);
-        var module   = this.getModuleByQid(question.previous);
-        //console.log("......graphQuestion",graphQuestion);
-        //console.log("......module",);
-        var orderedModQuestions = module.questions.map(function(a){return a.id});
-        var endPtIdx = orderedModQuestions.indexOf(graphQuestion.next);
-        //console.log("......endPtIdx:",endPtIdx);
-        var conditionalReentryPt = orderedModQuestions.indexOf(question.next);
-        //console.log("......conditionalReentryPt:",conditionalReentryPt);
-        //console.log("........delta:",endPtIdx - conditionalReentryPt);
+        var prevGraphQuestion = this.getQuestionById(question.previous);
+        return prevGraphQuestion.next;
       }
     }
 
