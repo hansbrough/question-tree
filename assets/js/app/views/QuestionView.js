@@ -29,7 +29,7 @@ define([
 			  CSS_CURRENT     = 'page-current',
         CSS_OFFSCREEN   = 'offscreen',
         CSS_DISABLED    = 'disabled',
-        CSS_CHOICE      = 'lifestyle-choice',
+        CSS_CHOICE      = 'question-set-container',
         CSS_INTRO       = CSS_CHOICE + '.opening',
         STR_NEXT        = 'next',
         STR_BACK        = 'back',
@@ -41,8 +41,8 @@ define([
           'click #cta_next:not(.disabled)' : 'handleNextButtonClick',
           'click #cta_prev' : 'handleBackButtonClick',
           'click #cta_finish:not(.disabled)' : 'handleFinishButtonClick',
-          'change .lifestyle-choice' : 'handleInputChange',
-          'keyup .lifestyle-choice textarea' : 'handleTextAreaChange'
+          'change .question-set-container' : 'handleInputChange',
+          'keyup .question-set-container textarea' : 'handleTextAreaChange'
         },
         direction: STR_NEXT,
         criterionDisplayNameLUT:null,
@@ -84,14 +84,14 @@ define([
         * determine ranking of criterion based on user answers
         */
         calculateCriteriaResults: function(){
-          console.info("QuestionView"," calculateCriteriaResults");
+          //console.info("QuestionView"," calculateCriteriaResults");
           var recordSet = [],
               criteria = {};
           //create criterion count
           _.each(this.collection.models, function(model){
             var questionSetCategory = model.get('category');
             if(questionSetCategory === 'survey'){
-              console.log('...model labels:',model.get('labels'));
+              //console.log('...model labels:',model.get('labels'));
               model.get('labels').forEach(function(question){
                 if(question.answerValue === 'T' && question.criterion){
                   //console.log('....',question.criterion);
@@ -106,14 +106,14 @@ define([
             var modalityMatches = this.criterionModalitiesLUT[name];
             recordSet.push({ id:name, count: criteria[name], displayName:this.getCriterionDisplayName(name), modalities:modalityMatches });
           }
-          console.log("...recordSet: ",recordSet);
+          //console.log("...recordSet: ",recordSet);
           return recordSet;
         },
         /*
         *
         */
         calculateQuizResults: function(){
-          console.log("QuestionView"," calculateQuizResults");
+          //console.log("QuestionView"," calculateQuizResults");
           var recordSet = [],
               criteria = {};
           //create criterion count
@@ -123,23 +123,23 @@ define([
             var criterion = model.get('criterion');
             if(questionSetCategory === 'quiz'){
               //console.log('...model labels:',model.get('labels'));
-              console.log("...... criterion:",criterion);
+              //console.log("...... criterion:",criterion);
               model.get('labels').forEach(function(question){
                 if(question.answerValue === 'T' && question.qid === answerId){
-                  console.log(".... ",answerId," is correct");
+                  //console.log(".... ",answerId," is correct");
                   criteria[criterion] = criteria[criterion] ? criteria[criterion]+1: 1;
                 }
               });
             }
           });
-          console.log("...criteria: ",criteria);
+          //console.log("...criteria: ",criteria);
 
           //transform criteria to template ready array.
           for(var name in criteria){
             //var modalityMatches = this.criterionModalitiesLUT[name];
             recordSet.push({ id:name, count: criteria[name], displayName:name });
           }
-          console.log("...recordSet: ",recordSet);
+          //console.log("...recordSet: ",recordSet);
           return recordSet;
         },
         /*
@@ -150,13 +150,13 @@ define([
         * 4. previous item which has previously been rendered.
         */
         determineRenderSource: function(model){
-          console.log("QuestionView"," determineRenderSource: ",model);
-          console.log("...module name:",model.get('module'));
+          //console.log("QuestionView"," determineRenderSource: ",model);
+          //console.log("...module name:",model.get('module'));
           var changedProps = _.keys(model.changed),
               isFinalScreen = model.get('last');
 
           if(isFinalScreen){
-            console.log('...isFinalScreen so re-render:',isFinalScreen);
+            //console.log('...isFinalScreen so re-render:',isFinalScreen);
             //var criteriaResults = this.calculateCriteriaResults();
             var quizResults = this.calculateQuizResults();
             //model.set({results:criteriaResults});

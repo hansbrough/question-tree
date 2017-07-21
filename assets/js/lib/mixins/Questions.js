@@ -23,7 +23,7 @@ define(['underscore','jquery'],
         this.store = resp.data || resp || {};
       },
       fetch: function(config_name){
-        config_name = config_name || 'index.js';
+        config_name = config_name+'.json' || 'index.js';
         var api_url = '/data/questions/'+config_name;
         $.ajax({
               url: api_url,

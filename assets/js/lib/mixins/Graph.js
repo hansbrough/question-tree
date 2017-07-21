@@ -22,7 +22,7 @@ define(['underscore','jquery'],
       },
       fetch: function(config_name){
         //console.log("Graph"," fetch");
-        config_name = config_name || 'index.js';
+        config_name = config_name+'.json' || 'index.js';
         var api_url = '/data/graph/'+config_name;
 
         $.ajax({

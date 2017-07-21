@@ -79,10 +79,10 @@ define(['underscore', 'backbone', 'mixins/Graph', 'mixins/Questions'],
       * TODO: determine of 'detour' (increment count) or 'shortcut' (decrement from count) path.
       */
       getConditionalQuestionCount: function(newCurrentQuestion){
-        console.log("DecisionTree"," getConditionalQuestionCount");
+        //console.log("DecisionTree"," getConditionalQuestionCount");
         var cnt = 0;
         this.history.forEach( function(modId){
-          console.log("...modId:",modId);
+          //console.log("...modId:",modId);
           var question = (modId === newCurrentQuestion.id) ? newCurrentQuestion : this.QTN.getNodeById(modId);
           if(question.conditional){
             cnt = cnt+1;

@@ -104,8 +104,8 @@ define([
           //todo:find better way to reference the parent application object - not by instantiated name
           QUESTIONNAIRE.Survey = new Tree({
             defaultScreen:'opening',
-            //graph_name:'ucsf_ckd_graph',//optional
-            //question_set_name:'ucsf_ckd_questions',//optional
+            graph_name:'sequential',//optional
+            question_set_name:'sequential',//optional
             token: localStorage.getItem('idToken') || null
           });
         }
