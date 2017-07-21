@@ -1,5 +1,5 @@
-// Define an AMD module
-// Decision Tree Logic
+// Decision Tree
+// uses Graph and Question methods to determine user flow through Survey / Quiz
 
 define(['underscore', 'backbone', 'mixins/Graph', 'mixins/Questions'],
   function (_, Backbone, GraphHelpers, QuestionsHelpers) {
@@ -34,9 +34,6 @@ define(['underscore', 'backbone', 'mixins/Graph', 'mixins/Questions'],
       getCurrentQuestion: function(){
         return this.currentQuestion;
       },
-      getDistanceBetweenNodes: function(){
-        console.log("getDistanceBetweenNodes");
-      },
       /*
       * for conditional paths return length
       */
@@ -56,13 +53,13 @@ define(['underscore', 'backbone', 'mixins/Graph', 'mixins/Questions'],
           //if both question ids found in module
           if(basePathEndPtIdx >= 0 && conditionalPathEndPtIdx >= 0){
             delta = basePathEndPtIdx - conditionalPathEndPtIdx;
+          } else if(basePathEndPtIdx >= 0 && this.QTN.getNodeById(conditionalPathEndPt)){//Detour Path
+            console.log("......Detour Path, ",conditionalPathEndPt," defined just not in current module.")
+            delta = 1;
           }
         }
         console.log("...delta:",delta);
         return delta;
-      },
-      getPathType: function(){
-        console.log("DecisionTree"," getPathType");
       },
       /*
       * based on questonObj determine which level of 'next' we should use - from graph or questions
@@ -70,20 +67,21 @@ define(['underscore', 'backbone', 'mixins/Graph', 'mixins/Questions'],
       */
       getNextQuestionId: function(question, options){
         options = options || {};
-        //console.log("getNextQuestionId: ",question, options);
+        console.log("getNextQuestionId: ",question, options);
         var payload = {id:null};
         if(_.isNumber(options.labelIdx) && question.labels && question.labels[options.labelIdx] && question.labels[options.labelIdx].next){
-          //console.log("... conditional by labelIdx: ",options.labelIdx);
+          console.log("... conditional by labelIdx: ",options.labelIdx);
           payload.id = question.labels[options.labelIdx].next;
-          //payload.module = this.findModuleIdByQuestionSetid(payload.id);
-          payload.module = this.GRF.getModuleIdByQuestionSetid(payload.id);
           payload.conditional = true;
         }else if(question.next){
-          //console.log("... by graph");
+          console.log("... by graph");
           payload.id = question.next;
-          //payload.module = this.findModuleIdByQuestionSetid(payload.id);
-          payload.module = this.GRF.getModuleIdByQuestionSetid(payload.id);
+        }else if(question.conditional){
+          console.log("... no next value. return to base path.");
+          payload.id = this.GRF.getSequentialEndPoint(question);
         }
+        payload.module = this.GRF.getModuleIdByQuestionSetid(payload.id);
+        console.log("......payload:",payload);
         return payload;
       },
       /*
@@ -110,10 +108,9 @@ define(['underscore', 'backbone', 'mixins/Graph', 'mixins/Questions'],
         return cnt;
       },
       getTotalQuestionCount: function(question){
-        console.log("DecisionTree"," getTotalQuestionCount");
+        //console.log("DecisionTree"," getTotalQuestionCount");
         this.updateRunningDelta(question);
         var cnt = this.GRF.getBasePathLength();
-        //cnt += this.getConditionalQuestionCount(question);
         cnt += this.runningDelta;
         return cnt;
       },
@@ -122,7 +119,7 @@ define(['underscore', 'backbone', 'mixins/Graph', 'mixins/Questions'],
       * account for conditional questions by setting current idx to items in history.
       */
       getQuestionPosition: function(question){
-        console.log("DecisionTree"," getQuestionPosition: ", question);
+        //console.log("DecisionTree"," getQuestionPosition: ", question);
         var position    = {current:this.history.length, total:this.getTotalQuestionCount(question)};
         //console.log("...position:",position);
         return position;
@@ -244,10 +241,10 @@ define(['underscore', 'backbone', 'mixins/Graph', 'mixins/Questions'],
         return this.history;
       },
       updateRunningDelta: function(question){
-        console.log("DecisionTree"," updateRunningDelta");
+        //console.log("DecisionTree"," updateRunningDelta");
         var pathDelta = this.getPathDelta(question);
         this.runningDelta += pathDelta;
-        console.log("...",this.runningDelta);
+        //console.log("...",this.runningDelta);
       }
     };
 

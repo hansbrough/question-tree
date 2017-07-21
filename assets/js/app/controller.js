@@ -102,11 +102,14 @@ define([
         if(!QUESTIONNAIRE.Survey){
           //initialize the Decision Tree
           //todo:find better way to reference the parent application object - not by instantiated name
+          //note: decisionTree config.graph_name, & .question_set_name are optional values
           QUESTIONNAIRE.Survey = new Tree({
             defaultScreen:'opening',
-            graph_name:'sequential',//optional
-            //question_set_name:'sequential',//optional
-            question_set_name:'shortcut',//optional
+            //graph_name:'sequential',
+            graph_name:'detour',
+            //question_set_name:'sequential',
+            //question_set_name:'shortcut',
+            question_set_name:'detour',
             token: localStorage.getItem('idToken') || null
           });
         }

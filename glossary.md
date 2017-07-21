@@ -39,7 +39,7 @@ permalink: /glossary/
 
   <dt>Graph Length</dt>
   <dd>
-    The total number of question sets encountered by a user from start to finish during quiz or survey. Can include from one to many paths e.g. a simple Sequential or a Sequential Path which includes several conditional branches.
+    The total number of question sets encountered by a user from start to finish during quiz or survey. Can include from one to many paths e.g. a simple Sequential or a path which includes several conditional branches.
   </dd>
 
   <dt>Multi-Branch Path</dt>
