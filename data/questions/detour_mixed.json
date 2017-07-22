@@ -1,0 +1,110 @@
+{
+  "plantId_1":{
+    "title":"Which of the following is the name of this plant?",
+    "media": [
+      {"type":"image", "src":"/assets/img/al_aculeata_a_200.jpg"}
+    ],
+    "labels":[
+      {"title":"Aloe aculeata", "qid":"105"},
+      {"title":"Agave sp.", "qid":"106"},
+      {"title":"Echeveria x agave 'Mixed'", "qid":"107", "next":"plantId_5"},
+      {"title":"Gasteria baylissiana", "qid":"108"}
+    ],
+    "actual":"105",
+    "category":"quiz",
+    "criterion":"aloe",
+    "type":"radio"
+  },
+  "plantId_2":{
+    "title":"Which of the following is the name of this plant?",
+    "media": [
+      {"type":"image", "src":"/assets/img/a_brevifolia_c_200.jpg"}
+    ],
+    "labels":[
+      {"title":"Aloe arborescens", "qid":"109"},
+      {"title":"Aloe vera", "qid":"110"},
+      {"title":"Aloe africana", "qid":"111"},
+      {"title":"Aloe brevifolia", "qid":"112"},
+      {"title":"Aloe aculeata", "qid":"113"}
+    ],
+    "actual":"112",
+    "category":"quiz",
+    "criterion":"aloe",
+    "type":"radio"
+  },
+  "plantId_3":{
+    "title":"Which of the following is the name of this plant?",
+    "media": [
+      {"type":"image", "src":"/assets/img/a_bracteosa_d_200.jpg"}
+    ],
+    "labels":[
+      {"title":"Agave celsii", "qid":"114"},
+      {"title":"Aloe vera", "qid":"115"},
+      {"title":"Agave bracteosa", "qid":"116"},
+      {"title":"Echeveria agavoides", "qid":"117"},
+      {"title":"Dudlyea brittonii", "qid":"118"}
+    ],
+    "actual":"116",
+    "category":"quiz",
+    "criterion":"agave",
+    "type":"radio"
+  },
+  "plantId_4":{
+    "title":"Which of the following is the name of this plant?",
+    "media": [
+      {"type":"image", "src":"/assets/img/a_bracteosa_h_200.jpg"}
+    ],
+    "labels":[
+      {"title":"Agave celsii", "qid":"114"},
+      {"title":"Aloe vera", "qid":"115"},
+      {"title":"Agave bracteosa", "qid":"116"},
+      {"title":"Echeveria agavoides", "qid":"117"},
+      {"title":"Dudlyea brittonii", "qid":"118"}
+    ],
+    "actual":"116",
+    "category":"quiz",
+    "criterion":"agave",
+    "type":"radio",
+    "comment":"another chance at agave bracteosa w/a different picture."
+  },
+  "plantId_5":{
+    "title":"A Detour Question",
+    "media": [
+      {"type":"image", "src":"/assets/img/a_bracteosa_frost_200.jpg"}
+    ],
+    "labels":[
+      {"title":"Agave bracteosa 'Calamar'", "qid":"119"},
+      {"title":"Aloe sp.", "qid":"120"},
+      {"title":"Agave bracteosa 'branch 1'", "qid":"121", "next":"plantId_6"},
+      {"title":"Echeveria 'shortcut'", "qid":"122", "next":"plantId_3"},
+      {"title":"Agave bracteosa varigata", "qid":"123"}
+    ],
+    "actual":"121",
+    "category":"quiz",
+    "criterion":"agave",
+    "type":"radio"
+  },
+  "plantId_6":{
+    "title":"Compound branch Question",
+    "media": [
+      {"type":"image", "src":"/assets/img/a_attenuata_a_200.jpg"}
+    ],
+    "labels":[
+      {"title":"Agave bovicornuta", "qid":"124"},
+      {"title":"Agave havardiana", "qid":"125"},
+      {"title":"Agave attenuata", "qid":"126"},
+      {"title":"Agave lophantha", "qid":"127"},
+      {"title":"Agave bracteosa", "qid":"128"}
+    ],
+    "actual":"126",
+    "category":"quiz",
+    "criterion":"agave",
+    "type":"radio"
+  },
+
+  "survey_results":{
+    "type":"summary",
+    "qid":"10000"
+  }
+
+}

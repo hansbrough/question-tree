@@ -1,12 +1,13 @@
 // Decision Tree
 // uses Graph and Question methods to determine user flow through Survey / Quiz
+// todo: homemade custom evts instead of backbone
 
 define(['underscore', 'backbone', 'mixins/Graph', 'mixins/Questions'],
   function (_, Backbone, GraphHelpers, QuestionsHelpers) {
 
     //constructor
     var _Mixin = function(options){
-      console.log('DecisionTree Constructor');
+      //console.log('DecisionTree Constructor');
       options                       = options || {};
       this.currentModuleId          = null;
       this.currentQuestion          = null;
@@ -40,23 +41,26 @@ define(['underscore', 'backbone', 'mixins/Graph', 'mixins/Questions'],
       getPathDelta: function(question){
         var delta = 0;
         if(question && question.conditional){
-          console.log("getPathDelta: ",question);
-          question = this.QTN.getFirstConditionalInPath(question);
-          var basePathEndPt = this.GRF.getSequentialEndPoint(question);
-          console.log("......basePathEndPt:",basePathEndPt);
-          //var conditionalPathEndPt = question.next;
-          var conditionalPathEndPt = question.id;
+          console.log("DecisionTree"," getPathDelta: ",question);
+          var targetQuestionInBasePath = this.GRF.getIsQidInBasePath(question.id);
+          var firstConditional = this.QTN.getFirstConditionalInPath(question);
+          var basePathEndPt = this.GRF.getSequentialEndPoint(firstConditional);
+          //console.log("......basePathEndPt:",basePathEndPt);
+          var conditionalPathEndPt = firstConditional.id;
           //console.log("......conditionalPathEndPt",conditionalPathEndPt);
           var basePathEndPtIdx = this.GRF.getIdxOfQidInModule(basePathEndPt);
           var conditionalPathEndPtIdx = this.GRF.getIdxOfQidInModule(conditionalPathEndPt);
-          console.log("......basePathEndPtIdx:",basePathEndPtIdx);
-          console.log("......conditionalPathEndPtIdx:",conditionalPathEndPtIdx);
-          console.log("......QTN.getNodeById():",this.QTN.getNodeById(conditionalPathEndPt))
-          //if both question ids found in module
-          if(basePathEndPtIdx >= 0 && conditionalPathEndPtIdx >= 0){
-            console.log("......both question ids found in module");
+          //console.log("......basePathEndPtIdx:",basePathEndPtIdx);
+          //console.log("......conditionalPathEndPtIdx:",conditionalPathEndPtIdx);
+          //console.log("......QTN.getNodeById():",this.QTN.getNodeById(conditionalPathEndPt))
+          //determin path type
+          if(basePathEndPtIdx >= 0 && conditionalPathEndPtIdx >= 0){//Shortcut
+            console.log("......straight shortcut");
             delta = basePathEndPtIdx - conditionalPathEndPtIdx;
-          } else if(basePathEndPtIdx >= 0 && this.QTN.getNodeById(conditionalPathEndPt)){//Detour Path
+          } else if(basePathEndPtIdx >= 0 && targetQuestionInBasePath){//Shortcut (from mixed path)
+            console.log("......mixed shortcut");
+            delta = basePathEndPtIdx - this.GRF.getIdxOfQidInModule(question.id);
+          } else if(basePathEndPtIdx >= 0 && this.QTN.getNodeById(conditionalPathEndPt)){//Detour
             console.log("......Detour Path, ",conditionalPathEndPt," defined just not in current module.")
             delta = 1;
           }
@@ -70,22 +74,22 @@ define(['underscore', 'backbone', 'mixins/Graph', 'mixins/Questions'],
       */
       getNextQuestionId: function(question, options){
         options = options || {};
-        console.log("getNextQuestionId: ",question, options);
+        //console.log("getNextQuestionId: ",question, options);
         var payload = {id:null};
         if(_.isNumber(options.labelIdx) && question.labels && question.labels[options.labelIdx] && question.labels[options.labelIdx].next){
-          console.log("... conditional by labelIdx: ",options.labelIdx);
+          //console.log("... conditional by labelIdx: ",options.labelIdx);
           payload.id = question.labels[options.labelIdx].next;
           payload.conditional = true;
         }else if(question.next){
-          console.log("... by graph");
+          //console.log("... by graph");
           payload.id = question.next;
         }else if(question.conditional){
-          console.log("... no next value. return to base path.");
+          //console.log("... no next value. return to base path.");
           question = this.QTN.getFirstConditionalInPath(question);
           payload.id = this.GRF.getSequentialEndPoint(question);
         }
-        payload.module = this.GRF.getModuleIdByQuestionSetid(payload.id);
-        console.log("......payload:",payload);
+        payload.module = this.GRF.getModuleIdByQid(payload.id);
+        //console.log("......payload:",payload);
         return payload;
       },
       getTotalQuestionCount: function(question){

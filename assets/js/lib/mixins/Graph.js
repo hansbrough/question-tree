@@ -70,14 +70,14 @@ define(['underscore','jquery'],
         //console.log("Graph"," getIdxOfQidInModule:",qid);
         return this.getModuleQids(qid).indexOf(qid);
       },
-      getModuleIdByQuestionSetid: function(QuestionSetid){
-        //console.log("Graph"," getModuleIdByQuestionSetid:",QuestionSetid);
+      getModuleIdByQid: function(qid){
+        //console.log("Graph"," getModuleIdByQid:",qid);
         var modId;
         for(var i in this.store){
           var questions = this.store[i].questions;
           if(questions){
             for(var x =0;x<questions.length;x++){
-              if(QuestionSetid === questions[x].id){
+              if(qid === questions[x].id){
                 modId = i;
                 break;
               }
@@ -91,7 +91,6 @@ define(['underscore','jquery'],
       * default to empty array if 'qid' doesnt exist in graph
       */
       getModuleQids: function(qid){
-        //return (qid) ? this.getModuleByQid(qid).questions.map(function(a){return a.id}) : null;
         var qids = [];
         if(qid){
           var mod = this.getModuleByQid(qid);
@@ -149,6 +148,13 @@ define(['underscore','jquery'],
         }, this);
         //console.log("...cnt:",cnt);
         return cnt;
+      },
+      /*
+      * return boolean describing if question id is part of the 'base path'
+      */
+      getIsQidInBasePath: function(qid){
+        //console.log("Graph", " getIsQidInBasePath qid:",qid);
+        return (this.getModuleIdByQid(qid)) ? true : false;
       },
       /*
       * return question object given a question id
