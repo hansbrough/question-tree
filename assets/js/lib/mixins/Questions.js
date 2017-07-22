@@ -23,8 +23,8 @@ define(['underscore','jquery'],
         this.store = resp.data || resp || {};
       },
       fetch: function(config_name){
-        config_name = config_name+'.json' || 'index.js';
-        var api_url = '/data/questions/'+config_name;
+        config_name = config_name || 'index';
+        var api_url = '/data/questions/'+config_name+'.json';
         $.ajax({
               url: api_url,
               type: 'GET',
