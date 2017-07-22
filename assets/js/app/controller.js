@@ -105,12 +105,13 @@ define([
           //note: decisionTree config.graph_name, & .question_set_name are optional values
           QUESTIONNAIRE.Survey = new Tree({
             defaultScreen:'opening',
-            //graph_name:'sequential',
-            //graph_name:'detour',
+            graph_name:'sequential',
+            graph_name:'detour',
             //question_set_name:'sequential',//use with 'sequential' graph
             //question_set_name:'shortcut',//use with 'sequential' graph
             //question_set_name:'detour',//use with 'detour' graph
             //question_set_name:'detour_multinode'//use with 'detour' graph
+            question_set_name:'detour_multinode_multibranch'//use with 'detour' graph
           });
         }
         if( !this.views.QuestionView ){

@@ -6,8 +6,8 @@
     ],
     "labels":[
       {"title":"Aloe aculeata", "qid":"105"},
-      {"title":"'detour' Agave", "qid":"106", "next":"plantId_5"},
-      {"title":"Aloe africana", "qid":"107"},
+      {"title":"Agave 'Detour 1'", "qid":"106", "next":"plantId_5"},
+      {"title":"Echeveria sp.", "qid":"107"},
       {"title":"Gasteria baylissiana", "qid":"108"}
     ],
     "actual":"105",

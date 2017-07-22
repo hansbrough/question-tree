@@ -7,7 +7,7 @@
     "labels":[
       {"title":"Aloe aculeata", "qid":"105"},
       {"title":"'detour' Agave", "qid":"106", "next":"plantId_5"},
-      {"title":"Echeveria sp.", "qid":"107"},
+      {"title":"Echeveria 'Detour 2'", "qid":"107", "next":"plantId_7"},
       {"title":"Gasteria baylissiana", "qid":"108"}
     ],
     "actual":"105",
@@ -102,18 +102,52 @@
     "type":"radio"
   },
   "plantId_7":{
-    "title":"Unused Question - not in a path.",
+    "title":"branch 2 Detour Question 1",
     "media": [
       {"type":"image", "src":"/assets/img/e_subrigida_a_200.jpg"}
     ],
     "labels":[
       {"title":"Kalinkoe luciae", "qid":"129"},
       {"title":"Agave havardiana", "qid":"130"},
-      {"title":"Echeveria subrigida", "qid":"131"},
+      {"title":"Echeveria subrigida", "qid":"131", "next":"plantId_8"},
       {"title":"Echeveria lophantha", "qid":"132"},
       {"title":"Echeveria gigantium", "qid":"133"}
     ],
     "actual":"131",
+    "category":"quiz",
+    "criterion":"echeveria",
+    "type":"radio"
+  },
+  "plantId_8":{
+    "title":"branch 2 Detour Question 2",
+    "media": [
+      {"type":"image", "src":"/assets/img/e_agavoides_b_200.jpg"}
+    ],
+    "labels":[
+      {"title":"Echeveria pulidonis", "qid":"134"},
+      {"title":"Echeveria derenbergii", "qid":"135"},
+      {"title":"Echeveria agavoides", "qid":"136", "next":"plantId_9"},
+      {"title":"Echeveria elegans", "qid":"137"},
+      {"title":"Echeveria subrigida", "qid":"138"}
+    ],
+    "actual":"135",
+    "category":"quiz",
+    "criterion":"echeveria",
+    "type":"radio"
+  },
+  "plantId_9":{
+    "title":"branch 2 Detour Question 3",
+    "media": [
+      {"type":"image", "src":"/assets/img/e_pulidonis_a.jpg"}
+    ],
+    "labels":[
+      {"title":"Echeveria pulidonis", "qid":"139"},
+      {"title":"Echeveria derenbergii", "qid":"140"},
+      {"title":"Echeveria agavoides", "qid":"141"},
+      {"title":"Echeveria elegans", "qid":"142"},
+      {"title":"Echeveria subrigida", "qid":"143"}
+    ],
+    "actual":"139",
     "category":"quiz",
     "criterion":"echeveria",
     "type":"radio"
