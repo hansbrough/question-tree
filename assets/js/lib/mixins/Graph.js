@@ -181,11 +181,12 @@ define(['underscore','jquery'],
       * given a start point node for a conditional path - return the squential path end node
       * e.g. conditional node 'plantId_3' was reached from base path node 'plantId_1' so return
       * the 'next' base path node of 'plantId_2' which would have been used was it not for the conditional branch.
+      * defaults to null value if question not found in graph base path (e.g. 'detour' question)
       */
       getSequentialEndPoint: function(question){
         //console.log("Graph"," getSequentialEndPoint:", question);
         var prevGraphQuestion = this.getQuestionById(question.previous);
-        return prevGraphQuestion.next;
+        return (prevGraphQuestion) ? prevGraphQuestion.next : null;
       }
     }
 

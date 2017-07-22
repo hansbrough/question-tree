@@ -41,17 +41,20 @@ define(['underscore', 'backbone', 'mixins/Graph', 'mixins/Questions'],
         var delta = 0;
         if(question && question.conditional){
           console.log("getPathDelta: ",question);
+          question = this.QTN.getFirstConditionalInPath(question);
           var basePathEndPt = this.GRF.getSequentialEndPoint(question);
-          //console.log("......basePathEndPt:",basePathEndPt);
+          console.log("......basePathEndPt:",basePathEndPt);
           //var conditionalPathEndPt = question.next;
           var conditionalPathEndPt = question.id;
           //console.log("......conditionalPathEndPt",conditionalPathEndPt);
           var basePathEndPtIdx = this.GRF.getIdxOfQidInModule(basePathEndPt);
           var conditionalPathEndPtIdx = this.GRF.getIdxOfQidInModule(conditionalPathEndPt);
-          //console.log("......basePathEndPtIdx:",basePathEndPtIdx);
-          //console.log("......conditionalPathEndPtIdx:",conditionalPathEndPtIdx);
+          console.log("......basePathEndPtIdx:",basePathEndPtIdx);
+          console.log("......conditionalPathEndPtIdx:",conditionalPathEndPtIdx);
+          console.log("......QTN.getNodeById():",this.QTN.getNodeById(conditionalPathEndPt))
           //if both question ids found in module
           if(basePathEndPtIdx >= 0 && conditionalPathEndPtIdx >= 0){
+            console.log("......both question ids found in module");
             delta = basePathEndPtIdx - conditionalPathEndPtIdx;
           } else if(basePathEndPtIdx >= 0 && this.QTN.getNodeById(conditionalPathEndPt)){//Detour Path
             console.log("......Detour Path, ",conditionalPathEndPt," defined just not in current module.")
@@ -78,34 +81,12 @@ define(['underscore', 'backbone', 'mixins/Graph', 'mixins/Questions'],
           payload.id = question.next;
         }else if(question.conditional){
           console.log("... no next value. return to base path.");
+          question = this.QTN.getFirstConditionalInPath(question);
           payload.id = this.GRF.getSequentialEndPoint(question);
         }
         payload.module = this.GRF.getModuleIdByQuestionSetid(payload.id);
         console.log("......payload:",payload);
         return payload;
-      },
-      /*
-      * Determine the total number of *conditional* questions that have been answered.
-      * TODO: determine of 'detour' (increment count) or 'shortcut' (decrement from count) path.
-      */
-      getConditionalQuestionCount: function(newCurrentQuestion){
-        console.log("DecisionTree"," getConditionalQuestionCount");
-        //var pathDelta = this.getPathDelta(newCurrentQuestion);
-        //this.updateRunningDelta(pathDelta);
-        //var cnt = pathDelta;
-        var cnt = 0;
-        /*
-        //Note: old way which miscounted because it didnt take into account shortcuts and erroneously incremented cnt
-        var cnt = 0;
-        this.history.forEach( function(modId){
-          //console.log("...modId:",modId);
-          var question = (modId === newCurrentQuestion.id) ? newCurrentQuestion : this.QTN.getNodeById(modId);
-          if(question.conditional){
-            cnt = cnt+1;
-          }
-        }, this);
-        */
-        return cnt;
       },
       getTotalQuestionCount: function(question){
         //console.log("DecisionTree"," getTotalQuestionCount");
