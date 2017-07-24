@@ -8,17 +8,10 @@ define([],
     var hOP = topics.hasOwnProperty;
 
     return {
-      subscribe: function(topic, listener, scope) {
+      subscribe: function(topic, listener) {
         // Create the topic's object if not yet created
         if(!hOP.call(topics, topic)) topics[topic] = [];
-        console.log(" sub listener:",listener);
 
-        if(scope){
-          //console.log("PubSub"," subscribe bind scope to listener");
-          //console.log("...scope:",scope);
-          //Object.assign(listener, scope);
-          //console.log("listener",listener);
-        }
         // Add the listener to queue
         var index = topics[topic].push(listener) -1;
 

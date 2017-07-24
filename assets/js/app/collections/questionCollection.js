@@ -18,7 +18,6 @@ define([
         });
 
         //listen to custom events
-        //this.listenTo( Backbone, 'question:change', this.catch );
         PubSub.subscribe('question:change', this.catch.bind(this) );
         this.listenTo( Backbone, 'questionSet:answered', this.setAnswerIds );
         this.listenTo(Backbone, 'question:bools:updated', this.setBoolAnswerValues);
