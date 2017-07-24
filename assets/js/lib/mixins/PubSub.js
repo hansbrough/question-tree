@@ -28,7 +28,6 @@ define([],
 
         // Cycle through topics queue, fire!
         topics[topic].forEach(function(item) {
-          console.log("publish topic:",topic," item:",item);
         	item(info != undefined ? info : {});
         });
       }

@@ -33,7 +33,8 @@ define(['underscore', 'mixins/Graph', 'mixins/Questions', 'mixins/PubSub'],
         this.QTN = new QuestionsHelpers({'config_name':questionSetName});
 
         //extend
-        Object.assign(this, PubSub);
+        //Object.assign(this, PubSub);
+        _.extend(this, PubSub);
       },
       getCurrentQuestion: function(){
         return this.currentQuestion;
