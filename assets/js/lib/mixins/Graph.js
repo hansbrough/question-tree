@@ -1,8 +1,8 @@
 //Define an AMD module
 //Graph Helpers
 
-define(['underscore','jquery'],
-  function (_,$) {
+define(['underscore'],
+  function (_) {
 
     var _Mixin = function(options){
       options = options || {};
@@ -24,14 +24,7 @@ define(['underscore','jquery'],
         //console.log("Graph"," fetch");
         config_name = config_name || 'index';
         var api_url = '/data/graph/'+config_name+'.json';
-
-        $.ajax({
-              url: api_url,
-              type: 'GET',
-              dataType: 'json',
-              contentType: "application/json; charset=utf-8",
-              headers: {}
-            }).done( this.digest );
+        fetch(api_url,{method:'get'}).then(function(resp){ return resp.json() }).then(this.digest);
       },
       digest: function(resp){
         //console.log("Graph"," digest:",resp);

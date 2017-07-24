@@ -1,8 +1,8 @@
 //Define an AMD module
 //Question Helper Methods
 
-define(['underscore','jquery'],
-  function (_,$) {
+define(['underscore'],
+  function (_) {
     var _Mixin = function(options){
       options = options || {};
 
@@ -19,18 +19,13 @@ define(['underscore','jquery'],
         this.fetch(options.config_name);
       },
       digest: function(resp){
-        //console.log("Questions"," digest");
+        //console.log("Questions"," digest:",resp);
         this.store = resp.data || resp || {};
       },
       fetch: function(config_name){
         config_name = config_name || 'index';
         var api_url = '/data/questions/'+config_name+'.json';
-        $.ajax({
-              url: api_url,
-              type: 'GET',
-              dataType: 'json',
-              contentType: "application/json; charset=utf-8"
-            }).done( this.digest );
+        fetch(api_url,{method:'get'}).then(function(resp){ return resp.json() }).then(this.digest);
       },
       /*
       * return which of a question's predecessors was first in a conditional branch.
