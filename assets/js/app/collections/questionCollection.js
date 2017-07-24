@@ -1,8 +1,9 @@
 define([
   'underscore',
   'backbone',
+  'mixins/PubSub',
   'app/models/QuestionModel'
-], function(_, Backbone, Model){
+], function(_, Backbone, PubSub, Model){
     var Collection = Backbone.Collection.extend({
       model: Model,
       parse: function(response, options){
@@ -17,7 +18,8 @@ define([
         });
 
         //listen to custom events
-        this.listenTo( Backbone, 'question:change', this.catch );
+        //this.listenTo( Backbone, 'question:change', this.catch );
+        PubSub.subscribe('question:change', this.catch.bind(this) );
         this.listenTo( Backbone, 'questionSet:answered', this.setAnswerIds );
         this.listenTo(Backbone, 'question:bools:updated', this.setBoolAnswerValues);
         this.listenTo(Backbone, 'question:text:updated', this.setTextAnswerValue);

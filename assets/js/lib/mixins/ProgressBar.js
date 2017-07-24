@@ -1,8 +1,8 @@
 //Define an AMD module
 // Progress Bar
 
-define(['underscore','jquery','backbone'],
-  function (_,$,Backbone) {
+define(['underscore','jquery','mixins/PubSub'],
+  function (_,$,PubSub) {
 
     var CSS_BAR = 'progress.bar';
 
@@ -18,14 +18,10 @@ define(['underscore','jquery','backbone'],
         this.options.delay = this.options.delay || 500;
 
         _.bindAll(this, 'update');
-        //hook up event listening
-        _.extend(this, Backbone.Events);
         //listen for custom events
-        this.listenTo( Backbone, 'question:change', this.update );
+        PubSub.subscribe('question:change', this.update.bind(this) );
       },
       update: function(e){
-        //note: can't currently save node references because of the way App.js works.
-        //which is why we are grabbing node refs each time handlers run.
         var timeoutID, percentage;
         if(e.position){
           percentage = (e.position.current / e.position.total) * 100;

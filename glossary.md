@@ -9,7 +9,7 @@ permalink: /glossary/
 <dl>
   <dt>Base Path</dt>
   <dd>
-    The route through a Sequential Path which avoids any conditional paths.
+    The sequential route through a graph which avoids any conditional paths.
   </dd>
 
   <dt>Compound Conditional Path</dt>
@@ -40,6 +40,11 @@ permalink: /glossary/
   <dt>Graph Length</dt>
   <dd>
     The total number of question sets encountered by a user from start to finish during quiz or survey. Can include from one to many paths e.g. a simple Sequential or a path which includes several conditional branches.
+  </dd>
+
+  <dt>Mixed Conditional Path</dt>
+  <dd>
+    A conditional path that contains both a detour and shortcut paths.
   </dd>
 
   <dt>Multi-Branch Path</dt>

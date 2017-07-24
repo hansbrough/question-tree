@@ -1,13 +1,13 @@
 // Decision Tree
 // uses Graph and Question methods to determine user flow through Survey / Quiz
-// todo: homemade custom evts instead of backbone
 
-define(['underscore', 'backbone', 'mixins/Graph', 'mixins/Questions'],
-  function (_, Backbone, GraphHelpers, QuestionsHelpers) {
+define(['underscore', 'mixins/Graph', 'mixins/Questions', 'mixins/PubSub'],
+  function (_, GraphHelpers, QuestionsHelpers, PubSub) {
 
     //constructor
     var _Mixin = function(options){
-      //console.log('DecisionTree Constructor');
+      console.log('DecisionTree Constructor');
+      console.log("...PubSub:",PubSub);
       options                       = options || {};
       this.currentModuleId          = null;
       this.currentQuestion          = null;
@@ -31,6 +31,9 @@ define(['underscore', 'backbone', 'mixins/Graph', 'mixins/Questions'],
         //intialize Graph and Question Helper Mixins
         this.GRF = new GraphHelpers({'graph_name':graphName});
         this.QTN = new QuestionsHelpers({'config_name':questionSetName});
+
+        //extend
+        Object.assign(this, PubSub);
       },
       getCurrentQuestion: function(){
         return this.currentQuestion;
@@ -152,7 +155,7 @@ define(['underscore', 'backbone', 'mixins/Graph', 'mixins/Questions'],
             this.setCurrentModuleId( nextModuleId );
             var firstModuleQuestion = this.GRF.getFirstQuestionInModule(nextModuleId);
             _.extend(question, firstModuleQuestion);
-            Backbone.trigger('survey:complete', {});
+            this.publish('survey:complete', {});
           }
         }
         //console.log('... question before being extended: ',question);
@@ -186,7 +189,7 @@ define(['underscore', 'backbone', 'mixins/Graph', 'mixins/Questions'],
         //console.log("setCurrentModuleId",mod_id);
         this.currentModuleId = mod_id;
         var data = { id:mod_id, title:this.GRF.getModuleTitleById(mod_id) };
-        Backbone.trigger('module:change',data);
+        this.publish('module:change',data);
       },
       setCurrentQuestion: function(question){
         //console.log("DecisionTree", "setCurrentQuestion:",question);
@@ -210,7 +213,7 @@ define(['underscore', 'backbone', 'mixins/Graph', 'mixins/Questions'],
           //console.log("... currentQuestion has been extended with 'previous' property");
           this.QTN.update(this.currentQuestion);//sync questions store
 
-          Backbone.trigger('question:change', this.currentQuestion);
+          this.publish('question:change', this.currentQuestion);
         }
       },
       setHistory: function(verb, obj){
