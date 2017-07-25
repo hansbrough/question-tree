@@ -39,7 +39,7 @@ define([
               currModId   = this.currentModule,
               $container  = this.$el,
               templFunc   = this.template,
-              $prevHead   = $container.find('.lifestyle.title');
+              $prevHead   = $container.find('.module.title');
           //console.log("...",currModId," ",nextModId );
           //inject properties to change tmpl rendering.
           payload[0].classNames = CSS_HIDE;
@@ -49,7 +49,7 @@ define([
           window.setTimeout(function(){
             $container.removeClass(currModId).addClass(nextModId);
             $prevHead.replaceWith( templFunc({RESULTS: payload}) );
-            $container.find('.lifestyle.title').addClass(CSS_FADEIN);
+            $container.find('.module.title').addClass(CSS_FADEIN);
           }, 200);
 
           this.currentModule = nextModId;

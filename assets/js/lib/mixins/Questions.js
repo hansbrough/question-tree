@@ -1,5 +1,6 @@
 //Define an AMD module
 //Question Helper Methods
+//depends on html5 fetch api
 
 define(['underscore'],
   function (_) {
