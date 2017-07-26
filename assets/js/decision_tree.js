@@ -6,8 +6,7 @@ define(['underscore', 'mixins/Graph', 'mixins/Questions', 'mixins/PubSub'],
 
     //constructor
     var _Mixin = function(options){
-      console.log('DecisionTree Constructor');
-      console.log("...PubSub:",PubSub);
+      //console.log('DecisionTree Constructor');
       options                       = options || {};
       this.currentModuleId          = null;
       this.currentQuestion          = null;
@@ -45,7 +44,7 @@ define(['underscore', 'mixins/Graph', 'mixins/Questions', 'mixins/PubSub'],
       getPathDelta: function(question){
         var delta = 0;
         if(question && question.conditional){
-          console.log("DecisionTree"," getPathDelta: ",question);
+          //console.log("DecisionTree"," getPathDelta: ",question);
           var targetQuestionInBasePath = this.GRF.getIsQidInBasePath(question.id);
           var firstConditional = this.QTN.getFirstConditionalInPath(question);
           var basePathEndPt = this.GRF.getSequentialEndPoint(firstConditional);
@@ -57,15 +56,15 @@ define(['underscore', 'mixins/Graph', 'mixins/Questions', 'mixins/PubSub'],
           //console.log("......basePathEndPtIdx:",basePathEndPtIdx);
           //console.log("......conditionalPathEndPtIdx:",conditionalPathEndPtIdx);
           //console.log("......QTN.getNodeById():",this.QTN.getNodeById(conditionalPathEndPt))
-          //determin path type
+          //determine path type - TODO:pull out into own method
           if(basePathEndPtIdx >= 0 && conditionalPathEndPtIdx >= 0){//Shortcut
-            console.log("......straight shortcut");
+            //console.log("......straight shortcut");
             delta = basePathEndPtIdx - conditionalPathEndPtIdx;
           } else if(basePathEndPtIdx >= 0 && targetQuestionInBasePath){//Shortcut (from mixed path)
-            console.log("......mixed shortcut");
+            //console.log("......mixed shortcut");
             delta = basePathEndPtIdx - this.GRF.getIdxOfQidInModule(question.id);
           } else if(basePathEndPtIdx >= 0 && this.QTN.getNodeById(conditionalPathEndPt)){//Detour
-            console.log("......Detour Path, ",conditionalPathEndPt," defined just not in current module.")
+            //console.log("......Detour Path, ",conditionalPathEndPt," defined just not in current module.")
             delta = 1;
           }
         }

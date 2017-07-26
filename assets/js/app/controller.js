@@ -98,7 +98,7 @@ define([
         this.emitIsAuthenticated();
       },
       initializeSurveyViews: function(){
-        //console.info('initializeSurveyViews');
+        console.info('initializeSurveyViews');
         if(!QUESTIONNAIRE.Survey){
           //initialize the Decision Tree
           //todo:find better way to reference the parent application object - not by instantiated name

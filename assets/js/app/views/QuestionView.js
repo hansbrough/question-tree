@@ -15,10 +15,9 @@ define([
   'marionette_overrides',
   'app/collections/questionCollection',
   'text!/assets/js/app/templates/question.tmpl?noext',
-  'text!/assets/js/app/templates/survey_results.tmpl?noext',
-  'text!/assets/js/app/templates/survey_introduction.tmpl?noext'
+  'text!/assets/js/app/templates/survey_results.tmpl?noext'
   ],
-  function($,_,Backbone,Marionette,overrides, Collection, questionTmpl, resultsTmpl, introTmpl){
+  function($,_,Backbone,Marionette,overrides, Collection, questionTmpl, resultsTmpl){
     //compile and cache the template. register a partial for use in the template.
     Marionette.TemplateCache.storeTemplate('question', questionTmpl);
 
@@ -35,7 +34,7 @@ define([
         STR_BACK        = 'back',
         CSS_PARENT      = '.content-wrapper.opening';
 
-    var treatmentsView = Marionette.View.extend({
+    var _View = Marionette.View.extend({
         template: Marionette.TemplateCache.get('#question'),
         events:{
           'click #cta_next:not(.disabled)' : 'handleNextButtonClick',
@@ -47,67 +46,21 @@ define([
         direction: STR_NEXT,
         criterionDisplayNameLUT:null,
         initialize: function(options){
-          //_.extend(this, new ClientEventLogger() );
           //console.log("QuestionView", " init");
           this.collection = new Collection();
           this.selectedRadioInputIdx = null;
           this.defaultNextSection = options.defaultNextSection;
 
           Marionette.TemplateCache.storeTemplate('results', resultsTmpl);
-          Marionette.TemplateCache.storeTemplate('intro', introTmpl);
-
-          //this.requestCriterionDisplayNameLUT();
-          //this.requestCriterionModalityLUT();
-          //note: once hope / care apps are distinct this app sniffing code like this can go away.
-          /*
-          if (QUESTIONNAIRE.appName === 'hope'){
-            this.requestIntroduction();
-          }
-          */
-          //this.requestExitTemplate();
 
           this.listenTo(this.collection, 'add change', this.determineRenderSource);//not triggered on back btn click.
 
           //console.log("...",this.collection);
-          _.bindAll(this,'initialize','render','handleNextButtonClick','handleBackButtonClick','persist','makeAnswersPayloadFromCollectionModel',
-          'makeTextAnswersPayloadFromCollectionModel','setSelectedRadioInputIndex','setCriterionDisplayNameLUT','setCriterionModalitiesLUT',
-          'handleReload','renderIntroduction');
+          _.bindAll(this,'initialize','render','handleNextButtonClick','handleBackButtonClick','setSelectedRadioInputIndex','handleReload');
 
           //listen to custom events
           Backbone.listenTo( Backbone, 'question:inputs:selected', this.setSelectedRadioInputIndex);
-          Backbone.listenTo( Backbone, 'criterionDisplayNames:requested', this.setCriterionDisplayNameLUT);
-          Backbone.listenTo( Backbone, 'criterionModalities:fetched', this.setCriterionModalitiesLUT);
           Backbone.listenTo( Backbone, 'survey:reloaded', this.handleReload);
-          Backbone.listenTo( Backbone, 'survey:introduction:fetched', this.renderIntroduction);
-        },
-        /*
-        * determine ranking of criterion based on user answers
-        */
-        calculateCriteriaResults: function(){
-          //console.info("QuestionView"," calculateCriteriaResults");
-          var recordSet = [],
-              criteria = {};
-          //create criterion count
-          _.each(this.collection.models, function(model){
-            var questionSetCategory = model.get('category');
-            if(questionSetCategory === 'survey'){
-              //console.log('...model labels:',model.get('labels'));
-              model.get('labels').forEach(function(question){
-                if(question.answerValue === 'T' && question.criterion){
-                  //console.log('....',question.criterion);
-                  criteria[question.criterion] = criteria[question.criterion] ? criteria[question.criterion]+1: 1;
-                }
-              });
-            }
-          });
-
-          //transform criteria to template ready array.
-          for(var name in criteria){
-            var modalityMatches = this.criterionModalitiesLUT[name];
-            recordSet.push({ id:name, count: criteria[name], displayName:this.getCriterionDisplayName(name), modalities:modalityMatches });
-          }
-          //console.log("...recordSet: ",recordSet);
-          return recordSet;
         },
         /*
         *
@@ -136,7 +89,6 @@ define([
 
           //transform criteria to template ready array.
           for(var name in criteria){
-            //var modalityMatches = this.criterionModalitiesLUT[name];
             recordSet.push({ id:name, count: criteria[name], displayName:name });
           }
           //console.log("...recordSet: ",recordSet);
@@ -150,16 +102,14 @@ define([
         * 4. previous item which has previously been rendered.
         */
         determineRenderSource: function(model){
-          //console.log("QuestionView"," determineRenderSource: ",model);
+          console.log("QuestionView"," determineRenderSource: ",model);
           //console.log("...module name:",model.get('module'));
           var changedProps = _.keys(model.changed),
               isFinalScreen = model.get('last');
 
           if(isFinalScreen){
             //console.log('...isFinalScreen so re-render:',isFinalScreen);
-            //var criteriaResults = this.calculateCriteriaResults();
             var quizResults = this.calculateQuizResults();
-            //model.set({results:criteriaResults});
             model.set({results:quizResults});
             this.render(model, {replace:true});
           }else if(changedProps.length > 0 && this.direction === STR_NEXT){
@@ -172,7 +122,6 @@ define([
             //console.log("...back");
             this.transitionBack( model.toJSON() );
           }
-
         },
         /*
         * ensure that a 'unique' input is not selected with any other inputs from the same control group.
@@ -199,71 +148,27 @@ define([
             }
           }
         },
-        getCriterionDisplayName: function(name){
-          console.info("getCriterionDisplayNameL ",name);
-          var displayName = '';
-          if(name && this.criterionDisplayNameLUT){
-            displayName = this.criterionDisplayNameLUT[name];
-          }
-          return displayName;
-        },
         getInputs: function($target){
           //console.log('getSelectedLabels:',$target);
           return $target.closest('.control-group').find('input');
-        },
-        /*
-        * Find all questions in set. per question extract id, value, objectize and push into an array.
-        * combine with question set and survey data and return in payload object.
-        * return null value if answerSet is empty(1)
-        */
-        getQuestionSetPayload: function(questionSet){
-          //console.log("getQuestionSetPayload: ", questionSet);
-          var payload = null,
-              questionSetId,
-              makeAnswersPayloadFunc;
-
-          if(questionSet){
-            questionSetId = questionSet.id;
-            makeAnswersPayloadFunc = this.getAnswersPayloadFunc(questionSet.type);
-            var answerSet = makeAnswersPayloadFunc(questionSetId);
-            if(answerSet.length > 0 ){//(1)
-              payload = {
-                surveyId: QUESTIONNAIRE.Survey.getId(),
-                questionSet: questionSetId,
-                answerType: this.mapQuestionTypeToAnswerType(questionSet.type),
-                answers: answerSet
-              };
-            }
-          }
-          return payload;
         },
         handleBackButtonClick: function(e){
           //console.log("handleBackButtonClick");
           e.preventDefault();
           this.direction = STR_BACK;
-          //this.persist($(e.target));
           QUESTIONNAIRE.Survey.prev();
         },
         /*
         * Finish button appears on the last screen
         */
         handleFinishButtonClick: function(e){
-          console.log("QuestionView"," handleFinishButtonClick");
+          //console.log("QuestionView"," handleFinishButtonClick");
           e.preventDefault();
           var $target = $(e.target),
               href    = $target.attr('href');
 
-          //this.persist($target);
-          var surveyUri  = 'survey://'+QUESTIONNAIRE.Survey.getId();
-          this.direction = STR_NEXT;
-          this.logEvent('surveyComplete', surveyUri, {'userAgent': navigator.userAgent});
-          QUESTIONNAIRE.setCookie('state_cricket',{'survey':1});
-          //lastly - go to screen specified in target or fallback to the discuss screen.
-          if(href){
-            window.location.href = href;
-          }else{
-            QUESTIONNAIRE.Router.navigate('/discuss', {trigger: true});
-          }
+          //this.direction = STR_NEXT;
+          window.location.href = href;
         },
         /*
         * Handle click event from UI
@@ -277,7 +182,6 @@ define([
           }
           e.preventDefault();
           this.direction = STR_NEXT;
-          //this.persist($(e.target));
           QUESTIONNAIRE.Survey.next(config);
         },
         handleInputChange: function(e){
@@ -298,10 +202,10 @@ define([
           }
         },
         handleReload: function(){
-          //console.log("QuestionView"," handleReload ");
-          this.$el = $(CSS_PARENT);
+          console.log("QuestionView"," handleReload ");
+          //this.$el = $(CSS_PARENT);
 
-          this.delegateEvents();
+          //this.delegateEvents();
         },
         handleTextAreaChange: function(e){
           var $target = $(e.target),
@@ -310,15 +214,6 @@ define([
 
           Backbone.trigger('question:text:updated', payload);
           this.toggleCtaBtn($target,valid);
-        },
-        /*
-        * determine if question is of a type that should be saved.
-        */
-        isPersistable: function(question){
-          //console.log("isPersistable: ",question);
-          var candidate     = (question && question.type) ? question.type : 'unknown',
-              questionTypes = {radio:true,checkbox:true,textarea:true,summary:false};
-          return questionTypes[candidate];
         },
         labelsInGroupHaveSameQID: function($inputs){
           //console.log("labelsInGroupHaveSameQID");
@@ -330,55 +225,6 @@ define([
           });
           //console.log("... qids: ",qids);
           return (qids.length === 1);
-        },
-        /*
-        * return the correct function to create a answers payload based on question type.
-        */
-        getAnswersPayloadFunc: function(questionType){
-          //console.log("getAnswersPayloadFunc: ",questionType);
-          var func;
-          switch(questionType){
-            case 'radio':
-            case 'checkbox':
-              func = this.makeAnswersPayloadFromCollectionModel;
-              break;
-            case 'textarea':
-              func = this.makeTextAnswersPayloadFromCollectionModel;
-              break;
-          }
-          return func;
-        },
-        /*
-        * Examine a given collection model and return an array of question objects w/their pertinents.
-        * only add to array if question has an answer (1)
-        * add answerId if exists (question answered previously)
-        */
-        makeAnswersPayloadFromCollectionModel: function(questionSetId){
-          //console.log("makeAnswersPayloadFromCollectionModel: ",questionSetId);
-          var questionSetResults = [],
-              model = this.collection.findWhere({'id':questionSetId}),
-              labels = model.get('labels');
-          //console.log("...model:",model);
-          labels.map( function(label){
-            if( !_.isUndefined(label.answerValue) ){//(1)
-              questionSetResults.push({
-                qid:label.qid,
-                val:label.answerValue,
-                aid:label.answerId
-              });
-            }
-          });
-          //console.log("... questionSetResults: ",questionSetResults);
-          return questionSetResults;
-        },
-        makeTextAnswersPayloadFromCollectionModel: function(questionSetId){
-          //console.log("makeTextAnswersPayloadFromCollectionModel: ",questionSetId);
-          var model = this.collection.findWhere({'id':questionSetId});
-          return [{
-            qid:model.get('qid'),
-            val:model.get('answerValue'),
-            aid:model.get('answerId'),
-          }];
         },
         makePayloadOfInputSet: function($inputs){
           //console.log("makePayloadOfInputSet: ",$inputs);
@@ -421,81 +267,6 @@ define([
           return payload;
         },
         /*
-        * translate type of questions found in a question set to a string format expected by endpoint.
-        */
-        mapQuestionTypeToAnswerType: function(questionType){
-          //console.log("QuestionView"," mapQuestionTypeToAnswerType ",questionType);
-          var answerType;
-          switch(questionType){
-            case 'radio':
-            case 'checkbox':
-              answerType = 'BOOLEAN';
-              break;
-            case 'textarea':
-              answerType = 'TEXT';
-              break;
-            default:
-              console.info('Unknown question type. Cannot map to an answer type.');
-              answerType = null;
-              break;
-          }
-
-          return answerType;
-        },
-        persist: function($target){
-          //console.log('persist: ',QUESTIONNAIRE.Survey.getCurrentQuestion());
-          var account_url = '/survey/answers',
-              token       = localStorage.getItem('idToken') || null,
-              questionSet = QUESTIONNAIRE.Survey.getCurrentQuestion(),
-              payload;
-
-          //not all screens will have questions / answers that need to be persisted e.g. final results page.
-          if( this.isPersistable(questionSet) ){
-            payload = this.getQuestionSetPayload(questionSet);
-            if(payload){
-              $.ajax({
-                    url: account_url,
-                    xhrFields: {
-                      withCredentials: true
-                    },
-                    dataType: 'json',
-                    contentType: "application/json; charset=utf-8",
-                    headers: {
-                      'Authorization': 'Bearer '+ token
-                    },
-                    data: JSON.stringify(payload),
-                    type: 'POST'
-                  }).done( function(resp){
-                    //console.log(" ... resp:",resp);
-                    Backbone.trigger('questionSet:answered', resp.data);
-                  }).fail( function(resp){
-                    //console.log(" ... failure resp:",resp);
-                  });
-
-              var events = [];
-              var questionSetURI = _cc.uriPrefix + payload.surveyId + "/" + payload.questionSet + "/";
-              for (var i = 0; i < payload.answers.length; i++) {
-                var answer = payload.answers[i];
-                //console.log("QuestionView", answer);
-                var object = questionSetURI + "question/" + answer.qid;
-                var answerId = answer.aid ? (questionSetURI + "answer/" + answer.aid) : undefined;
-                events.push({
-                  "predicate": "answeredSurveyQuestion",
-                  "object": object,
-                  "prepositions": {
-                    "answerId": answerId,
-                    "answer": answer.val,
-                    "userAgent": navigator.userAgent
-                  }
-                });
-              }
-              //this.logEvents(events);
-            }else{
-              console.info('no persist request made due to empty payload.');
-            }
-          }
-        },
-        /*
         * display a screen of questions OR the final results screen.
         */
         render: function(model, options){
@@ -508,12 +279,6 @@ define([
               templateFunc      = (payload.last)? Marionette.TemplateCache.get('#results') : this.template,
               markup;
           //console.log("... payload: ",payload);
-          //conditionally override w/an org specific results template
-          /*
-          if(payload.last && Marionette.TemplateCache.templateCaches['#org_survey_results']){
-            templateFunc = Marionette.TemplateCache.get('#org_survey_results');
-          }
-          */
           //Add extras to payload and create markup from template.
           _.extend(payload, {platform:platform, nextScreen:this.defaultNextSection});
           markup  = templateFunc({SCREEN: payload});
@@ -537,104 +302,9 @@ define([
           this.transitionNext(prevQuestionSetId, nxtQuestionSetId);
           Backbone.trigger('render:question',payload);//notify listeners that a new question has been rendered.
         },
-        renderIntroduction: function(data){
-          //console.log("renderIntroduction:",data);
-          this.$el.find('.'+CSS_INTRO).html( Marionette.TemplateCache.get('#intro')({SCREEN: data}) );
-        },
-        requestCriterionModalityLUT: function(config_name){
-          console.log("QuestionView"," requestCriterionModalityLUT");
-          config_name = config_name || 'ckd_criteria_modality';
-          var api_url   = '/survey/lut/'+config_name,
-              token     = localStorage.getItem('idToken') || null;
-
-          $.ajax({
-                url: api_url,
-                type: 'GET',
-                xhrFields: {
-                  withCredentials: true
-                },
-                headers: {
-                  'Authorization': 'Bearer '+ token
-                },
-              }).done( function(resp){
-                Backbone.trigger('criterionModalities:fetched', resp.data);
-              });
-        },
-        requestCriterionDisplayNameLUT: function(config_name){
-          console.log("QuestionView"," requestCriterionDisplayNameLUT");
-          config_name = config_name || 'ckd_criteria_name';
-          var api_url   = '/survey/lut/'+config_name,
-              token     = localStorage.getItem('idToken') || null;
-
-          $.ajax({
-                url: api_url,
-                xhrFields: {
-                  withCredentials: true
-                },
-                headers: {
-                  'Authorization': 'Bearer '+ token
-                },
-                type: 'GET'
-              }).done( function(resp){
-                Backbone.trigger('criterionDisplayNames:requested', resp.data);
-              });
-        },
-        requestExitTemplate: function(){
-          console.log("requestExitTemplate");
-          var token   =  localStorage.getItem('idToken'),
-              api_url = '/assets/js/app/templates/survey_exit.tmpl';
-
-          $.ajax({
-                url: api_url,
-                type: 'GET',
-                xhrFields: {
-                  withCredentials: true
-                },
-                headers: {
-                  'Authorization': 'Bearer '+ token
-                }
-              }).done( function(resp){
-                if(resp.success){
-                  //cache the template for later use
-                  Marionette.TemplateCache.storeTemplate(resp.data.name, resp.data.template);
-                }
-              });
-        },
-        requestIntroduction: function(){
-          console.log("QuestionView"," requestIntroduction");
-          var token   =  localStorage.getItem('idToken'),
-              api_url = '/survey/introduction';
-
-          $.ajax({
-                url: api_url,
-                type: 'GET',
-                xhrFields: {
-                  withCredentials: true
-                },
-                headers: {
-                  'Authorization': 'Bearer '+ token
-                }
-              }).done( function(resp){
-                if(resp.success){
-                  Backbone.trigger('survey:introduction:fetched', resp.data);
-                }
-              });
-        },
         scrollToTop: function(){
           $('html').animate({'scrollTop':0},'slow');
           $('body').animate({'scrollTop':0},'slow');
-        },
-        setCriterionDisplayNameLUT: function(value){
-          console.log("setCriterionDisplayNameLUT: ",value);
-          if(value){
-            this.criterionDisplayNameLUT = value;
-          }
-        },
-        setCriterionModalitiesLUT: function(value){
-          console.log("setCriterionModalitiesNameLUT: ",value);
-          if(value){
-            this.criterionModalitiesLUT = value;
-          }
         },
         /*
         * if radio btn selected save it's index 0 based index within the radio btn group.
@@ -689,6 +359,6 @@ define([
         }
 
     });
-    // Our module now returns our view
-    return treatmentsView;
+
+    return _View;
 });
