@@ -19,14 +19,17 @@
   </div>
   {{/each}}
 
+  {{#if tips}}
   <ul class="tips">
-    <h3 class="tips-title">Here's a hint to help you do better next time.</h3>
+    <h3 class="tips-title">Here's how you can do better next time.</h3>
+    {{#each tips}}
     <li class="tip">
-      <img class="tip-image" src="/assets/img/al_aculeata_a_200.jpg">
-      <span class="tip-body">This plant belongs to the Genus <strong>Aloe</strong> but you answered <em>Sempervivum</em>. Aloe will never have terminal spines on their leaf tips but may have thorns elsewhere.</span>
+      <img class="tip-image" src="{{img_src}}">
+      <span class="tip-body">This plant belongs to the Genus <strong>{{correct}}</strong> but you answered <em>{{incorrect}}</em>. Aloe will never have terminal spines on their leaf tips but may have thorns elsewhere.</span>
     </li>
+    {{/each}}
   </ul>
-
+  {{/if}}
 
   {{!-- MOBILE / unused for now --}}
   {{!--

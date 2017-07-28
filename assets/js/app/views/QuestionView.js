@@ -103,6 +103,27 @@ define([
           return recordSet;
         },
         /*
+        * return set of tip objects w/info to help users do better next time.
+        */
+        calculateQuizTips: function(results){
+          console.log("QuestionView"," calculateQuizTips results:",results);
+          var tips = [];
+          if(results){
+            tips = results.filter(function(item){
+              return !item.knowit}).map(function(answer){
+                console.log("... incorrect answer:",answer);
+                var qid = answer.incorrect[0].id;
+                var model = this.collection.get(qid);
+                var img_src = model.get('media')[0].src;
+                return {correct:answer.displayName, incorrect:answer.incorrect[0].response.title, img_src:img_src, advice:''}
+              }.bind(this));
+
+
+          }
+          console.log("...tips:",tips);
+          return tips;
+        },
+        /*
         * given a model find user selected radio btn
         */
         getUserAnswerForRadioBtnQuestion: function(questionModel){
@@ -131,8 +152,9 @@ define([
           if(isFinalScreen){
             console.log('...isFinalScreen so re-render:',isFinalScreen);
             var quizResults = this.calculateQuizResults();
+            var quizTips    = this.calculateQuizTips(quizResults);
             console.log("......quizResults:",quizResults);
-            model.set({results:quizResults});
+            model.set({results:quizResults,tips:quizTips});
             this.render(model, {replace:true});
           }else if(changedProps.length > 0 && this.direction === STR_NEXT){
             //console.log('...changedProps:',changedProps);
