@@ -1,0 +1,23 @@
+{
+  "meta":{
+    "graph_id":"1"
+  },
+  "module_plantClassification":{
+    "title":"Plant Classification",
+    "questions": [
+      {"id":"plantClassification_01","next":"plantClassification_02"},
+      {"id":"plantClassification_02","next":"plantClassification_03"},
+      {"id":"plantClassification_03","next":"plantClassification_04"},
+      {"id":"plantClassification_04","next":"plantClassification_05"},
+      {"id":"plantClassification_05","next":"plantClassification_06"},
+      {"id":"plantClassification_06"}
+    ],
+    "next":"module_final"
+  },
+  "module_final":{
+    "title":"What's Next",
+    "questions": [
+      { "id":"survey_results"}
+    ]
+  }
+}

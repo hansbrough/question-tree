@@ -75,24 +75,43 @@ define([
             var answerId = model.get('actual');
             var criterion = model.get('criterion');
             if(questionSetCategory === 'quiz'){
-              //console.log('...model labels:',model.get('labels'));
+              //console.log('...model:',model);
               //console.log("...... criterion:",criterion);
-              model.get('labels').forEach(function(question){
-                if(question.answerValue === 'T' && question.qid === answerId){
-                  //console.log(".... ",answerId," is correct");
-                  criteria[criterion] = criteria[criterion] ? criteria[criterion]+1: 1;
-                }
-              });
+              //check criterion entry exists else create
+              criteria[criterion] = criteria[criterion] ? criteria[criterion]: {correct:0,incorrect:[]};
+              var userSelected = this.getUserAnswerForRadioBtnQuestion(model);
+
+              if(userSelected.qid === answerId){
+                //console.log(".... ",answerId," is correct");
+                criteria[criterion].correct++;
+              }else{
+                //console.log("...question ",model.get('id')," is incorrect");
+                criteria[criterion].incorrect.push({id:model.get('id'),response:userSelected});
+              }
             }
-          });
+          }.bind(this));
           //console.log("...criteria: ",criteria);
 
           //transform criteria to template ready array.
           for(var name in criteria){
-            recordSet.push({ id:name, count: criteria[name], displayName:name });
+            var record = _.extend( { id:name, displayName:name}, criteria[name] );
+            recordSet.push(record);
           }
           //console.log("...recordSet: ",recordSet);
           return recordSet;
+        },
+        /*
+        * given a model find user selected radio btn
+        */
+        getUserAnswerForRadioBtnQuestion: function(questionModel){
+          console.log("getUserAnswerForRadioBtnQuestion");
+          var userSelected;
+          questionModel.get('labels').forEach(function(label){
+            if(label.answerValue === 'T'){
+              userSelected = label;
+            }
+          });
+          return userSelected;
         },
         /*
         * Display mechanics of question sets falls into 4 categories:
@@ -102,14 +121,15 @@ define([
         * 4. previous item which has previously been rendered.
         */
         determineRenderSource: function(model){
-          console.log("QuestionView"," determineRenderSource: ",model);
+          //console.log("QuestionView"," determineRenderSource: ",model);
           //console.log("...module name:",model.get('module'));
           var changedProps = _.keys(model.changed),
               isFinalScreen = model.get('last');
 
           if(isFinalScreen){
-            //console.log('...isFinalScreen so re-render:',isFinalScreen);
+            console.log('...isFinalScreen so re-render:',isFinalScreen);
             var quizResults = this.calculateQuizResults();
+            console.log("......quizResults:",quizResults);
             model.set({results:quizResults});
             this.render(model, {replace:true});
           }else if(changedProps.length > 0 && this.direction === STR_NEXT){

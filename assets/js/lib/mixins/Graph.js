@@ -132,6 +132,7 @@ define(['underscore'],
       /*
       * determine the total number of questions in the graph
       * (not inclusive of conditional questions)
+      * note: will count questions in unused modules
       */
       getBasePathLength: function(){
         //console.log("Graph", " getBasePathLength");

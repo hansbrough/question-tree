@@ -1,0 +1,331 @@
+{
+  "plantClassification_01":{
+    "title":"What genus does this plant most likely belong to?",
+    "media": [
+      {"type":"image", "src":"/assets/img/a_celsii_c_200.jpg"}
+    ],
+    "labels":[
+      {"title":"Aloe", "qid":"100", "next":"plantClassification_11"},
+      {"title":"Agave", "qid":"101"},
+      {"title":"Sempervivum", "qid":"102", "next":"plantClassification_13"},
+      {"title":"Gasteria", "qid":"103", "next":"plantClassification_14"},
+      {"title":"Echeveria", "qid":"104", "next":"plantClassification_12"},
+      {"title":"Haworthia", "qid":"105", "next":"plantClassification_15"}
+    ],
+    "actual":"101",
+    "category":"quiz",
+    "criterion":"agave",
+    "type":"radio"
+  },
+  "plantClassification_02":{
+    "title":"What genus does this plant most likely belong to?",
+    "media": [
+      {"type":"image", "src":"/assets/img/al_aculeata_a_200.jpg"}
+    ],
+    "labels":[
+      {"title":"Aloe", "qid":"106"},
+      {"title":"Haworthia", "qid":"107", "next":"plantClassification_15"},
+      {"title":"Sempervivum", "qid":"108", "next":"plantClassification_13"},
+      {"title":"Gasteria", "qid":"109", "next":"plantClassification_14"},
+      {"title":"Echeveria", "qid":"110", "next":"plantClassification_12"},
+      {"title":"Agave", "qid":"111", "next":"plantClassification_10"}
+    ],
+    "actual":"106",
+    "category":"quiz",
+    "criterion":"aloe",
+    "type":"radio"
+  },
+  "plantClassification_03":{
+    "title":"What genus does this plant most likely belong to?",
+    "media": [
+      {"type":"image", "src":"/assets/img/e_agavoides_b_200.jpg"}
+    ],
+    "labels":[
+      {"title":"Haworthia", "qid":"112", "next":"plantClassification_15"},
+      {"title":"Agave", "qid":"113", "next":"plantClassification_10"},
+      {"title":"Sempervivum", "qid":"114", "next":"plantClassification_13"},
+      {"title":"Gasteria", "qid":"115", "next":"plantClassification_14"},
+      {"title":"Echeveria", "qid":"116"},
+      {"title":"Aloe", "qid":"117", "next":"plantClassification_11"}
+    ],
+    "actual":"116",
+    "category":"quiz",
+    "criterion":"echeveria",
+    "type":"radio"
+  },
+  "plantClassification_04":{
+    "title":"What genus does this plant most likely belong to?",
+    "media": [
+      {"type":"image", "src":"/assets/img/s_arachnoideum_a_200.jpg"}
+    ],
+    "labels":[
+      {"title":"Aloe", "qid":"118", "next":"plantClassification_11"},
+      {"title":"Agave", "qid":"119", "next":"plantClassification_10"},
+      {"title":"Sempervivum", "qid":"120"},
+      {"title":"Haworthia", "qid":"121", "next":"plantClassification_15"},
+      {"title":"Echeveria", "qid":"122", "next":"plantClassification_12"},
+      {"title":"Gasteria", "qid":"123", "next":"plantClassification_14"}
+    ],
+    "actual":"120",
+    "category":"quiz",
+    "criterion":"sempervivum",
+    "type":"radio"
+  },
+  "plantClassification_05":{
+    "title":"What genus does this plant most likely belong to?",
+    "media": [
+      {"type":"image", "src":"/assets/img/g_baylissiana_a_200.jpg"}
+    ],
+    "labels":[
+      {"title":"Aloe", "qid":"124", "next":"plantClassification_11"},
+      {"title":"Agave", "qid":"125", "next":"plantClassification_10"},
+      {"title":"Haworthia", "qid":"126", "next":"plantClassification_15"},
+      {"title":"Gasteria", "qid":"127"},
+      {"title":"Echeveria", "qid":"128", "next":"plantClassification_12"},
+      {"title":"Sempervivum", "qid":"129", "next":"plantClassification_13"}
+    ],
+    "actual":"127",
+    "category":"quiz",
+    "criterion":"gasteria",
+    "type":"radio"
+  },
+  "plantClassification_06":{
+    "title":"What genus does this plant most likely belong to?",
+    "media": [
+      {"type":"image", "src":"/assets/img/h_fasciata_a_200.jpg"}
+    ],
+    "labels":[
+      {"title":"Aloe", "qid":"130", "next":"plantClassification_11"},
+      {"title":"Agave", "qid":"131", "next":"plantClassification_10"},
+      {"title":"Sempervivum", "qid":"132", "next":"plantClassification_13"},
+      {"title":"Gasteria", "qid":"133", "next":"plantClassification_14"},
+      {"title":"Echeveria", "qid":"134", "next":"plantClassification_12"},
+      {"title":"Haworthia", "qid":"135"}
+    ],
+    "actual":"135",
+    "category":"quiz",
+    "criterion":"haworthia",
+    "type":"radio"
+  },
+  "plantClassification_10":{
+    "title":"What genus does this plant most likely belong to?",
+    "media": [
+      {"type":"image", "src":"/assets/img/a_desmetiana_c.jpg"}
+    ],
+    "labels":[
+      {"title":"Aloe", "qid":"136", "next":"plantClassification_11"},
+      {"title":"Agave", "qid":"137", "next":"plantClassification_19"},
+      {"title":"Sempervivum", "qid":"138", "next":"plantClassification_13"},
+      {"title":"Gasteria", "qid":"139", "next":"plantClassification_14"},
+      {"title":"Echeveria", "qid":"140", "next":"plantClassification_12"},
+      {"title":"Haworthia", "qid":"141", "next":"plantClassification_15"}
+    ],
+    "actual":"137",
+    "category":"quiz",
+    "criterion":"agave",
+    "type":"radio"
+  },
+  "plantClassification_11":{
+    "title":"What genus does this plant most likely belong to?",
+    "media": [
+      {"type":"image", "src":"/assets/img/a_arborescens_a_200.jpg"}
+    ],
+    "labels":[
+      {"title":"Aloe", "qid":"142","next":"plantClassification_20"},
+      {"title":"Agave", "qid":"143", "next":"plantClassification_10"},
+      {"title":"Sempervivum", "qid":"144", "next":"plantClassification_13"},
+      {"title":"Gasteria", "qid":"145", "next":"plantClassification_14"},
+      {"title":"Echeveria", "qid":"146", "next":"plantClassification_12"},
+      {"title":"Haworthia", "qid":"147", "next":"plantClassification_15"}
+    ],
+    "actual":"142",
+    "category":"quiz",
+    "criterion":"aloe",
+    "type":"radio"
+  },
+  "plantClassification_12":{
+    "title":"What genus does this plant most likely belong to?",
+    "media": [
+      {"type":"image", "src":"/assets/img/e_subrigida_b_200.jpg"}
+    ],
+    "labels":[
+      {"title":"Aloe", "qid":"148", "next":"plantClassification_11"},
+      {"title":"Agave", "qid":"149", "next":"plantClassification_10"},
+      {"title":"Sempervivum", "qid":"150", "next":"plantClassification_13"},
+      {"title":"Gasteria", "qid":"151", "next":"plantClassification_14"},
+      {"title":"Echeveria", "qid":"152","next":"plantClassification_21"},
+      {"title":"Haworthia", "qid":"153", "next":"plantClassification_15"}
+    ],
+    "actual":"152",
+    "category":"quiz",
+    "criterion":"echeveria",
+    "type":"radio"
+  },
+  "plantClassification_13":{
+    "title":"What genus does this plant most likely belong to?",
+    "media": [
+      {"type":"image", "src":"/assets/img/s_royanum.jpg"}
+    ],
+    "labels":[
+      {"title":"Aloe", "qid":"154", "next":"plantClassification_11"},
+      {"title":"Agave", "qid":"155", "next":"plantClassification_10"},
+      {"title":"Sempervivum", "qid":"156", "next":"plantClassification_16"},
+      {"title":"Gasteria", "qid":"157", "next":"plantClassification_14"},
+      {"title":"Echeveria", "qid":"158", "next":"plantClassification_12"},
+      {"title":"Haworthia", "qid":"159", "next":"plantClassification_15"}
+    ],
+    "actual":"156",
+    "category":"quiz",
+    "criterion":"aloe",
+    "type":"radio"
+  },
+  "survey_results":{
+    "type":"summary",
+    "qid":"10000"
+  },
+  "plantClassification_14":{
+    "title":"What genus does this plant most likely belong to?",
+    "media": [
+      {"type":"image", "src":"/assets/img/g_grey_ghost.jpg"}
+    ],
+    "labels":[
+      {"title":"Aloe", "qid":"160", "next":"plantClassification_11"},
+      {"title":"Agave", "qid":"161", "next":"plantClassification_10"},
+      {"title":"Haworthia", "qid":"162", "next":"plantClassification_15"},
+      {"title":"Gasteria", "qid":"163", "next":"plantClassification_18"},
+      {"title":"Echeveria", "qid":"164", "next":"plantClassification_12"},
+      {"title":"Sempervivum", "qid":"165", "next":"plantClassification_13"}
+    ],
+    "actual":"163",
+    "category":"quiz",
+    "criterion":"gasteria",
+    "type":"radio"
+  },
+  "plantClassification_15":{
+    "title":"What genus does this plant most likely belong to?",
+    "media": [
+      {"type":"image", "src":"/assets/img/h_limifolia_a_200.jpg"}
+    ],
+    "labels":[
+      {"title":"Aloe", "qid":"161", "next":"plantClassification_11"},
+      {"title":"Agave", "qid":"162", "next":"plantClassification_10"},
+      {"title":"Sempervivum", "qid":"163", "next":"plantClassification_13"},
+      {"title":"Gasteria", "qid":"164", "next":"plantClassification_14"},
+      {"title":"Echeveria", "qid":"165", "next":"plantClassification_12"},
+      {"title":"Haworthia", "qid":"166", "next":"plantClassification_17"}
+    ],
+    "actual":"166",
+    "category":"quiz",
+    "criterion":"haworthia",
+    "type":"radio"
+  },
+  "plantClassification_16":{
+    "title":"What genus does this plant most likely belong to?",
+    "media": [
+      {"type":"image", "src":"/assets/img/s_kindergeri.jpg"}
+    ],
+    "labels":[
+      {"title":"Gasteria", "qid":"167"},
+      {"title":"Aloe", "qid":"168"},
+      {"title":"Agave", "qid":"169"},
+      {"title":"Echeveria", "qid":"170"},
+      {"title":"Haworthia", "qid":"171"},
+      {"title":"Sempervivum", "qid":"172"}
+    ],
+    "actual":"172",
+    "category":"quiz",
+    "criterion":"sempervivum",
+    "type":"radio"
+  },
+  "plantClassification_17":{
+    "title":"What genus does this plant most likely belong to?",
+    "media": [
+      {"type":"image", "src":"/assets/img/h_pumila_a_200.jpg"}
+    ],
+    "labels":[
+      {"title":"Haworthia", "qid":"173"},
+      {"title":"Agave", "qid":"174"},
+      {"title":"Sempervivum", "qid":"175"},
+      {"title":"Echeveria", "qid":"176"},
+      {"title":"Gasteria", "qid":"177"},
+      {"title":"Aloe", "qid":"178"}
+    ],
+    "actual":"173",
+    "category":"quiz",
+    "criterion":"haworthia",
+    "type":"radio"
+  },
+  "plantClassification_18":{
+    "title":"What genus does this plant most likely belong to?",
+    "media": [
+      {"type":"image", "src":"/assets/img/g_carinata_verrucosa.jpg"}
+    ],
+    "labels":[
+      {"title":"Echeveria", "qid":"179"},
+      {"title":"Aloe", "qid":"180"},
+      {"title":"Agave", "qid":"181"},
+      {"title":"Sempervivum", "qid":"182"},
+      {"title":"Gasteria", "qid":"183"},
+      {"title":"Haworthia", "qid":"184"}
+    ],
+    "actual":"183",
+    "category":"quiz",
+    "criterion":"gasteria",
+    "type":"radio"
+  },
+  "plantClassification_19":{
+    "title":"What genus does this plant most likely belong to?",
+    "media": [
+      {"type":"image", "src":"/assets/img/a_shawii.jpg"}
+    ],
+    "labels":[
+      {"title":"Aloe", "qid":"185"},
+      {"title":"Agave", "qid":"186"},
+      {"title":"Sempervivum", "qid":"187"},
+      {"title":"Gasteria", "qid":"188"},
+      {"title":"Echeveria", "qid":"189"},
+      {"title":"Haworthia", "qid":"190"}
+    ],
+    "actual":"186",
+    "category":"quiz",
+    "criterion":"agave",
+    "type":"radio"
+  },
+  "plantClassification_20":{
+    "title":"What genus does this plant most likely belong to?",
+    "media": [
+      {"type":"image", "src":"/assets/img/a_barberae_e_200.jpg"}
+    ],
+    "labels":[
+      {"title":"Sempervivum", "qid":"191"},
+      {"title":"Agave", "qid":"192"},
+      {"title":"Gasteria", "qid":"193"},
+      {"title":"Aloe", "qid":"194"},
+      {"title":"Echeveria", "qid":"195"},
+      {"title":"Haworthia", "qid":"196"}
+    ],
+    "actual":"194",
+    "category":"quiz",
+    "criterion":"aloe",
+    "type":"radio"
+  },
+  "plantClassification_21":{
+    "title":"What genus does this plant most likely belong to?",
+    "media": [
+      {"type":"image", "src":"/assets/img/e_perle_von_numberg.jpg"}
+    ],
+    "labels":[
+      {"title":"Agave", "qid":"197"},
+      {"title":"Gasteria", "qid":"198"},
+      {"title":"Echeveria", "qid":"199"},
+      {"title":"Haworthia", "qid":"200"},
+      {"title":"Sempervivum", "qid":"201"},
+      {"title":"Aloe", "qid":"202"}
+    ],
+    "actual":"199",
+    "category":"quiz",
+    "criterion":"echeveria",
+    "type":"radio"
+  }
+
+}

@@ -106,14 +106,16 @@ define([
           QUESTIONNAIRE.Survey = new Tree({
             defaultScreen:'opening',
             //graph_name:'sequential',
-            graph_name:'detour',
+            //graph_name:'detour',
+            graph_name:'succulent_id',
             //question_set_name:'sequential',//use with 'sequential' graph
             //question_set_name:'shortcut',//use with 'sequential' graph
             //question_set_name:'detour',//use with 'detour' graph
             //question_set_name:'detour_multinode'//use with 'detour' graph
             //question_set_name:'detour_multinode_multibranch'//use with 'detour' graph
             //question_set_name:'detour_compound'//use with 'detour' graph
-            question_set_name:'detour_mixed'//use with 'detour' graph
+            //question_set_name:'detour_mixed'//use with 'detour' graph
+            question_set_name:'succulent_id',//use with 'succulent_id' graph
           });
         }
         if( !this.views.QuestionView ){
@@ -156,7 +158,7 @@ define([
                     //QUESTIONNAIRE.setPostSurveyScreen();
                     //QUESTIONNAIRE.Router.navigate('/'+QUESTIONNAIRE.postSurveyScreen, {trigger: true});
                   //}else{
-                    console.log('cookie says...survey not complete');
+                    //console.log('cookie says...survey not complete');
                     QUESTIONNAIRE.Router.navigate('/introduction', {trigger: true});
                   //}
                 //}

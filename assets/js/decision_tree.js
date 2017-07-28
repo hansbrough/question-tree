@@ -53,20 +53,30 @@ define(['underscore', 'mixins/Graph', 'mixins/Questions', 'mixins/PubSub'],
           //console.log("......conditionalPathEndPt",conditionalPathEndPt);
           var basePathEndPtIdx = this.GRF.getIdxOfQidInModule(basePathEndPt);
           var conditionalPathEndPtIdx = this.GRF.getIdxOfQidInModule(conditionalPathEndPt);
+          var conditionalPathEndPtDefined = this.QTN.getNodeById(conditionalPathEndPt);
           //console.log("......basePathEndPtIdx:",basePathEndPtIdx);
           //console.log("......conditionalPathEndPtIdx:",conditionalPathEndPtIdx);
           //console.log("......QTN.getNodeById():",this.QTN.getNodeById(conditionalPathEndPt))
           //determine path type - TODO:pull out into own method
-          if(basePathEndPtIdx >= 0 && conditionalPathEndPtIdx >= 0){//Shortcut
-            //console.log("......straight shortcut");
-            delta = basePathEndPtIdx - conditionalPathEndPtIdx;
-          } else if(basePathEndPtIdx >= 0 && targetQuestionInBasePath){//Shortcut (from mixed path)
-            //console.log("......mixed shortcut");
-            delta = basePathEndPtIdx - this.GRF.getIdxOfQidInModule(question.id);
-          } else if(basePathEndPtIdx >= 0 && this.QTN.getNodeById(conditionalPathEndPt)){//Detour
-            //console.log("......Detour Path, ",conditionalPathEndPt," defined just not in current module.")
+          if(basePathEndPt && basePathEndPtIdx >= 0){
+            if(conditionalPathEndPtIdx >= 0){//Shortcut
+              //console.log("......straight shortcut");
+              delta = basePathEndPtIdx - conditionalPathEndPtIdx;
+            } else if(targetQuestionInBasePath){//Shortcut (from mixed path)
+              //console.log("......mixed shortcut");
+              delta = basePathEndPtIdx - this.GRF.getIdxOfQidInModule(question.id);
+            } else if(conditionalPathEndPtDefined){//Detour
+              //console.log("......Detour Path, ",conditionalPathEndPt," defined just not in current module.")
+              delta = 1;
+            }
+          }else if(!basePathEndPt && conditionalPathEndPtDefined){//detour off last base path node
+            //console.log("......detour off last base path node");
             delta = 1;
+          }else {
+            console.log("......... unknown path type!");
           }
+
+
         }
         console.log("...delta:",delta);
         return delta;
@@ -96,7 +106,7 @@ define(['underscore', 'mixins/Graph', 'mixins/Questions', 'mixins/PubSub'],
         return payload;
       },
       getTotalQuestionCount: function(question){
-        //console.log("DecisionTree"," getTotalQuestionCount");
+        console.log("DecisionTree"," getTotalQuestionCount");
         this.updateRunningDelta(question);
         var cnt = this.GRF.getBasePathLength();
         cnt += this.runningDelta;
@@ -130,28 +140,28 @@ define(['underscore', 'mixins/Graph', 'mixins/Questions', 'mixins/PubSub'],
         console.log("DecisionTree"," next:", config);
         var question = {views:0};
         if( !this.currentQuestion ){//0 case. first question.
-          console.log("...first question");
+          //console.log("...first question");
           this.setCurrentModuleId( this.GRF.getNextModuleId() );
           var firstModuleQuestion = this.GRF.getFirstQuestionInModule(this.currentModuleId);
           _.extend(question, firstModuleQuestion, {first:true});
-          console.log("......",question);
+          //console.log("......",question);
         }else{//find next question within current module
-          console.log("...this.currentQuestion:",this.currentQuestion);
+          //console.log("...this.currentQuestion:",this.currentQuestion);
           var nextModuleId    = this.GRF.getNextModuleId( this.currentModuleId ),
               nextQuestionObj  = this.getNextQuestionId( this.currentQuestion, config );
-          console.log("...nextModuleId:",nextModuleId," nextQuestionObj:",nextQuestionObj);
+          //console.log("...nextModuleId:",nextModuleId," nextQuestionObj:",nextQuestionObj);
           if(nextQuestionObj.id){//use next question in this module
-            console.log("...currentQuestion is followed by another question in same module");
+            //console.log("...currentQuestion is followed by another question in same module");
             var graphNextQuestion = this.getNextQuestionFromGraph(nextQuestionObj);
             _.extend(question, nextQuestionObj, graphNextQuestion);
           }else if(nextModuleId && nextModuleId !== 'module_final'){//jump to next module
-            console.log("...go to next module");
+            //console.log("...go to next module");
             this.setCurrentModuleId( nextModuleId );
             var firstModuleQuestion = this.GRF.getFirstQuestionInModule(nextModuleId);
             _.extend(question, firstModuleQuestion);
           }else{//account for last module.
             //currently there is not much difference between this and previous, non-final condition.
-            console.log("...graph complete");
+            //console.log("...graph complete");
             this.setCurrentModuleId( nextModuleId );
             var firstModuleQuestion = this.GRF.getFirstQuestionInModule(nextModuleId);
             _.extend(question, firstModuleQuestion);
@@ -197,15 +207,16 @@ define(['underscore', 'mixins/Graph', 'mixins/Questions', 'mixins/PubSub'],
           this.setHistory('add', question);//add qid to history stack.
           var prevQuestionId  = (this.currentQuestion) ? this.currentQuestion.id : this.defaultScreen;
           question = _.extend(question, {previous:prevQuestionId});
-          //var pathDelta = this.getPathDelta(question);
           var positionData    = this.getQuestionPosition(question);
 
           console.log("...positionData:",positionData);
           //determine if is second to last and last question.
           if( positionData.total / positionData.current === 1){
+            //console.log("......this is the last question");
             _.extend(question, {last:true});
           }
           if( positionData.total - positionData.current === 1){
+            //console.log("......this is the penultimate question")
             _.extend(question, {penultimate:true});
           }
 
