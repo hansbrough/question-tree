@@ -215,6 +215,28 @@
       }
    }
 
+   .tips {
+     margin: 2em 0 0 0;
+
+     .tips-title {
+       @include font-small-large();
+     }
+
+     .tip {
+       overflow:hidden;
+     }
+
+     .tip-image {
+       float:left;
+       height: 100px;
+       margin-right: 1em;
+     }
+
+     .tip-body {
+       color: $charcoal;
+     }
+   }
+
    .summary-final-msg {
      clear:both;
      margin:1em 0;
