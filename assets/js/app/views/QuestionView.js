@@ -122,10 +122,10 @@ define([
             tips = results.filter(function(item){
               return !item.knowit}).map(function(answer){
                 //console.log("... incorrect answer:",answer);
-                var qid = answer.incorrect[0].id;
+                var qid = this.getRandomItemFromArray(answer.incorrect).id;
                 var model = this.collection.get(qid);
                 var img_src = model.get('media')[0].src;
-                var criterionAdvice = this.getCriterionGeneralAdvice(answer.id);
+                var criterionAdvice = this.getRandomItemFromArray(criterionGeneralInfo[answer.id]);
 
                 return {correct:answer.displayName, incorrect:answer.incorrect[0].response.title, img_src:img_src, advice:criterionAdvice}
               }.bind(this));
@@ -133,13 +133,8 @@ define([
           //console.log("...tips:",tips);
           return tips;
         },
-        /*
-        * return a random piece of advice for a given criterion
-        */
-        getCriterionGeneralAdvice: function(id){
-          //console.log("getCriterionGeneralAdvice");
-          var advice    = criterionGeneralInfo[id];
-          return advice[Math.floor(Math.random() * advice.length)];
+        getRandomItemFromArray: function(arr){
+          return arr[Math.floor(Math.random() * arr.length)];
         },
         /*
         * given a model find user selected radio btn
