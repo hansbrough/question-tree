@@ -34,6 +34,16 @@ define([
         STR_BACK        = 'back',
         CSS_PARENT      = '.content-wrapper.opening';
 
+    //for lack of better place at the moment - hardwire general text tips here.
+    var criterionGeneralInfo = {
+      agave:['Agave leaves end with a sharp spine.','Agave leaves are fibrous, which makes it a good plant for producing rope and string.'],
+      aloe:['Aloe will never have terminal spines on their leaf tips but may have thorns elsewhere.','Some Aloes can grow to the size of a tree.','Aloe leaves have a gelatinous, or gooey, interior.'],
+      echeveria:['Offsets tend to hang out under the mother-plant','Echeveria are polycarps. That’s a kind of plant that has multiple flowers arising from one stem.'],
+      gasteria:['Gasteria often have flattened, tongue shaped leaves.','Gasteria flowers individually dangle off a thin stem and are stomach shaped.'],
+      haworthia:['Haworthia leaves are often banded, speckled, dotted and show wide variations.',' Haworthia flowers are always small and white in appearance.','Generally Haworthias are smaller and lack margin teeth.'],
+      sempervivum:['Offsets tend to sprout adjacent to the mother plant rather than directly under the the rosette.','Flowers will bloom from the top of a rosette that has grown taller and often thicker.']
+    };
+
     var _View = Marionette.View.extend({
         template: Marionette.TemplateCache.get('#question'),
         events:{
@@ -106,28 +116,36 @@ define([
         * return set of tip objects w/info to help users do better next time.
         */
         calculateQuizTips: function(results){
-          console.log("QuestionView"," calculateQuizTips results:",results);
+          //console.log("QuestionView"," calculateQuizTips results:",results);
           var tips = [];
           if(results){
             tips = results.filter(function(item){
               return !item.knowit}).map(function(answer){
-                console.log("... incorrect answer:",answer);
+                //console.log("... incorrect answer:",answer);
                 var qid = answer.incorrect[0].id;
                 var model = this.collection.get(qid);
                 var img_src = model.get('media')[0].src;
-                return {correct:answer.displayName, incorrect:answer.incorrect[0].response.title, img_src:img_src, advice:''}
+                var criterionAdvice = this.getCriterionGeneralAdvice(answer.id);
+
+                return {correct:answer.displayName, incorrect:answer.incorrect[0].response.title, img_src:img_src, advice:criterionAdvice}
               }.bind(this));
-
-
           }
-          console.log("...tips:",tips);
+          //console.log("...tips:",tips);
           return tips;
+        },
+        /*
+        * return a random piece of advice for a given criterion
+        */
+        getCriterionGeneralAdvice: function(id){
+          //console.log("getCriterionGeneralAdvice");
+          var advice    = criterionGeneralInfo[id];
+          return advice[Math.floor(Math.random() * advice.length)];
         },
         /*
         * given a model find user selected radio btn
         */
         getUserAnswerForRadioBtnQuestion: function(questionModel){
-          console.log("getUserAnswerForRadioBtnQuestion");
+          //console.log("getUserAnswerForRadioBtnQuestion");
           var userSelected;
           questionModel.get('labels').forEach(function(label){
             if(label.answerValue === 'T'){
