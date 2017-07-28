@@ -78,7 +78,7 @@ define(['underscore', 'mixins/Graph', 'mixins/Questions', 'mixins/PubSub'],
 
 
         }
-        console.log("...delta:",delta);
+        //console.log("...delta:",delta);
         return delta;
       },
       /*
@@ -106,7 +106,7 @@ define(['underscore', 'mixins/Graph', 'mixins/Questions', 'mixins/PubSub'],
         return payload;
       },
       getTotalQuestionCount: function(question){
-        console.log("DecisionTree"," getTotalQuestionCount");
+        //console.log("DecisionTree"," getTotalQuestionCount");
         this.updateRunningDelta(question);
         var cnt = this.GRF.getBasePathLength();
         cnt += this.runningDelta;
@@ -137,7 +137,7 @@ define(['underscore', 'mixins/Graph', 'mixins/Questions', 'mixins/PubSub'],
       },
       //return the next question (object)
       next: function(config){
-        console.log("DecisionTree"," next:", config);
+        //console.log("DecisionTree"," next:", config);
         var question = {views:0};
         if( !this.currentQuestion ){//0 case. first question.
           //console.log("...first question");
@@ -175,7 +175,7 @@ define(['underscore', 'mixins/Graph', 'mixins/Questions', 'mixins/PubSub'],
           //console.log('..... question after being extended a second time: ',question);
         }
         this.setCurrentQuestion(question);
-        console.log(".........next:", question);
+        //console.log(".........next:", question);
         return question;
       },
       prev: function(){
@@ -209,7 +209,7 @@ define(['underscore', 'mixins/Graph', 'mixins/Questions', 'mixins/PubSub'],
           question = _.extend(question, {previous:prevQuestionId});
           var positionData    = this.getQuestionPosition(question);
 
-          console.log("...positionData:",positionData);
+          //console.log("...positionData:",positionData);
           //determine if is second to last and last question.
           if( positionData.total / positionData.current === 1){
             //console.log("......this is the last question");

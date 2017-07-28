@@ -9,9 +9,7 @@ define([
     var Router = Marionette.AppRouter.extend({
         appRoutes: {
           '': 'index',
-          'introduction': 'introduction',
-          'choices/:topic': 'choices',
-          'choices/:topic/:idx': 'question'
+          'introduction': 'introduction'
         },
         initialize: function(options){
           //console.log("Router initialize:",options);

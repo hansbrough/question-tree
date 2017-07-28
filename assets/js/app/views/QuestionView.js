@@ -163,10 +163,10 @@ define([
               isFinalScreen = model.get('last');
 
           if(isFinalScreen){
-            console.log('...isFinalScreen so re-render:',isFinalScreen);
+            //console.log('...isFinalScreen so re-render:',isFinalScreen);
             var quizResults = this.calculateQuizResults();
             var quizTips    = this.calculateQuizTips(quizResults);
-            console.log("......quizResults:",quizResults);
+            //console.log("......quizResults:",quizResults);
             model.set({results:quizResults,tips:quizTips});
             this.render(model, {replace:true});
           }else if(changedProps.length > 0 && this.direction === STR_NEXT){
