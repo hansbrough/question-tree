@@ -78,7 +78,7 @@ define([
               //console.log('...model:',model);
               //console.log("...... criterion:",criterion);
               //check criterion entry exists else create
-              criteria[criterion] = criteria[criterion] ? criteria[criterion]: {correct:0,incorrect:[]};
+              criteria[criterion] = criteria[criterion] ? criteria[criterion]: {knowit:0,correct:0,incorrect:[]};
               var userSelected = this.getUserAnswerForRadioBtnQuestion(model);
 
               if(userSelected.qid === answerId){
@@ -88,6 +88,8 @@ define([
                 //console.log("...question ",model.get('id')," is incorrect");
                 criteria[criterion].incorrect.push({id:model.get('id'),response:userSelected});
               }
+              //finally update bool indicating topic knowledge
+              criteria[criterion].knowit = criteria[criterion].correct > criteria[criterion].incorrect.length;
             }
           }.bind(this));
           //console.log("...criteria: ",criteria);

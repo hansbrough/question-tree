@@ -41,7 +41,13 @@
    }
  }
 
- .survey_results {
+ .results-summary {
+
+   p {
+    margin:0;
+    min-height: 2.5em;
+    line-height: 2.5em;
+   }
 
    .modality-container {
      border:1px solid $mediumGray;
@@ -76,7 +82,7 @@
    }
 
    .overview {
-     @include font-medium();
+     @include font-small-large();
    }
 
    .survey-result-criteria {
@@ -115,9 +121,9 @@
    }
 
    .criteria-header {
-     margin: 2em 0 1em 0;
+     margin-bottom: .5em;
      overflow:hidden;
-     padding-top: 1.5em;
+     padding-top: 1em;
 
      @include ipad_1_2 {
        margin-top:0;
@@ -148,6 +154,7 @@
 
       &.first {
         border-top:1px solid $mediumGray;
+        padding-top: .5em;
 
         @include ipad_1_2 {
           padding-top:8px;
@@ -160,6 +167,7 @@
 
       &.last {
         border-bottom:1px solid $mediumGray;
+        padding-bottom: .5em;
       }
 
       .criterion-name {
@@ -176,8 +184,6 @@
       }
 
       .criterion-supported {
-        padding:12px;
-        border-right:1px solid $mediumGray;
 
         .criterion-name {
           display: none;
@@ -209,8 +215,10 @@
       }
    }
 
-   .begin-program-msg {
+   .summary-final-msg {
      clear:both;
+     margin:1em 0;
+     text-align: center;
    }
 
    .navigation-controls {
@@ -226,6 +234,10 @@
    }
  }
 
+ .criterion {
+   text-transform: capitalize;
+ }
+
  .criterion-supported {
    text-align: center;
 
@@ -236,6 +248,10 @@
    @include iphone6plus {
      text-align: left;
    }
+ }
+
+ .criterion-count {
+   text-align: center;
  }
 
 }

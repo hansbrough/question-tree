@@ -15,7 +15,7 @@
     "next":"module_final"
   },
   "module_final":{
-    "title":"What's Next",
+    "title":"Results Summary",
     "questions": [
       { "id":"survey_results"}
     ]
