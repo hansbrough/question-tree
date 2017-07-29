@@ -8,7 +8,7 @@ A project that uses a json formatted graph and json formatted questions to navig
 * Question definitions json - defines the questions themselves as well as optional rules about order.
 * Graph.js and Questions.js - contain convenience methods for performing operations on the json data.
 * DecisionTree.js - provides information to your js application such as what's the next or previous question.
-* Quiz / Survey etc App files - Consumer of the above and files associated with the appearance and behavior of your Quiz. (these files are included here to give an example of how to use the DecisionTree)
+* Quiz / Survey etc App files - Consumer of the above and files associated with the appearance and behavior of your Quiz. (these files are included here to give an example of how to use the DecisionTree but you can substitute your own versions)
 
 ### Graph and Question Json Formatting examples
 
@@ -80,8 +80,8 @@ There are a few things to note about the above. First - the questions are groupe
   }
 }
 ````
-Note how the 'plantClassification_01' has been defined above. The 'labels' property is an array of options associated with question. Because this question node is categorized as a 'quiz' there is a correct answer specified with the 'actual' property. The 'type' property indicates that the options should be rendered as radio button controls. The 'criterion' property acts as a metadata tag for use by any application logic needing to summarize user responses. The 'media' property is an array of images etc that may be displayed in the UI.
+Note how the 'plantClassification_01' has been defined above. The 'labels' property is an array of options associated with question. Because this question node is categorized as a 'quiz' there is a correct answer specified with the 'actual' property. The 'type' property indicates that the options should be rendered as radio button controls. The 'criterion' property acts as a metadata tag for use by any application logic needing to summarize user responses. The 'media' property is an array of images etc that may be displayed in the UI. There are examples of using these properties to define a UI in the app logic views (created via Backbone/Marionette)
 
-A deceivingly simple looking property 'next' on label members is how branching can be defined between questions.
+A deceivingly simple looking property 'next' on label members is how branching can be defined between questions. More specifically _conditional paths_ can be created which will either add to or substract from the Base Path graph length. For example question nodes can be added by specifying a 'next' property which points at a question not defined in the _Base Path_. In other words from the example above the option `{"title":"Sempervivum", "qid":"102", "next":"plantClassification_13"}` will add add the 'plantClassification_13' node to the stack of questions visible to the user (assuming it's defined). Upon completion, unless 'plantClassification_13' itself defines a next question, the user will be returned to the _Base Path_ which in the case of the graph file example would be 'plantId_1' (since its the first question in the next module). Similarly _Shortcut Paths_ can be created by setting a question's 'next' value equal to a node on the _Base Path_ more than a single hop away. For example jumping from 'plantId_1' directly to 'plantId_3'. There are more variations on conditional paths which will be covered later.
 
 Finally any question definitions like 'favColors_85' not referenced in the _Base Path_ or directly from other questions will be ignored.
