@@ -10,7 +10,7 @@ define([
   function (Backbone, Marionette, Router, Progress) {
 
     var _App  = Marionette.Application.extend({
-      el:'.cricket-app',
+      el:'.quiz-app',
       Progress: new Progress(),
       postSurveyScreenLUT:{'DEFAULT':'introduction'},
 

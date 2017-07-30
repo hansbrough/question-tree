@@ -85,3 +85,16 @@ Note how the 'plantClassification_01' has been defined above. The 'labels' prope
 A deceivingly simple looking property 'next' on label members is how branching can be defined between questions. More specifically _conditional paths_ can be created which will either add to or substract from the Base Path graph length. For example question nodes can be added by specifying a 'next' property which points at a question not defined in the _Base Path_. In other words from the example above the option `{"title":"Sempervivum", "qid":"102", "next":"plantClassification_13"}` will add add the 'plantClassification_13' node to the stack of questions visible to the user (assuming it's defined). Upon completion, unless 'plantClassification_13' itself defines a next question, the user will be returned to the _Base Path_ which in the case of the graph file example would be 'plantId_1' (since its the first question in the next module). Similarly _Shortcut Paths_ can be created by setting a question's 'next' value equal to a node on the _Base Path_ more than a single hop away. For example jumping from 'plantId_1' directly to 'plantId_3'. There are more variations on conditional paths which will be covered later.
 
 Finally any question definitions like 'favColors_85' not referenced in the _Base Path_ or directly from other questions will be ignored.
+
+#### Graph and Questions Helper Files
+
+These files are used by the decisionTree logic to help with tasks like determining which is the current question node and what comes next etc. The Graph and Questions files also handle fetching your json files (via the HTML5 fetch api) and storing the results locally. By design only the decisionTree uses these files, not the view logic which does not need to know about the inner workings of path branching. In general the Graph.js file provides info specific to the graph json while Questions.js does the same for the questions json.
+
+#### DecisionTree
+
+This file combines information about the graph and questions json to determine a path through the question set. It should be instantiated and used by the View logic to determine the 'next' and 'previous' question nodes. The decisionTree logic simply guides the way from the first question to the last it does not try to do other tasks like persisting user answers.
+
+#### View Logic
+Use your own presentation files that create the quiz / survey UI or use the Backbone/Marionette files included here as an example.
+
+The example presentation related files included here use the requirejs, AMD style module loading which by convention starts with main.js ( located at `/assets/js/` ). The decisionTree file is instantiated within `/assets/js/controller.js` where there are also two views instantiated which do the UI work. The views associated collections also keep a copy of each question node answered and augment with user answers, how many times viewed etc. A unique screen at the end of the quiz displays a summary of the user results and offers tips about how to do better.
