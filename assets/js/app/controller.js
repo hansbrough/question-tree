@@ -3,7 +3,7 @@ define([
   'marionette',
   'app/views/QuestionView',
   'app/views/ModuleHeadingView',
-  'decision_tree'],
+  'decisionTree'],
 
   function(Marionette, QuestionView, HeadingView, Tree){
     var Controller = Marionette.Object.extend({
