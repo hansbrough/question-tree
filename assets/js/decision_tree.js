@@ -22,14 +22,13 @@ define(['underscore', 'mixins/Graph', 'mixins/Questions', 'mixins/PubSub'],
     _Mixin.prototype = {
       initialize: function(options){
         //console.log("DecisionTree", " initialize:" ,options);
-        var graphName = options.graph_name || null,
-            questionSetName = options.question_set_name || null;
+        var graphPath = options.graph_path || null,
+            questionSetPath = options.question_set_path || null;
 
         this.defaultScreen = options.defaultScreen || 'introduction';
-
         //intialize Graph and Question Helper Mixins
-        this.GRF = new GraphHelpers({'graph_name':graphName});
-        this.QTN = new QuestionsHelpers({'config_name':questionSetName});
+        this.GRF = new GraphHelpers({'config_path':graphPath});
+        this.QTN = new QuestionsHelpers({'config_path':questionSetPath});
 
         //extend
         //Object.assign(this, PubSub);

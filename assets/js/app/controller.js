@@ -13,24 +13,24 @@ define([
         _.bindAll(this,'index','initialize');
       },
       initializeSurveyViews: function(){
-        //console.info('initializeSurveyViews');
+        //console.info("controller"," initializeSurveyViews");
         if(!QUESTIONNAIRE.Survey){
           //initialize the Decision Tree
           //todo:find better way to reference the parent application object - not by instantiated name
           //note: decisionTree config.graph_name, & .question_set_name are optional values
           QUESTIONNAIRE.Survey = new Tree({
             defaultScreen:'opening',
-            //graph_name:'sequential',
-            //graph_name:'detour',
-            graph_name:'succulent_id',
-            //question_set_name:'sequential',//use with 'sequential' graph
-            //question_set_name:'shortcut',//use with 'sequential' graph
-            //question_set_name:'detour',//use with 'detour' graph
-            //question_set_name:'detour_multinode'//use with 'detour' graph
-            //question_set_name:'detour_multinode_multibranch'//use with 'detour' graph
-            //question_set_name:'detour_compound'//use with 'detour' graph
-            //question_set_name:'detour_mixed'//use with 'detour' graph
-            question_set_name:'succulent_id',//use with 'succulent_id' graph
+            //graph_name:'/data/graph/sequential',
+            //graph_name:'/data/graph/detour',
+            graph_path:'/data/graph/succulent_id',
+            //question_set_name:'/data/questions/sequential',//use with 'sequential' graph
+            //question_set_name:'/data/questions/shortcut',//use with 'sequential' graph
+            //question_set_name:'/data/questions/detour',//use with 'detour' graph
+            //question_set_name:'/data/questions/detour_multinode'//use with 'detour' graph
+            //question_set_name:'/data/questions/detour_multinode_multibranch'//use with 'detour' graph
+            //question_set_name:'/data/questions/detour_compound'//use with 'detour' graph
+            //question_set_name:'/data/questions/detour_mixed'//use with 'detour' graph
+            question_set_path:'/data/questions/succulent_id'//use with 'succulent_id' graph
           });
         }
         if( !this.views.QuestionView ){

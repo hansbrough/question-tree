@@ -19,13 +19,12 @@ define(['underscore'],
 
         _.bindAll(this,'digest');
 
-        this.fetch(options.graph_name);
+        this.fetch(options.config_path);
       },
-      fetch: function(config_name){
-        //console.log("Graph"," fetch");
-        config_name = config_name || 'index';
-        var api_url = '/data/graph/'+config_name+'.json';
-        fetch(api_url,{method:'get'}).then(function(resp){ return resp.json() }).then(this.digest);
+      fetch: function(config_url){
+        //console.log("Graph"," fetch:", config_url);
+        config_url = (config_url || '/data/graph/index') + '.json';
+        fetch(config_url,{method:'get'}).then(function(resp){ return resp.json() }).then(this.digest);
       },
       digest: function(resp){
         //console.log("Graph"," digest:",resp);

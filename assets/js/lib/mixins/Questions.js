@@ -17,16 +17,15 @@ define(['underscore'],
 
         _.bindAll(this,'digest');
 
-        this.fetch(options.config_name);
+        this.fetch(options.config_path);
       },
       digest: function(resp){
         //console.log("Questions"," digest:",resp);
         this.store = resp.data || resp || {};
       },
-      fetch: function(config_name){
-        config_name = config_name || 'index';
-        var api_url = '/data/questions/'+config_name+'.json';
-        fetch(api_url,{method:'get'}).then(function(resp){ return resp.json() }).then(this.digest);
+      fetch: function(config_url){
+        config_url = (config_url || '/data/questions/index') + '.json';
+        fetch(config_url,{method:'get'}).then(function(resp){ return resp.json() }).then(this.digest);
       },
       /*
       * return which of a question's predecessors was first in a conditional branch.
