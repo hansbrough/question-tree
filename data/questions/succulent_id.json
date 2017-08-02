@@ -113,12 +113,12 @@
       {"type":"image", "src":"/assets/img/a_desmetiana_c.jpg"}
     ],
     "labels":[
-      {"title":"Aloe", "qid":"136", "next":"plantClassification_11"},
+      {"title":"Aloe", "qid":"136"},
       {"title":"Agave", "qid":"137", "next":"plantClassification_19"},
-      {"title":"Sempervivum", "qid":"138", "next":"plantClassification_13"},
-      {"title":"Gasteria", "qid":"139", "next":"plantClassification_14"},
-      {"title":"Echeveria", "qid":"140", "next":"plantClassification_12"},
-      {"title":"Haworthia", "qid":"141", "next":"plantClassification_15"}
+      {"title":"Sempervivum", "qid":"138"},
+      {"title":"Gasteria", "qid":"139"},
+      {"title":"Echeveria", "qid":"140"},
+      {"title":"Haworthia", "qid":"141"}
     ],
     "actual":"137",
     "category":"quiz",
@@ -132,11 +132,11 @@
     ],
     "labels":[
       {"title":"Aloe", "qid":"142","next":"plantClassification_20"},
-      {"title":"Agave", "qid":"143", "next":"plantClassification_10"},
-      {"title":"Sempervivum", "qid":"144", "next":"plantClassification_13"},
-      {"title":"Gasteria", "qid":"145", "next":"plantClassification_14"},
-      {"title":"Echeveria", "qid":"146", "next":"plantClassification_12"},
-      {"title":"Haworthia", "qid":"147", "next":"plantClassification_15"}
+      {"title":"Agave", "qid":"143"},
+      {"title":"Sempervivum", "qid":"144"},
+      {"title":"Gasteria", "qid":"145"},
+      {"title":"Echeveria", "qid":"146"},
+      {"title":"Haworthia", "qid":"147"}
     ],
     "actual":"142",
     "category":"quiz",
@@ -149,12 +149,12 @@
       {"type":"image", "src":"/assets/img/e_subrigida_b_200.jpg"}
     ],
     "labels":[
-      {"title":"Aloe", "qid":"148", "next":"plantClassification_11"},
-      {"title":"Agave", "qid":"149", "next":"plantClassification_10"},
-      {"title":"Sempervivum", "qid":"150", "next":"plantClassification_13"},
-      {"title":"Gasteria", "qid":"151", "next":"plantClassification_14"},
+      {"title":"Aloe", "qid":"148"},
+      {"title":"Agave", "qid":"149"},
+      {"title":"Sempervivum", "qid":"150"},
+      {"title":"Gasteria", "qid":"151"},
       {"title":"Echeveria", "qid":"152","next":"plantClassification_21"},
-      {"title":"Haworthia", "qid":"153", "next":"plantClassification_15"}
+      {"title":"Haworthia", "qid":"153"}
     ],
     "actual":"152",
     "category":"quiz",
@@ -167,12 +167,12 @@
       {"type":"image", "src":"/assets/img/s_royanum.jpg"}
     ],
     "labels":[
-      {"title":"Aloe", "qid":"154", "next":"plantClassification_11"},
-      {"title":"Agave", "qid":"155", "next":"plantClassification_10"},
+      {"title":"Aloe", "qid":"154"},
+      {"title":"Agave", "qid":"155"},
       {"title":"Sempervivum", "qid":"156", "next":"plantClassification_16"},
-      {"title":"Gasteria", "qid":"157", "next":"plantClassification_14"},
-      {"title":"Echeveria", "qid":"158", "next":"plantClassification_12"},
-      {"title":"Haworthia", "qid":"159", "next":"plantClassification_15"}
+      {"title":"Gasteria", "qid":"157"},
+      {"title":"Echeveria", "qid":"158"},
+      {"title":"Haworthia", "qid":"159"}
     ],
     "actual":"156",
     "category":"quiz",
@@ -189,12 +189,12 @@
       {"type":"image", "src":"/assets/img/g_grey_ghost.jpg"}
     ],
     "labels":[
-      {"title":"Aloe", "qid":"160", "next":"plantClassification_11"},
-      {"title":"Agave", "qid":"161", "next":"plantClassification_10"},
-      {"title":"Haworthia", "qid":"162", "next":"plantClassification_15"},
+      {"title":"Aloe", "qid":"160"},
+      {"title":"Agave", "qid":"161"},
+      {"title":"Haworthia", "qid":"162"},
       {"title":"Gasteria", "qid":"163", "next":"plantClassification_18"},
-      {"title":"Echeveria", "qid":"164", "next":"plantClassification_12"},
-      {"title":"Sempervivum", "qid":"165", "next":"plantClassification_13"}
+      {"title":"Echeveria", "qid":"164"},
+      {"title":"Sempervivum", "qid":"165"}
     ],
     "actual":"163",
     "category":"quiz",
@@ -207,11 +207,11 @@
       {"type":"image", "src":"/assets/img/h_limifolia_a_200.jpg"}
     ],
     "labels":[
-      {"title":"Aloe", "qid":"161", "next":"plantClassification_11"},
-      {"title":"Agave", "qid":"162", "next":"plantClassification_10"},
-      {"title":"Sempervivum", "qid":"163", "next":"plantClassification_13"},
-      {"title":"Gasteria", "qid":"164", "next":"plantClassification_14"},
-      {"title":"Echeveria", "qid":"165", "next":"plantClassification_12"},
+      {"title":"Aloe", "qid":"161"},
+      {"title":"Agave", "qid":"162"},
+      {"title":"Sempervivum", "qid":"163"},
+      {"title":"Gasteria", "qid":"164"},
+      {"title":"Echeveria", "qid":"165"},
       {"title":"Haworthia", "qid":"166", "next":"plantClassification_17"}
     ],
     "actual":"166",
