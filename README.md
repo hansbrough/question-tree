@@ -101,29 +101,35 @@ The example presentation related files included here use the requirejs, AMD styl
 
 ### Path Branching Overview
 
-A _**Base Path**_ is the sequential route through nodes in a graph which avoids any conditional paths. The diagram below has a _Graph Length_ of 4 nodes.
+Below is a listing of path type examples from simple to more complex. The term _Graph Length_ refers to the total number of nodes encountered by a user from start to finish during quiz or survey. It can include from one to many paths e.g. a simple, sequential path or a path which includes several conditional branches.
+
+_**Base Path**_ is the sequential route through nodes in a graph which avoids any conditional paths. The diagram below has a _Graph Length_ of 4 nodes. This simplest type of path is defined in the Graph json file.
 
 ![Image of Base Path](https://user-images.githubusercontent.com/658255/28881940-98624038-775e-11e7-9a4e-c1672a51cd81.png)
 
 
-A _**Conditional Path**_ - an optional, offshoot path that exposes users to extra questions or allows skipping questions in the Base Path.
+_**Conditional Path**_ - an optional, offshoot path that exposes users to extra questions or allows skipping questions in the Base Path. Conditional paths are defined with the 'next' property in the Questions json file.
 
-A _**Detour Path**_ - a type of Conditional Path which exposes users to _additional_ questions. In the diagram below if a user took the optional detour branch then the _Graph Length_ is 4 nodes else the Graph Length would be 3 nodes.
+_**Detour Path**_ - a type of _Conditional Path_ which exposes users to _additional_ questions. In the diagram below if a user took the optional detour branch then the _Graph Length_ is 4 nodes else the _Graph Length_ would be 3 nodes.
 
 ![Image of Detour Path](https://user-images.githubusercontent.com/658255/28882908-7f1ab4d6-7761-11e7-8c29-af40f5cd2af2.png)
 
-A _**Shortcut Path**_ - a type of Conditional Path that allows users to _bypass_ questions on the Base Path. In the diagram below the _Graph Length_ is only 2 nodes if the shortcut is used.
+_**Shortcut Path**_ - a type of _Conditional Path_ that allows users to bypass questions on the _Base Path_. In the diagram below the _Graph Length_ is only 2 nodes if the shortcut is used.
 
 ![Image of Shortcut Path](https://user-images.githubusercontent.com/658255/28883099-294ebac4-7762-11e7-8e54-0b982504954f.png)
 
-A _**Multi-Node Path**_ - path containing more than one node. Almost all Sequential paths will be multi-node. Conditional Paths might often contain just a single node. The diagram below shows a multi-node detour path with a graph length of 5 nodes.
+_**Multi-Node Path**_ - path containing more than one node. Almost all Sequential paths will be multi-node. Conditional Paths might often contain just a single node. The diagram below shows a multi-node detour path with a graph length of 5 nodes.
 
 ![Image of MultiNode Path](https://user-images.githubusercontent.com/658255/28883656-0bdc5f26-7764-11e7-8308-d2ccc0bae480.png)
 
-A _**Multi-Branch Path**_ - node from which multiple, conditional paths are available to choose from.
+_**Multi-Branch Path**_ - node from which multiple, conditional paths are available to choose from.
 
 ![Image of MultiNode Path](https://user-images.githubusercontent.com/658255/28884089-69aa222c-7765-11e7-8b3e-12ab5f657393.png)
 
-A _**Compound Conditional Path**_ - A Conditional Path with nested, conditional paths.
+_**Compound Conditional Path**_ - A Conditional Path with nested, conditional paths.
 
-![Image of MultiNode Path](https://user-images.githubusercontent.com/658255/28884380-6d912060-7766-11e7-8ab9-da45c038dab2.png)
+![Image of Compound Path](https://user-images.githubusercontent.com/658255/28884380-6d912060-7766-11e7-8ab9-da45c038dab2.png)
+
+_**Mixed Conditional Path**_ - A compound conditional path that contains both detour and shortcut paths. In the diagram below 'path 1' represents a _Shortcut Path_ with a _Graph Length_ of 3, while 'path 2' represents a _Detour Path_ with a _Graph Length_ of 5.
+
+![Image of Mixed Path](https://user-images.githubusercontent.com/658255/28886182-624b6d4e-776d-11e7-995a-c9047e55d185.png)
