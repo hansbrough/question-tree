@@ -98,3 +98,32 @@ This file combines information about the graph and questions json to determine a
 Use your own presentation files that create the quiz / survey UI or use the Backbone/Marionette files included here as an example.
 
 The example presentation related files included here use the requirejs, AMD style module loading which by convention starts with main.js ( located at `/assets/js/` ). The decisionTree file is instantiated within `/assets/js/controller.js` where there are also two views instantiated which do the UI work. The views associated collections also keep a copy of each question node answered and augment with user answers, how many times viewed etc. A unique screen at the end of the quiz displays a summary of the user results and offers tips about how to do better.
+
+### Path Branching Overview
+
+A _**Base Path**_ is the sequential route through nodes in a graph which avoids any conditional paths. The diagram below has a _Graph Length_ of 4 nodes.
+
+![Image of Base Path](https://user-images.githubusercontent.com/658255/28881940-98624038-775e-11e7-9a4e-c1672a51cd81.png)
+
+
+A _**Conditional Path**_ - an optional, offshoot path that exposes users to extra questions or allows skipping questions in the Base Path.
+
+A _**Detour Path**_ - a type of Conditional Path which exposes users to _additional_ questions. In the diagram below if a user took the optional detour branch then the _Graph Length_ is 4 nodes else the Graph Length would be 3 nodes.
+
+![Image of Detour Path](https://user-images.githubusercontent.com/658255/28882908-7f1ab4d6-7761-11e7-8c29-af40f5cd2af2.png)
+
+A _**Shortcut Path**_ - a type of Conditional Path that allows users to _bypass_ questions on the Base Path. In the diagram below the _Graph Length_ is only 2 nodes if the shortcut is used.
+
+![Image of Shortcut Path](https://user-images.githubusercontent.com/658255/28883099-294ebac4-7762-11e7-8e54-0b982504954f.png)
+
+A _**Multi-Node Path**_ - path containing more than one node. Almost all Sequential paths will be multi-node. Conditional Paths might often contain just a single node. The diagram below shows a multi-node detour path with a graph length of 5 nodes.
+
+![Image of MultiNode Path](https://user-images.githubusercontent.com/658255/28883656-0bdc5f26-7764-11e7-8308-d2ccc0bae480.png)
+
+A _**Multi-Branch Path**_ - node from which multiple, conditional paths are available to choose from.
+
+![Image of MultiNode Path](https://user-images.githubusercontent.com/658255/28884089-69aa222c-7765-11e7-8b3e-12ab5f657393.png)
+
+A _**Compound Conditional Path**_ - A Conditional Path with nested, conditional paths.
+
+![Image of MultiNode Path](https://user-images.githubusercontent.com/658255/28884380-6d912060-7766-11e7-8ab9-da45c038dab2.png)
