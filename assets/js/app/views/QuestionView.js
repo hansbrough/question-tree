@@ -400,7 +400,7 @@ define([
           //console.log("...$next:",$next);
           this.scrollToTop();
           $current.addClass(CSS_MOVEOUT).removeClass(CSS_MOVEIN).removeClass(CSS_MOVEBACKIN).removeClass(CSS_CURRENT);
-          $next.addClass(CSS_MOVEIN).addClass(CSS_CURRENT).removeClass(CSS_OFFSCREEN).removeClass(CSS_MOVEBACKOUT);
+          $next.addClass(CSS_MOVEIN).addClass(CSS_CURRENT).removeClass(CSS_OFFSCREEN).removeClass(CSS_MOVEBACKOUT).removeClass(CSS_MOVEOUT);
         },
         transitionBack: function(prevQuestion){
           //console.log("transitionBack: ",prevQuestion);
