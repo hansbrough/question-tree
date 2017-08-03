@@ -213,7 +213,7 @@ define([
           //console.log("handleBackButtonClick");
           e.preventDefault();
           this.direction = STR_BACK;
-          QUESTIONNAIRE.Survey.prev();
+          QUESTIONNAIRE.DecisionTree.prev();
         },
         /*
         * Finish button appears on the last screen
@@ -239,7 +239,7 @@ define([
           }
           e.preventDefault();
           this.direction = STR_NEXT;
-          QUESTIONNAIRE.Survey.next(config);
+          QUESTIONNAIRE.DecisionTree.next(config);
         },
         handleInputChange: function(e){
           //console.log("QuestionView"," handleInputChange ");

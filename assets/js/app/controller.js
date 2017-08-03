@@ -14,11 +14,11 @@ define([
       },
       initializeSurveyViews: function(){
         //console.info("controller"," initializeSurveyViews");
-        if(!QUESTIONNAIRE.Survey){
+        if(!QUESTIONNAIRE.DecisionTree){
           //initialize the Decision Tree
           //todo:find better way to reference the parent application object - not by instantiated name
           //note: decisionTree config.graph_name, & .question_set_name are optional values
-          QUESTIONNAIRE.Survey = new Tree({
+          QUESTIONNAIRE.DecisionTree = new Tree({
             defaultScreen:'opening',
             //graph_name:'/data/graph/sequential',
             //graph_name:'/data/graph/detour',
