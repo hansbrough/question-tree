@@ -181,9 +181,10 @@ define(['underscore', 'mixins/Graph', 'mixins/Questions', 'mixins/PubSub'],
 
     _Mixin.prototype = {
       initialize: function(options){
-        //console.log("DecisionTree", " initialize:" ,options);
-        var graphPath = options.graph_path || null,
-            questionSetPath = options.question_set_path || null;
+        console.log("DecisionTree", " initialize:" ,options);
+        var baseUrl = options.base_url || '';
+        var graphPath = (options.graph_path) ? options.base_url + options.graph_path : null,
+            questionSetPath = (options.question_set_path) ? options.base_url + options.question_set_path : null;
 
         _defaultScreen = options.defaultScreen || 'introduction';
         //intialize Graph and Question Helper Mixins

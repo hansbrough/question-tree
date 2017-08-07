@@ -1,10 +1,7 @@
-/*global _cc */
-
-/* global QUESTIONNAIRE, window, localStorage, _platform, navigator */
+/* global QUESTIONNAIRE */
 /*
-* Search Results View
+* Question View
 * includes handler logic for all dom nodes
-* todo: conditionally include result template based on app name
 */
 
 define([
@@ -14,8 +11,8 @@ define([
   'marionette',
   'marionette_overrides',
   'app/collections/questionCollection',
-  'text!/question-tree/assets/js/app/templates/question.tmpl?noext',
-  'text!/question-tree/assets/js/app/templates/survey_results.tmpl?noext'
+  'text!'+_baseUrl+'/assets/js/app/templates/question.tmpl?noext',
+  'text!'+_baseUrl+'/assets/js/app/templates/survey_results.tmpl?noext'
   ],
   function($,_,Backbone,Marionette,overrides, Collection, questionTmpl, resultsTmpl){
     //compile and cache the template. register a partial for use in the template.

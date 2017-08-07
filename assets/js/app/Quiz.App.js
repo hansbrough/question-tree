@@ -16,7 +16,7 @@ define([
 
       initialize: function(options){
         this.$el = $(this.el);
-        this.Router = new Router();
+        this.Router = new Router({baseUrl:_baseUrl});
       }
     });
 

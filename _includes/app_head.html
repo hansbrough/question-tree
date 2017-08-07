@@ -2,7 +2,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
+  <meta name="env" content="{{jekyll.environment}}">
   <title>{% if page.title %}{{ page.title | escape }}{% else %}{{ site.title | escape }}{% endif %}</title>
   <meta name="description" content="{{ page.excerpt | default: site.description | strip_html | normalize_whitespace | truncate: 160 | escape }}">
 
@@ -14,13 +14,12 @@
   <script src="{{ site.github.url }}/assets/js/lib/require-min.js"></script>
 
       <script>
-      var  githubPagesUrl = '{{ site.github.url }}';//TODO: correct way to pass in path to requirejs config???
+      var  _baseUrl = '{{ site.github.url }}';//TODO: correct way to pass in path to requirejs config???
       //Load common code that includes config, then load the app logic for this page.
       requirejs(['{{ site.github.url }}/assets/js/common.js'], function (common) {
         requirejs(['{{ site.github.url }}/assets/js/main.js']);
       });
       </script>
-
 
   {% if jekyll.environment == 'production' and site.google_analytics %}
   {% include google-analytics.html %}

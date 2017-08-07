@@ -4,7 +4,6 @@ define([
 ],
 
   function(Marionette, Controller){
-    //console.log('CRICKET.App Router Load');
 
     var Router = Marionette.AppRouter.extend({
         appRoutes: {
@@ -12,7 +11,7 @@ define([
           'introduction': 'introduction'
         },
         initialize: function(options){
-          //console.log("Router initialize:",options);
+          console.log("Router initialize:",options);
           this.controller = new Controller(options);
         }
       });

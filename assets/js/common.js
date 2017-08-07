@@ -1,7 +1,7 @@
 //The build will inline common dependencies in this file.
 
 requirejs.config({
-    baseUrl: githubPagesUrl+'/assets/js',
+    baseUrl: _baseUrl+'/assets/js',
     paths: {
         'text':'./lib/text',
         'jquery':'./lib/jquery-2.2.1.min',

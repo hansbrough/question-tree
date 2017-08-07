@@ -8,21 +8,25 @@ define([
   function(Marionette, QuestionView, HeadingView, Tree){
     var Controller = Marionette.Object.extend({
       initialize: function (options) {
+        console.info("controller"," initialize options:",options);
         this.options = options || {};
         this.views = {};
         _.bindAll(this,'index','initialize');
       },
       initializeSurveyViews: function(){
-        //console.info("controller"," initializeSurveyViews");
+        console.info("controller"," initializeSurveyViews");
+        console.log("...this.options.baseUrl:",this.options.baseUrl);
+        var baseUrl = this.options.baseUrl || '';
         if(!QUESTIONNAIRE.DecisionTree){
           //initialize the Decision Tree
           //todo:find better way to reference the parent application object - not by instantiated name
           //note: decisionTree config.graph_name, & .question_set_name are optional values
           QUESTIONNAIRE.DecisionTree = new Tree({
             defaultScreen:'opening',
+            base_url:baseUrl,
             //graph_name:'/data/graph/sequential',
             //graph_name:'/data/graph/detour',
-            graph_path:'/question-tree/data/graph/succulent_id',
+            graph_path:'/data/graph/succulent_id',
             //question_set_name:'/data/questions/sequential',//use with 'sequential' graph
             //question_set_name:'/data/questions/shortcut',//use with 'sequential' graph
             //question_set_name:'/data/questions/detour',//use with 'detour' graph
@@ -30,7 +34,7 @@ define([
             //question_set_name:'/data/questions/detour_multinode_multibranch'//use with 'detour' graph
             //question_set_name:'/data/questions/detour_compound'//use with 'detour' graph
             //question_set_name:'/data/questions/detour_mixed'//use with 'detour' graph
-            question_set_path:'/question-tree/data/questions/succulent_id'//use with 'succulent_id' graph
+            question_set_path:'/data/questions/succulent_id'//use with 'succulent_id' graph
           });
         }
         if( !this.views.QuestionView ){
