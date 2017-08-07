@@ -31,7 +31,7 @@ define(['underscore'],
               resp[q].media.forEach(function(m){
                 console.log("......m:",m)
                 m.src = this.options.base_url + m.src;
-              })
+              }.bind(this))
             }
           }
         }
