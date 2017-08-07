@@ -14,8 +14,8 @@ define([
   'marionette',
   'marionette_overrides',
   'app/collections/questionCollection',
-  'text!/assets/js/app/templates/question.tmpl?noext',
-  'text!/assets/js/app/templates/survey_results.tmpl?noext'
+  'text!/question-tree/assets/js/app/templates/question.tmpl?noext',
+  'text!/question-tree/assets/js/app/templates/survey_results.tmpl?noext'
   ],
   function($,_,Backbone,Marionette,overrides, Collection, questionTmpl, resultsTmpl){
     //compile and cache the template. register a partial for use in the template.

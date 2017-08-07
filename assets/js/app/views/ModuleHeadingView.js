@@ -11,7 +11,7 @@ define([
   'marionette',
   'marionette_overrides',
   'app/collections/moduleHeadingCollection',
-  'text!/assets/js/app/templates/survey_heading.tmpl?noext'
+  'text!/question-tree/assets/js/app/templates/survey_heading.tmpl?noext'
   ],
   function($, _, Backbone, Marionette, overrides, Collection, headingTmpl){
     //compile and cache the template. register a partial for use in the template.
