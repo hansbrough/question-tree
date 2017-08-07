@@ -334,7 +334,7 @@ define([
               markup;
           //console.log("... payload: ",payload);
           //Add extras to payload and create markup from template.
-          _.extend(payload, {platform:platform, nextScreen:this.defaultNextSection});
+          _.extend(payload, {platform:platform, nextScreen:this.defaultNextSection, baseUrl:_baseUrl});
           markup  = templateFunc({SCREEN: payload});
           //choose insertion type.
           if(options.replace){
