@@ -22,7 +22,7 @@ define([
             defaultScreen:'opening',
             //graph_name:'/data/graph/sequential',
             //graph_name:'/data/graph/detour',
-            graph_path:'/data/graph/succulent_id',
+            graph_path:'/question-tree/data/graph/succulent_id',
             //question_set_name:'/data/questions/sequential',//use with 'sequential' graph
             //question_set_name:'/data/questions/shortcut',//use with 'sequential' graph
             //question_set_name:'/data/questions/detour',//use with 'detour' graph
@@ -30,7 +30,7 @@ define([
             //question_set_name:'/data/questions/detour_multinode_multibranch'//use with 'detour' graph
             //question_set_name:'/data/questions/detour_compound'//use with 'detour' graph
             //question_set_name:'/data/questions/detour_mixed'//use with 'detour' graph
-            question_set_path:'/data/questions/succulent_id'//use with 'succulent_id' graph
+            question_set_path:'/question-tree/data/questions/succulent_id'//use with 'succulent_id' graph
           });
         }
         if( !this.views.QuestionView ){
