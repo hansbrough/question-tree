@@ -324,7 +324,7 @@ define([
         * display a screen of questions OR the final results screen.
         */
         render: function(model, options){
-          //console.log("QuestionView ","render ", " model:",model);
+          console.log("QuestionView ","render ", " _baseUrl:",_baseUrl);
           options = options || {};
           var payload           = model.toJSON(),
               nxtQuestionSetId  = payload.id,
@@ -335,6 +335,7 @@ define([
           //console.log("... payload: ",payload);
           //Add extras to payload and create markup from template.
           _.extend(payload, {platform:platform, nextScreen:this.defaultNextSection, baseUrl:_baseUrl});
+          console.log("...payload:",payload);
           markup  = templateFunc({SCREEN: payload});
           //choose insertion type.
           if(options.replace){
