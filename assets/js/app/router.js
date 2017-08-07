@@ -11,7 +11,7 @@ define([
           'introduction': 'introduction'
         },
         initialize: function(options){
-          console.log("Router initialize:",options);
+          //console.log("Router initialize:",options);
           this.controller = new Controller(options);
         }
       });

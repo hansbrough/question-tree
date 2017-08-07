@@ -1,7 +1,7 @@
 /* global QUESTIONNAIRE */
 /*
 * Question View
-* includes handler logic for all dom nodes
+* TODO: how to inject the baseUrl into template requests
 */
 
 define([

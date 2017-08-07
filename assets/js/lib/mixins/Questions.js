@@ -20,8 +20,24 @@ define(['underscore'],
         this.fetch(options.config_path);
       },
       digest: function(resp){
-        //console.log("Questions"," digest:",resp);
-        this.store = resp.data || resp || {};
+        resp = resp.data || resp || {};
+        console.log("Questions"," digest:",resp);
+        console.log("...this.options:",this.options);
+        if(this.options.base_url){
+          console.log("...has base_url");
+          for(var q in resp){
+            console.log("...q:",q);
+            if(q.media){
+              q.media.forEach(function(m){
+                console.log("......m:",m)
+                m.src = this.options.base_url + m.src;
+              })
+            }
+          }
+        }
+        //this.store = resp.data || resp || {};
+        this.store = resp;
+        console.log("...this.store:",this.store);
       },
       fetch: function(config_url){
         config_url = (config_url || '/data/questions/index') + '.json';
