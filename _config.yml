@@ -17,7 +17,7 @@ title: Question Graph Project
 email: hans.brough@yahoo.com
 description: > # this means to ignore newlines until "baseurl:"
   Decision tree that runs off a user supplied question graph
-baseurl: "" # the subpath of your site, e.g. /blog
+baseurl: "question-tree" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: letterati
 github_username:  hansbrough
