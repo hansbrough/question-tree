@@ -26,9 +26,9 @@ define(['underscore'],
         if(this.options.base_url){
           console.log("...has base_url");
           for(var q in resp){
-            console.log("...q:",q);
-            if(q.media){
-              q.media.forEach(function(m){
+            console.log("...q:",resp[q]);
+            if(resp[q].media){
+              resp[q].media.forEach(function(m){
                 console.log("......m:",m)
                 m.src = this.options.base_url + m.src;
               })
