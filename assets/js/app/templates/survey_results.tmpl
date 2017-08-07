@@ -9,11 +9,11 @@
   <div class="criteria-header">
     <p class="column-name genus col-1-3 small-large">Genus</p><p class="column-name example-img col-1-6 small-large">Know it</p><p class="column-name correct col-1-6 small-large">Correct</p><p class="column-name correct col-1-6 small-large">Incorrect</p>
   </div>
-  <p>baseUrl:{{baseUrl}}</p>
+  
   {{#each results}}
   <div class="data-row {{stripes @index}}{{#if @first}} first{{/if}}{{#if @last}} last{{/if}}">
     <p class="criterion col-1-3">{{displayName}}</p>
-    <p class="criterion-supported col-1-6">{{#if knowit}}<img src="{{./baseUrl}}/assets/img/icons/mini-checkcircle-18px.svg">{{/if}}</p>
+    <p class="criterion-supported col-1-6">{{#if knowit}}<img src="{{../baseUrl}}/assets/img/icons/mini-checkcircle-18px.svg">{{/if}}</p>
     <p class="criterion-count col-1-6">{{correct}}</p>
     <p class="criterion-count col-1-6">{{incorrect.length}}</p>
   </div>
