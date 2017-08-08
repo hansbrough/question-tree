@@ -8,14 +8,13 @@ define([
   function(Marionette, QuestionView, HeadingView, Tree){
     var Controller = Marionette.Object.extend({
       initialize: function (options) {
-        console.info("controller"," initialize options:",options);
+        //console.info("controller"," initialize options:",options);
         this.options = options || {};
         this.views = {};
         _.bindAll(this,'index','initialize');
       },
       initializeSurveyViews: function(){
-        console.info("controller"," initializeSurveyViews");
-        console.log("...this.options.baseUrl:",this.options.baseUrl);
+        //console.info("controller"," initializeSurveyViews");
         var baseUrl = this.options.baseUrl || '';
         if(!QUESTIONNAIRE.DecisionTree){
           //initialize the Decision Tree

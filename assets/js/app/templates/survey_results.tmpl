@@ -11,8 +11,6 @@
   </div>
 
   {{#each results}}
-  <p>baseUrl: {{../baseUrl}}</p>
-  <p>previous: {{../previous}}</p>
   <div class="data-row {{stripes @index}}{{#if @first}} first{{/if}}{{#if @last}} last{{/if}}">
     <p class="criterion col-1-3">{{displayName}}</p>
     <p class="criterion-supported col-1-6">{{#if knowit}}<img src="{{../../baseUrl}}/assets/img/icons/mini-checkcircle-18px.svg">{{/if}}</p>

@@ -181,7 +181,7 @@ define(['underscore', 'mixins/Graph', 'mixins/Questions', 'mixins/PubSub'],
 
     _Mixin.prototype = {
       initialize: function(options){
-        console.log("DecisionTree", " initialize:" ,options);
+        //console.log("DecisionTree", " initialize:" ,options);
         var baseUrl = options.base_url || '';
         var graphPath = (options.graph_path) ? options.base_url + options.graph_path : null,
             questionSetPath = (options.question_set_path) ? baseUrl + options.question_set_path : null;
