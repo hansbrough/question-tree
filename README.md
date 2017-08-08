@@ -2,7 +2,7 @@
 
 A project that uses a json formatted graph and json formatted questions to navigate conditional paths through a quiz or survey.
 
-[Project on Github Pages](https://hansbrough.github.io/question-tree/) 
+[Project on Github Pages](https://hansbrough.github.io/question-tree/)
 
 ### Overview of the Pieces
 
@@ -126,7 +126,7 @@ _**Multi-Node Path**_ - path containing more than one node. Almost all Sequentia
 
 _**Multi-Branch Path**_ - node from which multiple, conditional paths are available to choose from.
 
-![Image of MultiNode Path](https://user-images.githubusercontent.com/658255/28884089-69aa222c-7765-11e7-8b3e-12ab5f657393.png)
+![Image of MultiBranch Path](https://user-images.githubusercontent.com/658255/28884089-69aa222c-7765-11e7-8b3e-12ab5f657393.png)
 
 _**Compound Conditional Path**_ - A Conditional Path with nested, conditional paths.
 
