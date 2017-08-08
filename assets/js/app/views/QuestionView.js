@@ -1,7 +1,8 @@
 /* global QUESTIONNAIRE */
 /*
 * Question View
-* TODO: how to inject the baseUrl into template requests
+* TODO: how to inject the baseUrl into template requests?
+* above driven by env differences when using Github pages
 */
 
 define([
