@@ -1,7 +1,7 @@
 ## Question Graph
 
 A project that uses a json formatted graph and json formatted questions to navigate conditional paths through a quiz or survey.
-Note - this version built w/ ES5 syntax. ES6 native version coming soon.
+Note - this is the original version built w/ ES5 syntax. ES6+ version w/no UI available on NPM as [question-tree-core](https://www.npmjs.com/package/question-tree-core)
 
 [Project on Github Pages](https://hansbrough.github.io/question-tree/)
 
